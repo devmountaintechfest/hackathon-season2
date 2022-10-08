@@ -14,7 +14,7 @@
 - สร้างไฟล์ CSV แยกตามสัญชาติของพนักงาน
 - สร้าง SQLite view ที่สามารถ query ตามประเทศที่ทำงาน
 - สร้าง SQLite view สำหรับแบ่งตาม department
-- สร้าง SQLite view ที่สามารถ query ตามประเทศสัญชาติของพนักงาน
+- สร้าง SQLite view ที่สามารถ query ตามสัญชาติของพนักงาน
 
 ## Clean anomalies information challenge
 - ลบข้อมูลที่ซ้ำกัน
