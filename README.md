@@ -1,5 +1,11 @@
 # hackathon-season2
 
+## เลข Status จะมีตามนี้ครับ
+- 1 = Active
+- 2 = Resigned
+- 3 = Retired
+- ถ้าเป็นเลขอื่นๆจะถือว่าเป็น anomaly information(**ข้อมูลที่ไม่ถูกต้อง**)
+
 ## กฎระเบียบ
 
 - ห้ามใช้ library สำหรับการทำ transformation จาก XML ไปเป็น CSV
