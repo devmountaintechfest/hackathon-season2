@@ -8,8 +8,10 @@ set JAVA_HOME=C:\jdk-11.0.13+8
 set PATH=C:\Program Files\Git\cmd;%JAVA_HOME%\bin;C:\Windows\System32\WindowsPowerShell\v1.0\
 
 # Check User Profile : .ammonite folder for sure
-
 ./amm.bat main.sc
+
+# Check Visualization
+main-visualize.ipynb
 
 =======
 # hackathon-season2
