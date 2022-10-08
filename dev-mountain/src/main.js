@@ -4,7 +4,7 @@ import { createVuetify } from "vuetify";
 import App from "./App.vue";
 import { loadFonts } from "./plugins/webfontloader";
 
-//Import Vuetify
+//Import Vuetify Components
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
 
