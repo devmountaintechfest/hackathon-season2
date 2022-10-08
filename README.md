@@ -11,6 +11,7 @@ set PATH=C:\Program Files\Git\cmd;%JAVA_HOME%\bin;C:\Windows\System32\WindowsPow
 # Check User Profile : .ammonite folder for sure
 
 ./amm.bat main.sc
+
 =======
 ## กฎระเบียบ
 
