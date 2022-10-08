@@ -1,5 +1,15 @@
 # hackathon-season2
-Hackathon Challenge Season2
+
+## เลข Status จะมีตามนี้ครับ
+- 1 = Active
+- 2 = Resigned
+- 3 = Retired
+- ถ้าเป็นเลขอื่นๆจะถือว่าเป็น anomaly information(**ข้อมูลที่ไม่ถูกต้อง**)
+
+## เลข GENDER จะมีตามนี้ครับ
+- 0 = Male
+- 1 = Female
+- ถ้าเป็นเลขอื่นๆจะถือว่าเป็น anomaly information(**ข้อมูลที่ไม่ถูกต้อง**)
 
 curl -o amm.bat -k -L https://github.com/com-lihaoyi/Ammonite/releases/download/2.5.4/2.12-2.5.4
 
@@ -22,11 +32,24 @@ set PATH=C:\Program Files\Git\cmd;%JAVA_HOME%\bin;C:\Windows\System32\WindowsPow
 
 ## เกณฑ์การให้คะแนน
 
-- ข้อมูลถูกต้อง
+- โค๊ดทำงานถูกต้อง
+- Performance
+  - Memory usage
+  - Runtime benchmark 
+- Code อ่านง่าย
 - ส่งเร็ว
-- เขียนโค๊ดให้ทีมงานสามารถอ่านรู้เรื่อง
+- Creative ตอนทำ Data visualization 
+- ผลลัพธ์จาก SQLlite ต้องได้เป็น **JSON** format
 
-
-ตัวอย่าง Data visualization
+**ตัวอย่าง Data visualization**
 
 [dev-mountain-visualization](https://dev-moutain-dataviz.netlify.app/)
+
+
+## ตัวอย่างการสร้าง PR
+ทีม Dev mountain
+สมาชิก
+- [annibuliful](https://github.com/annibuliful)
+- [lordbenz](https://github.com/lordbenz)
+
+Repo: [hackathon](https://github.com/devmountaintechfest/hackathon-season2)
