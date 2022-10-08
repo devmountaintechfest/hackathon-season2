@@ -9,11 +9,11 @@ Hackathon Challenge Season2
 
 ## เกณฑ์การให้คะแนน
 
-- ข้อมูลถูกต้อง
+- โค๊ดทำงานถูกต้อง
+- Performance
+- Code อ่านง่าย
 - ส่งเร็ว
-- เขียนโค๊ดให้ทีมงานสามารถอ่านรู้เรื่อง
-- ความคิดสร้างสรรค์
-
+- Creative ตอนทำ Data visualization 
 
 ตัวอย่าง Data visualization
 
