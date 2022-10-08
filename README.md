@@ -10,6 +10,8 @@
 
 - โค๊ดทำงานถูกต้อง
 - Performance
+  - Memory usage
+  - Runtime benchmark 
 - Code อ่านง่าย
 - ส่งเร็ว
 - Creative ตอนทำ Data visualization 
