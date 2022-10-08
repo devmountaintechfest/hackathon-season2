@@ -34,7 +34,7 @@ def insert_data(table_name: str, data: List[dict]):
             count = cursor.execute(sqlite_insert_query, tuple(val.values()))
             sqlite_connection.commit()
             print("insert success", count)
-            cursor.close()
+        cursor.close()
     except sqlite3.Error as error:
         print("insert failed", error)
     finally:
