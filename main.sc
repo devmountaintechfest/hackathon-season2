@@ -37,12 +37,6 @@ import ujson._
 
 @main
 def dataprep1(args: String*) = {
-	//println(" Read CSV ")
-	//val spark = SparkSession.builder.master("local[*]").appName("test").getOrCreate()
-	//val sc = spark.sparkContext
-	//import spark.implicits._
-	//val data2 = spark.read.csv("file:///tmp/pipeline-test/1_1342.csv")
-	//data2.show
 	try {
 		os.remove(os.pwd / "devclub.csv")
 		os.remove(os.pwd / "devclub.json")
@@ -51,9 +45,10 @@ def dataprep1(args: String*) = {
 		case t: Throwable => t.printStackTrace
 	}
 	println(" Read XML ")
+	var records = scala.xml.XML.loadFile("data-devclub-1.xml")
+	println(" Write CSV ")
 	val csv1File = new PrintWriter("devclub.csv")
 	csv1File.println("EMPID,PASSPORT,FIRSTNAME,LASTNAME,GENDER,BIRTHDAY,NATIONALITY,HIRED,DEPT,POSITION,STATUS,REGION")
-	var records = scala.xml.XML.loadFile("data-devclub-1.xml")
 	for (record <- records \ "record") {
 		csv1File.print((record \ "EMPID").text)
 		csv1File.print(","); csv1File.print((record \ "PASSPORT").text)
@@ -71,15 +66,8 @@ def dataprep1(args: String*) = {
 	}
 	csv1File.close
 
-	println(" Read JSON ")
-	import scala.io._, scala.util._, ujson._
-	//var retProc = Using(Source.fromFile("main.json")) { src =>
-	//	for (line <- src.getLines) {
-	//		cntData += 1
-			val         srcJSON = ujson.Obj("field1" -> "value1", "field2" -> ujson.Null)
-			val      srcColumns = ujson.read("""{"srcColumns":[{"name":"_1","noColCount":0,"rules":{"CUSTOM":{"boolExpr":"_1 = '3180c249-9565-41fd-9fc8-549484f42a20' or _1 = 'f31f14a0-b0a8-4050-bd3f-b6298b71023c'","dataExpr":null},"IS_DIGIT":{},"IS_CITIZEN_ID":{}}},{"name":"_80005","noColCount":0,"rules":{"IS_NULL":{"validCount":0,"errorCount":0},"IS_DIGIT":{}}}]}""")("srcColumns").arr
-	//	}
-	//}
+	(records \ "record").map(r => ((r \ "NATIONALITY").text, r))
+
 	println(" Read SQLite ")
 	var connection = java.sql.DriverManager.getConnection("jdbc:sqlite:result.sqlite");
 	var statement = connection.createStatement();
@@ -98,6 +86,7 @@ def dataprep1(args: String*) = {
 		REGION varchar(20)
 	)""")
 	println(s"result = $result")
+	println(" Write SQLite ")
 	for (record <- records \ "record") {
 		statement.execute("INSERT INTO DEV_CLUB VALUES("
 			+"'"+ (record \ "EMPID").text + "'"
@@ -115,6 +104,7 @@ def dataprep1(args: String*) = {
 			+ ")")
 	}
 	var rs = statement.executeQuery("SELECT * FROM DEV_CLUB")
+	println(" Write JSON ")
 	val json1File = new PrintWriter("devclub.json")
 	while (rs.next) {
 		json1File.println(s"""{ "EMPID": "${rs.getString(1)}", "PASSPORT": "${rs.getString(2)}", "FIRSTNAME": "${rs.getString(3)}", "LASTNAME": "${rs.getString(4)}", "GENDER": "${rs.getString(5)}", "BIRTHDAY": "${rs.getString(6)}", "NATIONALITY": "${rs.getString(7)}", "HIRED": "${rs.getString(8)}", "DEPT": "${rs.getString(9)}", "POSITION": "${rs.getString(10)}", "STATUS": "${rs.getString(11)}", "REGION": "${rs.getString(12)}" }""")
