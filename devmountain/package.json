@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "express": "^4.18.1",
+    "supervisor": "^0.12.0"
+  },
+  "scripts": {
+    "serve": "node main.js",
+    "dev": "supervisor  main.js"
+  }
+}
