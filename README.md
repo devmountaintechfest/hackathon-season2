@@ -21,6 +21,7 @@
 - Code อ่านง่าย
 - ส่งเร็ว
 - Creative ตอนทำ Data visualization 
+- ผลลัพธ์จาก SQLlite ต้องได้เป็น **JSON** format
 
 **ตัวอย่าง Data visualization**
 
