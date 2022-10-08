@@ -16,6 +16,15 @@
 - ส่งเร็ว
 - Creative ตอนทำ Data visualization 
 
-ตัวอย่าง Data visualization
+**ตัวอย่าง Data visualization**
 
 [dev-mountain-visualization](https://dev-moutain-dataviz.netlify.app/)
+
+
+## ตัวอย่างการสร้าง PR
+ทีม Dev mountain
+สมาชิก
+- [annibuliful](https://github.com/annibuliful)
+- [lordbenz](https://github.com/lordbenz)
+
+Repo: [hackathon](https://github.com/devmountaintechfest/hackathon-season2)
