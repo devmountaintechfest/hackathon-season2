@@ -13,6 +13,13 @@ set PATH=C:\Program Files\Git\cmd;%JAVA_HOME%\bin;C:\Windows\System32\WindowsPow
 # Check Visualization
 main-visualize.ipynb
 
+# Check SQLite
+result.sqlite
+ - table: dev_club_old, dev_club, dev_club_[by country], dev_club_[by dept], dev_club_[by nationality]
+
+# Check JSON Fiile from SQLite
+devclub.json - refer to main.sc line: 107
+
 =======
 # hackathon-season2
 
