@@ -1,15 +1,3 @@
-# hackathon-season2
-
-## เลข Status จะมีตามนี้ครับ
-- 1 = Active
-- 2 = Resigned
-- 3 = Retired
-- ถ้าเป็นเลขอื่นๆจะถือว่าเป็น anomaly information(**ข้อมูลที่ไม่ถูกต้อง**)
-
-## เลข GENDER จะมีตามนี้ครับ
-- 0 = Male
-- 1 = Female
-- ถ้าเป็นเลขอื่นๆจะถือว่าเป็น anomaly information(**ข้อมูลที่ไม่ถูกต้อง**)
 
 curl -o amm.bat -k -L https://github.com/com-lihaoyi/Ammonite/releases/download/2.5.4/2.12-2.5.4
 
@@ -22,6 +10,20 @@ set PATH=C:\Program Files\Git\cmd;%JAVA_HOME%\bin;C:\Windows\System32\WindowsPow
 # Check User Profile : .ammonite folder for sure
 
 ./amm.bat main.sc
+
+=======
+# hackathon-season2
+
+## เลข Status จะมีตามนี้ครับ
+- 1 = Active
+- 2 = Resigned
+- 3 = Retired
+- ถ้าเป็นเลขอื่นๆจะถือว่าเป็น anomaly information(**ข้อมูลที่ไม่ถูกต้อง**)
+
+## เลข GENDER จะมีตามนี้ครับ
+- 0 = Male
+- 1 = Female
+- ถ้าเป็นเลขอื่นๆจะถือว่าเป็น anomaly information(**ข้อมูลที่ไม่ถูกต้อง**)
 
 =======
 ## กฎระเบียบ
