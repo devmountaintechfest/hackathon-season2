@@ -55,21 +55,24 @@ export default {
 
         // Start to fetch the data by using TagName
         for (i = 0; i < x.length; i++) {
-          read_xml.push({
-            EMPID: x[i].getElementsByTagName("EMPID")[0].childNodes[0].nodeValue,
-            PASSPORT: x[i].getElementsByTagName("PASSPORT")[0].childNodes[0].nodeValue,
-            FIRSTNAME: x[i].getElementsByTagName("FIRSTNAME")[0].childNodes[0].nodeValue,
-            LASTNAME: x[i].getElementsByTagName("LASTNAME")[0].childNodes[0].nodeValue,
-            GENDER: x[i].getElementsByTagName("GENDER")[0].childNodes[0].nodeValue,
-            BIRTHDAY: x[i].getElementsByTagName("BIRTHDAY")[0].childNodes[0].nodeValue,
-            NATIONALITY: x[i].getElementsByTagName("NATIONALITY")[0].childNodes[0]
-              .nodeValue,
-            HIRED: x[i].getElementsByTagName("HIRED")[0].childNodes[0].nodeValue,
-            DEPT: x[i].getElementsByTagName("DEPT")[0].childNodes[0].nodeValue,
-            POSITION: x[i].getElementsByTagName("POSITION")[0].childNodes[0].nodeValue,
-            STATUS: x[i].getElementsByTagName("STATUS")[0].childNodes[0].nodeValue,
-            REGION: x[i].getElementsByTagName("REGION")[0].childNodes[0].nodeValue,
-          });
+          if (x[i].getElementsByTagName("STATUS")[0].childNodes[0].nodeValue == 1 || x[i].getElementsByTagName("STATUS")[0].childNodes[0].nodeValue == 2)
+            if (read_xml.some((item) => item.PASSPORT == x[i].getElementsByTagName("PASSPORT")[0].childNodes[0].nodeValue) == false) {
+              read_xml.push({
+                EMPID: x[i].getElementsByTagName("EMPID")[0].childNodes[0].nodeValue,
+                PASSPORT: x[i].getElementsByTagName("PASSPORT")[0].childNodes[0].nodeValue,
+                FIRSTNAME: x[i].getElementsByTagName("FIRSTNAME")[0].childNodes[0].nodeValue,
+                LASTNAME: x[i].getElementsByTagName("LASTNAME")[0].childNodes[0].nodeValue,
+                GENDER: x[i].getElementsByTagName("GENDER")[0].childNodes[0].nodeValue,
+                BIRTHDAY: x[i].getElementsByTagName("BIRTHDAY")[0].childNodes[0].nodeValue,
+                NATIONALITY: x[i].getElementsByTagName("NATIONALITY")[0].childNodes[0]
+                  .nodeValue,
+                HIRED: x[i].getElementsByTagName("HIRED")[0].childNodes[0].nodeValue,
+                DEPT: x[i].getElementsByTagName("DEPT")[0].childNodes[0].nodeValue,
+                POSITION: x[i].getElementsByTagName("POSITION")[0].childNodes[0].nodeValue,
+                STATUS: x[i].getElementsByTagName("STATUS")[0].childNodes[0].nodeValue,
+                REGION: x[i].getElementsByTagName("REGION")[0].childNodes[0].nodeValue,
+              });
+            }
         }
         console.log(read_xml);
         return read_xml;
