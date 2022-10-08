@@ -6,6 +6,11 @@
 - 3 = Retired
 - ถ้าเป็นเลขอื่นๆจะถือว่าเป็น anomaly information(**ข้อมูลที่ไม่ถูกต้อง**)
 
+## เลข GENDER จะมีตามนี้ครับ
+- 0 = Male
+- 1 = Female
+- ถ้าเป็นเลขอื่นๆจะถือว่าเป็น anomaly information(**ข้อมูลที่ไม่ถูกต้อง**)
+
 ## กฎระเบียบ
 
 - ห้ามใช้ library สำหรับการทำ transformation จาก XML ไปเป็น CSV
