@@ -1,16 +1,4 @@
 import $ivy.{
-	`org.slf4j:jcl-over-slf4j:1.7.36`,
-	`org.slf4j:jul-to-slf4j:1.7.36`,
-	`org.apache.logging.log4j:log4j-slf4j-impl:2.17.2`,
-	`com.typesafe:config:1.4.2`,
-	`com.lihaoyi::ammonite-ops:2.4.1`,
-	`com.lihaoyi::requests:0.7.1`,
-	`com.lihaoyi::ujson:2.0.0`,
-	`org.mongodb:mongodb-driver-core:4.6.0`,
-	`org.mongodb:mongodb-driver-sync:4.6.0`,
-	`org.mongodb:bson:4.6.0`,
-	`org.mongodb.scala::mongo-scala-driver:4.6.0`,
-	`org.apache.spark::spark-sql:3.2.1`,
 	`org.xerial:sqlite-jdbc:3.39.3.0`
 }
 
@@ -28,13 +16,6 @@ import scala.math.BigDecimal
 import scala.util.{Try, Using, Success, Failure}
 import sys.process._
 
-import com.typesafe.config.ConfigFactory
-
-import org.apache.spark.sql._
-import org.apache.spark.sql.functions._
-
-import ujson._
-
 @main
 def dataprep1(args: String*) = {
 	try {
@@ -47,8 +28,9 @@ def dataprep1(args: String*) = {
 	println(" Read XML ")
 	var records = scala.xml.XML.loadFile("data-devclub-1.xml")
 	println(" Write CSV ")
+	val headFile = "EMPID,PASSPORT,FIRSTNAME,LASTNAME,GENDER,BIRTHDAY,NATIONALITY,HIRED,DEPT,POSITION,STATUS,REGION"
 	val csv1File = new PrintWriter("devclub.csv")
-	csv1File.println("EMPID,PASSPORT,FIRSTNAME,LASTNAME,GENDER,BIRTHDAY,NATIONALITY,HIRED,DEPT,POSITION,STATUS,REGION")
+	csv1File.println(headFile)
 	for (record <- records \ "record") {
 		csv1File.print((record \ "EMPID").text)
 		csv1File.print(","); csv1File.print((record \ "PASSPORT").text)
@@ -67,7 +49,7 @@ def dataprep1(args: String*) = {
 	csv1File.close
 
 	(records \ "record").map(r => ((r \ "NATIONALITY").text, r)).groupBy(_._1).map {
-		case (k, v) => new PrintWriter(s"devclub-$k.csv") { v.foreach(r => println((r._2 \ "EMPID").text + "," + (r._2 \ "PASSPORT").text + "," + (r._2 \ "FIRSTNAME").text + "," + (r._2 \ "LASTNAME").text + "," + (r._2 \ "GENDER").text + "," + (r._2 \ "BIRTHDAY").text + "," + (r._2 \ "NATIONALITY").text + "," + (r._2 \ "HIRED").text + "," + (r._2 \ "DEPT").text + "," + (r._2 \ "POSITION").text + "," + (r._2 \ "STATUS").text + "," + (r._2 \ "REGION").text)); close }
+		case (k, v) => new PrintWriter(s"devclub-$k.csv") { println(headFile); v.foreach(r => println((r._2 \ "EMPID").text + "," + (r._2 \ "PASSPORT").text + "," + (r._2 \ "FIRSTNAME").text + "," + (r._2 \ "LASTNAME").text + "," + (r._2 \ "GENDER").text + "," + (r._2 \ "BIRTHDAY").text + "," + (r._2 \ "NATIONALITY").text + "," + (r._2 \ "HIRED").text + "," + (r._2 \ "DEPT").text + "," + (r._2 \ "POSITION").text + "," + (r._2 \ "STATUS").text + "," + (r._2 \ "REGION").text)); close }
 	}
 
 	println(" Read SQLite ")
