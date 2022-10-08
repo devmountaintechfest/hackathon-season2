@@ -9,6 +9,8 @@ def read_file(path: str) -> List[dict]:
     for child in root.iter('record'):
         d = {}
         for x in child.iter():
+            if x.tag == "record":
+                continue
             d[x.tag] = x.text
         data.append(d)
     return data
