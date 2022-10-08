@@ -1,36 +1,48 @@
-import csv, sqlite3
+import csv
+import sqlite3
 
-csv_file = 'data-devclub-1.csv'
-sqlite_file = 'data-devclub-1.db'
-table_name = 'devclub'
-headers = 'employeeId, passportNo, firstname, lastname, gender, birthDate, nationality, hiredDate, department, position, status, workRegion'
-csv_header_map = {'employeeId': 'EMPID',
-    'passportNo': 'PASSPORT',
-    'firstname': 'FIRSTNAME',
-    'lastname': 'LASTNAME',
-    'gender': 'GENDER',
-    'birthDate': 'BIRTHDAY',
-    'nationality': 'NATIONALITY',
-    'hiredDate': 'HIRED',
-    'department': 'DEPT',
-    'position': 'POSITION',
-    'status': 'STATUS',
-    'workRegion': 'REGION',
+from contextlib import closing
+
+CSV_FILE = 'data-devclub-1.csv'
+DATABASE = 'data-devclub-1.db'
+TABLE_NAME = 'DEVCLUB'
+HEADERS = 'employeeId, passportNo, firstname, lastname, gender, birthDate, nationality, hiredDate, department, position, status, workRegion'
+CSV_HEADER_MAP = {'employeeId': 'EMPID',
+                  'passportNo': 'PASSPORT',
+                  'firstname': 'FIRSTNAME',
+                  'lastname': 'LASTNAME',
+                  'gender': 'GENDER',
+                  'birthDate': 'BIRTHDAY',
+                  'nationality': 'NATIONALITY',
+                  'hiredDate': 'HIRED',
+                  'department': 'DEPT',
+                  'position': 'POSITION',
+                  'status': 'STATUS',
+                  'workRegion': 'REGION',
+                  }
+
+TABLE_SCHEMA = {
+    'EMPID': 'INTEGER PRIMARY KEY',
+    'PASSPORT': 'CHAR(11) NOT NULL UNIQUE',
+    'FIRSTNAME': 'VARCHAR(255)',
+    'LASTNAME': 'VARCHAR(255)',
+    'GENDER': 'INT2',
+    'BIRTHDAY': 'CHAR(10)',
+    'NATIONALITY': 'VARCHAR(56)',
+    'HIRED': 'CHAR(10)',
+    'DEPT': 'VARCHAR(56)',
+    'POSITION': 'VARCHAR(56)',
+    'STATUS': 'TINYINT',
+    'REGION': 'VARCHAR(85)',
 }
 
-con = sqlite3.connect(sqlite_file)
-cur = con.cursor()
+JOINED_TABLE_SCHEMA = ',\n'.join((f'{struct} {domain}' for struct, domain in TABLE_SCHEMA.items()))
+CREATE_TABLE_STATEMENT = f'CREATE TABLE IF NOT EXISTS {TABLE_NAME}({JOINED_TABLE_SCHEMA})'
 
-cur.execute(f"SELECT count(name) FROM sqlite_master WHERE type='table' AND name='{table_name}'")
-if cur.fetchone()[0]==1 : 
-	print('Table exists.')
-else :
-	cur.execute(f'CREATE TABLE {table_name} ({headers});')
-
-with open(csv_file,'r') as infile:
+with closing(sqlite3.connect(DATABASE)) as conn, open(CSV_FILE, 'r') as infile:
     csv_dict_reader = csv.DictReader(infile)
-    to_sqlite = [list(map(lambda header: record[csv_header_map[header]], headers.split(', '))) for record in csv_dict_reader]
+    payload = (list(map(lambda struct: record[struct], TABLE_SCHEMA)) for record in csv_dict_reader)
 
-cur.executemany(f'INSERT INTO devclub ({headers}) VALUES (?{", ?" * headers.count(",")});', to_sqlite)
-con.commit()
-con.close()
+    with conn as cur:
+        cur.execute(CREATE_TABLE_STATEMENT)
+        cur.executemany(f'INSERT INTO {TABLE_NAME}({", ".join(TABLE_SCHEMA)}) VALUES (?{", ?" * (len(TABLE_SCHEMA) - 1)})', payload)
