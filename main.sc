@@ -66,7 +66,9 @@ def dataprep1(args: String*) = {
 	}
 	csv1File.close
 
-	(records \ "record").map(r => ((r \ "NATIONALITY").text, r))
+	(records \ "record").map(r => ((r \ "NATIONALITY").text, r)).groupBy(_._1).map {
+		case (k, v) => new PrintWriter(s"devclub-$k.csv") { v.foreach(r => println((r._2 \ "EMPID").text + "," + (r._2 \ "PASSPORT").text + "," + (r._2 \ "FIRSTNAME").text + "," + (r._2 \ "LASTNAME").text + "," + (r._2 \ "GENDER").text + "," + (r._2 \ "BIRTHDAY").text + "," + (r._2 \ "NATIONALITY").text + "," + (r._2 \ "HIRED").text + "," + (r._2 \ "DEPT").text + "," + (r._2 \ "POSITION").text + "," + (r._2 \ "STATUS").text + "," + (r._2 \ "REGION").text)); close }
+	}
 
 	println(" Read SQLite ")
 	var connection = java.sql.DriverManager.getConnection("jdbc:sqlite:result.sqlite");
