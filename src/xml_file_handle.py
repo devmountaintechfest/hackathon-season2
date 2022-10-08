@@ -3,11 +3,12 @@ from typing import List
 
 
 def read_file(path: str) -> List[dict]:
-    tree = ET.parse('resources/data-devclub-1.xml')
+    tree = ET.parse(path)
     root = tree.getroot()
-    for child in root.iter():
-        print(child.tag, child.attrib)
-
-    return [{
-        "x": "y"
-    }]
+    data = []
+    for child in root.iter('record'):
+        d = {}
+        for x in child.iter():
+            d[x.tag] = x.text
+        data.append(d)
+    return data
