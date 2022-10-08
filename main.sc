@@ -55,7 +55,7 @@ def dataprep1(args: String*) = {
 	println(" Read SQLite ")
 	var connection = java.sql.DriverManager.getConnection("jdbc:sqlite:result.sqlite");
 	var statement = connection.createStatement();
-	var result = statement.execute("""CREATE TABLE DEV_CLUB (
+	var result = statement.execute("""CREATE TABLE DEV_CLUB_OLD (
 		EMPID varchar(5),
 		PASSPORT varchar(40),
 		FIRSTNAME varchar(50),
@@ -69,10 +69,23 @@ def dataprep1(args: String*) = {
 		STATUS varchar(5),
 		REGION varchar(20)
 	)""")
-	println(s"result = $result")
+	 result = statement.execute("""CREATE TABLE DEV_CLUB (
+		EMPID varchar(5),
+		PASSPORT varchar(40),
+		FIRSTNAME varchar(50),
+		LASTNAME varchar(50),
+		GENDER varchar(5),
+		BIRTHDAY varchar(10),
+		NATIONALITY varchar(30),
+		HIRED varchar(10),
+		DEPT varchar(20),
+		POSITION varchar(20),
+		STATUS varchar(5),
+		REGION varchar(20)
+	)""")
 	println(" Write SQLite ")
 	for (record <- records \ "record") {
-		statement.execute("INSERT INTO DEV_CLUB VALUES("
+		statement.execute("INSERT INTO DEV_CLUB_OLD VALUES("
 			+"'"+ (record \ "EMPID").text + "'"
 			+",'"+ (record \ "PASSPORT").text + "'"
 			+",'"+ (record \ "FIRSTNAME").text + "'"
@@ -87,12 +100,44 @@ def dataprep1(args: String*) = {
 			+",'"+ (record \ "REGION").text + "'"
 			+ ")")
 	}
-	var rs = statement.executeQuery("SELECT * FROM DEV_CLUB")
+	var rs1 = statement.executeQuery("SELECT * FROM DEV_CLUB")
 	println(" Write JSON ")
 	val json1File = new PrintWriter("devclub.json")
-	while (rs.next) {
-		json1File.println(s"""{ "EMPID": "${rs.getString(1)}", "PASSPORT": "${rs.getString(2)}", "FIRSTNAME": "${rs.getString(3)}", "LASTNAME": "${rs.getString(4)}", "GENDER": "${rs.getString(5)}", "BIRTHDAY": "${rs.getString(6)}", "NATIONALITY": "${rs.getString(7)}", "HIRED": "${rs.getString(8)}", "DEPT": "${rs.getString(9)}", "POSITION": "${rs.getString(10)}", "STATUS": "${rs.getString(11)}", "REGION": "${rs.getString(12)}" }""")
+	while (rs1.next) {
+		json1File.println(s"""{ "EMPID": "${rs1.getString(1)}", "PASSPORT": "${rs1.getString(2)}", "FIrs1TNAME": "${rs1.getString(3)}", "LASTNAME": "${rs1.getString(4)}", "GENDER": "${rs1.getString(5)}", "BIRTHDAY": "${rs1.getString(6)}", "NATIONALITY": "${rs1.getString(7)}", "HIRED": "${rs1.getString(8)}", "DEPT": "${rs1.getString(9)}", "POSITION": "${rs1.getString(10)}", "STATUS": "${rs1.getString(11)}", "REGION": "${rs1.getString(12)}" }""")
 	}
 	json1File.close
+	val allowPosition = Set("Airhostess", "Pilot", "Steward")
+	val allowHired = java.sql.Date.valueOf("2019-10-08")
+	for (record <- records \ "record") {
+		val validPosition = allowPosition.contains((record \ "POSITION").text)
+		val isActive = (record \ "STATUS").text == "1"
+		val more3y = java.sql.Date.valueOf((record \ "HIRED").text.replaceAll("([0-9]{2})-([0-9]{2})-([0-9]{4})", "$3-$2-$1")).compareTo(allowHired) < 0
+		if (validPosition && isActive && more3y) {
+			statement.execute("INSERT INTO DEV_CLUB VALUES("
+				+"'"+ (record \ "EMPID").text + "'"
+				+",'"+ (record \ "PASSPORT").text + "'"
+				+",'"+ (record \ "FIRSTNAME").text + "'"
+				+",'"+ (record \ "LASTNAME").text + "'"
+				+",'"+ (record \ "GENDER").text + "'"
+				+",'"+ (record \ "BIRTHDAY").text + "'"
+				+",'"+ (record \ "NATIONALITY").text + "'"
+				+",'"+ (record \ "HIRED").text + "'"
+				+",'"+ (record \ "DEPT").text + "'"
+				+",'"+ (record \ "POSITION").text + "'"
+				+",'"+ (record \ "STATUS").text + "'"
+				+",'"+ (record \ "REGION").text + "'"
+				+ ")")
+		}
+	}
+	(records \ "record").map(r => ((r \ "REGION").text, r)).groupBy(_._1).map {
+		case (k, v) => statement.execute(s"create view dev_club_${k.replace(" ", "_")} as select * from dev_club where region = '$k';")
+	}
+	(records \ "record").map(r => ((r \ "DEPT").text, r)).groupBy(_._1).map {
+		case (k, v) => statement.execute(s"create view dev_club_${k.replace(" ", "_")} as select * from dev_club where dept = '$k';")
+	}
+	(records \ "record").map(r => ((r \ "NATIONALITY").text, r)).groupBy(_._1).map {
+		case (k, v) => statement.execute(s"create view dev_club_${k.replace(" ", "_")} as select * from dev_club where nationality = '$k';")
+	}
 	connection.close
 }
