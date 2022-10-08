@@ -1,7 +1,6 @@
 # hackathon-season2
 Hackathon Challenge Season2
 
-<<<<<<< HEAD
 curl -o amm.bat -k -L https://github.com/com-lihaoyi/Ammonite/releases/download/2.5.4/2.12-2.5.4
 
 chmod 755 scala-ammo.bin
@@ -29,4 +28,3 @@ set PATH=C:\Program Files\Git\cmd;%JAVA_HOME%\bin;C:\Windows\System32\WindowsPow
 ตัวอย่าง Data visualization
 
 [dev-mountain-visualization](https://dev-moutain-dataviz.netlify.app/)
->>>>>>> a8b5bb850d1b9259b3ae2e679a44e303d29f09a0
