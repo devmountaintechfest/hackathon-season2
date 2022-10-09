@@ -11,7 +11,7 @@ https://learn.unity.com/tutorial/install-the-unity-hub-and-editor
 #### Click "Convert to CSV" ข้างขวาเพื่อแปลงไฟล์ XML ไปเป็น CSV
 ![อุ้ย อะไรน่ะ](images/Screenshot2.png)
 
-#### Click "Convert to CSV" ข้างขวาเพื่อแปลงไฟล์ XML ไปเป็น CSV
+#### ใช้ Button ใน Inspector (ข้างขวาในรูป) เพื่อจัดการ Sqlite
 ![แอบดูหรอ](images/Screenshot3.png)
 
 ## Data Visualization
