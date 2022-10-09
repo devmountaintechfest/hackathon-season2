@@ -37,7 +37,6 @@ app.post("/api/update/devclub", (req, res) => {
     req.body.data_array.map(element => {
         if (element.STATUS == "1") {
             sequelize.query("SELECT * FROM devclub WHERE EMPID = :EMPID OR PASSPORT = :PASSPORT LIMIT 1", { replacements: { EMPID: element.EMPID, PASSPORT: element.PASSPORT }, type: QueryTypes.SELECT }).then((chk) => {
-                console.log(chk)
                 if (chk.length == 0) {
                     sequelize.query("INSERT INTO devclub (EMPID,PASSPORT,FIRSTNAME,LASTNAME,GENDER,BIRTHDAY,NATIONALITY,HIRED,DEPT,POSITION,STATUS,REGION) VALUES(:EMPID,:PASSPORT,:FIRSTNAME,:LASTNAME,:GENDER,:BIRTHDAY,:NATIONALITY,:HIRED,:DEPT,:POSITION,:STATUS,:REGION)",
                         {
@@ -61,6 +60,7 @@ app.post("/api/update/devclub", (req, res) => {
             })
         }
     });
+    res.send("Import Complete");
 });
 
 app.get("/api/create/view/dept", (req, res) => {
