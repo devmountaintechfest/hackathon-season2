@@ -68,13 +68,13 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
     parser.add_argument(
-        "-xml",
+        "--xml",
         default='data-devclub-1.xml',
         help="Specify a xml file."
     )
 
     parser.add_argument(
-        "-csv",
+        "--csv",
         default='data-devclub-1.csv',
         help="Specify the name of a csv file to write to."
     )
@@ -88,13 +88,11 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if not args.xml:
-        print("[-] Please specify a xml file."
-              "\nUse -xml <file.xml> to specify the file.")
+        print("[-] Please specify a xml file.")
         exit()
 
     if not args.csv:
-        print("[-] Please specify the name of a csv file to write to. "
-              "\nUse -csv <file.csv> to specify the file")
+        print("[-] Please specify the name of a csv file to write to.")
         exit()
 
     main()
