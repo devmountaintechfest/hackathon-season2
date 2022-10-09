@@ -65,9 +65,9 @@ sequelize
                 type: Sequelize.STRING
             },
         }, {
-            sequelize,
             tableName: 'devclub',
             timestamps: false,
+            freezeTableName: true
         }
         );
     })
