@@ -4,6 +4,9 @@
 
 # Happy New World ! 🎉🎉🎉
 
+## ลง Unity ยังไง
+https://learn.unity.com/tutorial/install-the-unity-hub-and-editor
+
 ## Usages
 #### Click "Convert to CSV" ข้างขวาเพื่อแปลงไฟล์ XML ไปเป็น CSV
 ![อุ้ย อะไรน่ะ](images/Screenshot2.png)
