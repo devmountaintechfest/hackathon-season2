@@ -1,0 +1,29 @@
+[
+{
+ "BIRTHDAY": "26-03-1972",
+ "DEPT": "Flight Attendance",
+ "EMPID": "34",
+ "FIRSTNAME": "Selma",
+ "GENDER": "0",
+ "HIRED": "10-10-2008",
+ "LASTNAME": "Bush",
+ "NATIONALITY": "Italy",
+ "PASSPORT": "BFS82MEY3CX",
+ "POSITION": "Airhostess",
+ "REGION": "USA",
+ "STATUS": "1"
+},{
+ "BIRTHDAY": "13-06-1998",
+ "DEPT": "Aircraft Maintenance",
+ "EMPID": "80",
+ "FIRSTNAME": "Ryan",
+ "GENDER": "0",
+ "HIRED": "31-07-2019",
+ "LASTNAME": "Rush",
+ "NATIONALITY": "Italy",
+ "PASSPORT": "EUC74ENE9ZK",
+ "POSITION": "Pilot",
+ "REGION": "Middle East",
+ "STATUS": "1"
+}
+]

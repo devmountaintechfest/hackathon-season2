@@ -1,7 +1,9 @@
 package csv
 
 import (
+	"bufio"
 	"fmt"
+	"io"
 	"os"
 	"strings"
 )
@@ -11,8 +13,8 @@ type CsvData struct {
 	Records []string
 }
 
-func (c *CsvData) BuildCsvFile() error {
-	csvFile, err := os.Create("DevMountain.csv")
+func (c *CsvData) BuildCsvFile(outPath string) error {
+	csvFile, err := os.Create(outPath)
 	if err != nil {
 		return err
 	}
@@ -22,9 +24,8 @@ func (c *CsvData) BuildCsvFile() error {
 	if err != nil {
 		return err
 	}
-	// fmt.Printf("wrote %v bytes\n", c)
+
 	err = prepareRow(c.Records, csvFile)
-	// fmt.Println(c.Records)
 	if err != nil {
 		return err
 	}
@@ -32,8 +33,6 @@ func (c *CsvData) BuildCsvFile() error {
 }
 
 func prepareRow(rows []string, file *os.File) error {
-
-	fmt.Println(rows)
 	for i, s := range rows {
 		var sb strings.Builder
 		sb.WriteString(s)
@@ -77,4 +76,84 @@ func (c *CsvData) AddRecord(data []string) {
 		}
 	}
 	c.Records = append(c.Records, sb.String())
+}
+
+// CSVFileToMap reads csv file into slice of map
+func CSVFileToMap(filePath string) (returnMap []map[string]interface{}, err error) {
+
+	// read csv file
+	csvfile, err := os.Open(filePath)
+	if err != nil {
+		return nil, fmt.Errorf(err.Error())
+	}
+
+	defer csvfile.Close()
+
+	reader := bufio.NewReader(csvfile)
+	if err != nil {
+		return nil, err
+	}
+	header := []string{} // holds first row (header)
+	isFirstRow := true
+	for {
+		row, _, err := reader.ReadLine()
+		if err != nil {
+			// if EOF error we just jump out of loop
+			if err == io.EOF {
+				break
+			}
+			return nil, err
+		}
+		rowStr := string(row)
+		if isFirstRow {
+			str := strings.Split(rowStr, ";")
+			header = append(header, str...)
+			isFirstRow = false
+		} else {
+			// for each cell, map[string]string k=header v=value
+			line := make(map[string]interface{})
+			str := strings.Split(rowStr, ";")
+			for i := 0; i < len(str); i++ {
+				line[header[i]] = str[i]
+			}
+			returnMap = append(returnMap, line)
+		}
+	}
+	return
+}
+
+func CSVFileToList(filePath string) (returnMap [][]string, err error) {
+
+	// read csv file
+	csvfile, err := os.Open(filePath)
+	if err != nil {
+		return nil, fmt.Errorf(err.Error())
+	}
+
+	defer csvfile.Close()
+
+	reader := bufio.NewReader(csvfile)
+	if err != nil {
+		return nil, err
+	}
+
+	isFirstRow := true
+	for {
+		row, _, err := reader.ReadLine()
+		if err != nil {
+			// if EOF error we just jump out of loop
+			if err == io.EOF {
+				break
+			}
+			return nil, err
+		}
+		rowStr := string(row)
+		if isFirstRow {
+			isFirstRow = false
+		} else {
+			str := strings.Split(rowStr, ";")
+			returnMap = append(returnMap, str)
+		}
+	}
+	return
 }
