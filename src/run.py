@@ -51,24 +51,39 @@ class Executor(object):
 
 def main():
     try:
+
         print("#####start#####")
-        config={
-            "datasource":"../data-devclub-1.xml",
-            "clubDataReport":"../reports/data-devclub-report.json",
-            "dbName":"../database/devclub2022.db"
-        }
+        print(f"{sys.argv}")
+        if(len(sys.argv)>1):
+            
+            exeType = sys.argv[1]
+            
+            print(f'{exeType}') 
+            if (exeType=='M'):
+                datasource = sys.argv[2]
+                dbName = sys.argv[3]
+                reportName = sys.argv[4]
+                config={
+                    "datasource":datasource,
+                    "dbName":dbName,
+                    "clubDataReport":reportName
+                }
 
-        startTime = time.perf_counter()
-                
-        exe=Executor()
-        exe.setup(config)
-        exe.extract()
-        exe.load()
-        exe.generateSummary()
+                startTime = time.perf_counter()
+                        
+                exe=Executor()
+                exe.setup(config)
+                exe.extract()
+                exe.load()
+                exe.generateSummary()
 
-        endTime = time.perf_counter()
-        totalTime = endTime - startTime
-        print(f'##Total used time {totalTime:.4f} seconds##')
+                endTime = time.perf_counter()
+                totalTime = endTime - startTime
+                print(f'##Total used time {totalTime:.4f} seconds##')
+            else:
+                print("Please enter Execute Type (M) Parameter!")
+        else:
+            print("Please enter Parameter!")
     except ValueError as ve:
         return str(ve)
 
