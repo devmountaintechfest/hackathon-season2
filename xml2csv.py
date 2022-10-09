@@ -10,11 +10,12 @@ attribute_list = (
 
 current_datetime = datetime.now()  # Acceptable edge case
 
+
 def ensure_years_experiences(date_str, years=3):
     leap_days = 0
     target_date = datetime(int(date_str[6:]), int(date_str[3:5]), int(date_str[:2]))
-    for year in range(target_date.year, current_datetime.year+2):
-        if year & 0b11: # mod 4
+    for year in range(target_date.year, current_datetime.year + 2):
+        if year & 0b11:  # mod 4
             leap_days += 1
     return (current_datetime - target_date).days > years * 365 + leap_days
 
@@ -25,15 +26,15 @@ def xml2csv_converter_helper(records, convert_default):
     for record in records:
         if convert_default and \
                 (record[10].text != '1' or \
-                record[9].text not in ('Airhostess', 'Pilot', 'Steward') or \
-                record[0].text == record[1].text or \
-                record[0].text in existed_EMPID_set or \
-                record[1].text in existed_PASSPORT or \
-                not ensure_years_experiences(record[7].text, years=3)):
+                 record[9].text not in ('Airhostess', 'Pilot', 'Steward') or \
+                 record[0].text == record[1].text or \
+                 record[0].text in existed_EMPID_set or \
+                 record[1].text in existed_PASSPORT or \
+                 not ensure_years_experiences(record[7].text, years=3)):
             continue
         existed_EMPID_set.add(record[0].text)
         existed_PASSPORT.add(record[1].text)
-        yield list(map(lambda attibute: record.find(attibute).text, attribute_list))
+        yield list(map(lambda attribute: record.find(attribute).text, attribute_list))
 
 
 def xml2csv_converter(xml_file, csv_file, convert_default):
@@ -89,10 +90,10 @@ if __name__ == '__main__':
 
     if not args.xml:
         print("[-] Please specify a xml file.")
-        exit()
+        exit(1)
 
     if not args.csv:
         print("[-] Please specify the name of a csv file to write to.")
-        exit()
+        exit(1)
 
     main()

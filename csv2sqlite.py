@@ -1,54 +1,73 @@
 import csv
 import argparse
+import collections
+import json
 import sqlite3
 
+from os import remove
 from contextlib import closing
 
+CSV_FILE = 'data-devclub-1.csv'
+JSON_FILE = 'data-devclub-1.json'
+DATABASE = 'data-devclub-1.db'
+TABLE_NAME = 'DEVCLUB'
+TABLE_SCHEMA = {
+    'EMPID': 'INTEGER PRIMARY KEY',
+    'PASSPORT': 'CHAR(11) NOT NULL UNIQUE',
+    'FIRSTNAME': 'VARCHAR(255)',
+    'LASTNAME': 'VARCHAR(255)',
+    'GENDER': 'INT2',
+    'BIRTHDAY': 'CHAR(10)',
+    'NATIONALITY': 'VARCHAR(56)',
+    'HIRED': 'CHAR(10)',
+    'DEPT': 'VARCHAR(56)',
+    'POSITION': 'VARCHAR(56)',
+    'STATUS': 'TINYINT',
+    'REGION': 'VARCHAR(85)',
+}
+
+JOINED_TABLE_SCHEMA = ',\n'.join((f'{struct} {domain}' for struct, domain in TABLE_SCHEMA.items()))
+
+EMPLOYEE_RECORD = collections.namedtuple('EmployeeRecord', ','.join(TABLE_SCHEMA))
+
+try:
+    remove(DATABASE)
+except FileNotFoundError:
+    pass
+
+
+def _json_dumps(objects):
+    output = {}
+    for i, obj in enumerate(objects):
+        output[i] = []
+        for emp in map(EMPLOYEE_RECORD._make, iter(obj)):
+            output[i].append(emp._asdict())
+    return json.dumps(output, indent=2)
+
+
 def main():
-    CSV_FILE = args.csv
-    DATABASE = args.database
-    TABLE_NAME = args.table_name
-    HEADERS = 'employeeId, passportNo, firstname, lastname, gender, birthDate, nationality, hiredDate, department, position, status, workRegion'
-    CSV_HEADER_MAP = {'employeeId': 'EMPID',
-                    'passportNo': 'PASSPORT',
-                    'firstname': 'FIRSTNAME',
-                    'lastname': 'LASTNAME',
-                    'gender': 'GENDER',
-                    'birthDate': 'BIRTHDAY',
-                    'nationality': 'NATIONALITY',
-                    'hiredDate': 'HIRED',
-                    'department': 'DEPT',
-                    'position': 'POSITION',
-                    'status': 'STATUS',
-                    'workRegion': 'REGION',
-                    }
-
-    TABLE_SCHEMA = {
-        'EMPID': 'INTEGER PRIMARY KEY',
-        'PASSPORT': 'CHAR(11) NOT NULL UNIQUE',
-        'FIRSTNAME': 'VARCHAR(255)',
-        'LASTNAME': 'VARCHAR(255)',
-        'GENDER': 'INT2',
-        'BIRTHDAY': 'CHAR(10)',
-        'NATIONALITY': 'VARCHAR(56)',
-        'HIRED': 'CHAR(10)',
-        'DEPT': 'VARCHAR(56)',
-        'POSITION': 'VARCHAR(56)',
-        'STATUS': 'TINYINT',
-        'REGION': 'VARCHAR(85)',
-    }
-
-    JOINED_TABLE_SCHEMA = ',\n'.join((f'{struct} {domain}' for struct, domain in TABLE_SCHEMA.items()))
-    CREATE_TABLE_STATEMENT = f'CREATE TABLE IF NOT EXISTS {TABLE_NAME}({JOINED_TABLE_SCHEMA})'
-
-    with closing(sqlite3.connect(DATABASE)) as conn, open(CSV_FILE, 'r') as infile:
+    with closing(sqlite3.connect(DATABASE)) as conn, open(CSV_FILE, 'r') as infile, open(JSON_FILE, 'w') as outfile:
         csv_dict_reader = csv.DictReader(infile)
         payload = (list(map(lambda struct: record[struct], TABLE_SCHEMA)) for record in csv_dict_reader)
 
         with conn as cur:
-            cur.execute(CREATE_TABLE_STATEMENT)
-            cur.executemany(f'INSERT INTO {TABLE_NAME}({", ".join(TABLE_SCHEMA)}) VALUES (?{", ?" * (len(TABLE_SCHEMA) - 1)})', payload)
-            
+            cur.execute(f'CREATE TABLE {TABLE_NAME}({JOINED_TABLE_SCHEMA})')
+            cur.execute(f'CREATE VIEW `VIEW_EMP_REGION` AS SELECT * FROM {TABLE_NAME} ORDER BY REGION')
+            cur.execute(f'CREATE VIEW `VIEW_EMP_DEPARTMENT` AS SELECT * FROM {TABLE_NAME} ORDER BY DEPT')
+            cur.execute(f'CREATE VIEW `VIEW_EMP_NATIONALITY` AS SELECT * FROM {TABLE_NAME} ORDER BY NATIONALITY')
+
+            cur.executemany(
+                f'INSERT INTO {TABLE_NAME} VALUES (?{", ?" * (len(TABLE_SCHEMA) - 1)})',
+                payload)
+
+        with conn as cur:
+            result_sets = [
+                cur.execute('SELECT * FROM `VIEW_EMP_REGION` WHERE REGION = ?', ('Europe',)),
+                cur.execute('SELECT * FROM `VIEW_EMP_DEPARTMENT` WHERE DEPT = ?', ('Flight Planning',)),
+                cur.execute('SELECT * FROM `VIEW_EMP_NATIONALITY` WHERE NATIONALITY = ?', ('Ukraine',))
+            ]
+            outfile.write(_json_dumps(result_sets))
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -75,14 +94,14 @@ if __name__ == '__main__':
 
     if not args.csv:
         print("[-] Please specify a csv file.")
-        exit()
+        exit(1)
 
     if not args.database:
         print("[-] Please specify the name of a database file to write to.")
-        exit()
+        exit(1)
 
     if not args.table_name:
         print("[-] Please specify the name of a table.")
-        exit()
+        exit(1)
 
-    main()
+main()
