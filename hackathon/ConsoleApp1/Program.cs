@@ -13,7 +13,9 @@ namespace ConsoleApp1
             {
                 "Stop program",
                 "Convert Xml To CSV",
-                "Convert Csv To Xml"
+                "Convert Csv To Xml",
+                "tranfer data DevMountain to DevClub",
+                "split csv with nationallity"
             };
             string menu = "";
             while (!stop)
@@ -27,7 +29,7 @@ namespace ConsoleApp1
                 try
                 {
                     int menuSelect = Convert.ToInt32(menu);
-                    if (menuSelect < cmd.Length)
+                    if (menuSelect <= cmd.Length)
                     {
                        
                         if (menuSelect == 1)
@@ -44,13 +46,46 @@ namespace ConsoleApp1
                             Console.WriteLine("please enter your output file path");
                             output = Console.ReadLine();
                             //for test : ../../../../data-devclub-1
-                            GlobalFunction.XmlToCsv(path,output);
+                            List<Employees> employee = GlobalFunction.XmlToCsv(path,output);
                             Console.ReadLine();
                         }
                         else if (menuSelect == 3)
                         {
                             Console.WriteLine("Convert Csv To Xml");
                         }
+                        else if (menuSelect == 4)
+                        {
+                            string path = "", output = "";
+                            Console.WriteLine("we need DevMountain csv file please enter path csv file");
+                            path = Console.ReadLine();
+                            // ../../../../data-devclub-1.csv
+                            List<Employees> employee = GlobalFunction.csvToXml(path, output);
+                            
+                            List<Employees> dataSender = new List<Employees>();
+                            foreach (var emp in employee)
+                            {
+                                // filter data 
+                                if (emp.empStatus == "1" && (emp.empPosition == "Pilot"|| emp.empPosition == "Steward" || emp.empPosition == "Airhostess"))
+                                {
+                                    string[] year = emp.empHired.Split('-');
+                                    if (2022 - Convert.ToInt32(year[2]) >= 3)
+                                    {
+                                        dataSender.Add(emp);
+                                    }
+                                }
+                            }
+                            GlobalFunction.genarateCsvFormat(dataSender,"../../../../dataDevclub");
+                        }
+                    }
+                    else if (menuSelect == 5)
+                    {
+                        string path = "", output = "";
+                        Console.WriteLine("we need csv file for split please enter file path");
+                        // ../../../../data-devclub-1.csv
+                        path = Console.ReadLine();
+                        List<Employees> employee = GlobalFunction.XmlToCsv(path, output);
+                        GlobalFunction.csvToXml(path, "../../../../dataDevclub.csv");
+
                     }
                     else
                     {
