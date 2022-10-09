@@ -1,0 +1,1 @@
+SELECT * FROM dev_club WHERE REGION = 'Italy';
