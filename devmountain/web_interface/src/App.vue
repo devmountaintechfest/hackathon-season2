@@ -109,6 +109,9 @@
                 <b>Country</b>
                 <Pie :chart-options="chartOptions" :chart-data="CountrychartData" :width="width" :height="height" />
               </v-col>
+            </v-row>
+            <hr style="margin: 15px">
+            <v-row no-gutters style="margin-top: 15px">
               <v-col cols="12" sm="6">
                 <b>Nationality</b>
                 <Doughnut :chart-options="chartOptions" :chart-data="NationchartData" :width="width" :height="height" />
