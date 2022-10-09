@@ -44,7 +44,25 @@ class Executor(object):
     @usedtime
     def generateSummary(self):
         print("Generate Summary..")
-        FileUtility().write(self.config['clubDataReport'],json.dumps(self.results))
+        results=[]
+        for data in self.results:
+            tmpData={
+                "emp_id":data[0],
+                "passport":data[1],
+                "firstname":data[2],
+                "lastname":data[3],
+                "gender":data[4],
+                "birthday":data[5],
+                "nationality":data[6],
+                "hired":data[7],
+                "dept":data[8],
+                "position":data[9],
+                "status":data[10],
+                "region":data[11]
+            }
+            results.append(tmpData)
+        FileUtility().write(self.config['clubDataReport'],json.dumps(results))
+        # FileUtility().write(self.config['clubDataReport'],json.dumps(self.results))
 
 
 
