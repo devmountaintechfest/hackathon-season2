@@ -1,7 +1,6 @@
 # Setup
 1. python -m venv venv
 2. pip install -r requirements.txt
-3. python run.py M ../data-devclub-1.xml ../database/devclub2022.db ../reports/data-devclub-report.json
 
 # How to run
 - arg1 Execute type
