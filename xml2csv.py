@@ -20,13 +20,19 @@ def ensure_years_experiences(date_str, years=3):
 
 
 def xml2csv_converter_helper(records, convert_default):
+    existed_EMPID_set = set()
+    existed_PASSPORT = set()
     for record in records:
         if convert_default and \
-                record[10].text != '1' or \
+                (record[10].text != '1' or \
                 record[9].text not in ('Airhostess', 'Pilot', 'Steward') or \
-                record[0].text != record[1].text or \
-                not ensure_years_experiences(record[7].text, years=3):
+                record[0].text == record[1].text or \
+                record[0].text in existed_EMPID_set or \
+                record[1].text in existed_PASSPORT or \
+                not ensure_years_experiences(record[7].text, years=3)):
             continue
+        existed_EMPID_set.add(record[0].text)
+        existed_PASSPORT.add(record[1].text)
         yield list(map(lambda attibute: record.find(attibute).text, attribute_list))
 
 
@@ -75,8 +81,8 @@ if __name__ == '__main__':
 
     parser.add_argument(
         "--convert-default",
-        action='store_true',
-        help="Only convert actives 3 years experiences+ Airhostess, Pilot, Steward to csv file"
+        action='store_false',
+        help="Only convert actives 3 years experiences+ Airhostess, Pilot, Steward to csv file without duplicate ID and passport number"
     )
 
     args = parser.parse_args()
