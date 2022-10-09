@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,7 +10,7 @@ namespace ConsoleApp1.modules.module
 {
     public static class GlobalFunction
     {
-        private static string genarateCsvFormat(List<Employees> data)
+        private static string genarateCsvFormat(List<Employees> data,string putputPath)
         {
             string[] csvText = new string[100];
             for (int idx = 0; idx < 100; idx++)
@@ -23,7 +24,8 @@ namespace ConsoleApp1.modules.module
             {
                 text += csvText[idx] + "\n";
             }
-            writeCsv(csvText, "../../DefaultDevMountainData");
+            Console.WriteLine(text);
+            writeCsv(csvText, putputPath);
             return text;
         }
         public static void writeCsv(string[] csvData, string fileName)
@@ -72,12 +74,12 @@ namespace ConsoleApp1.modules.module
             }
             return dataSet;
         }
-        public static List<Employees> XmlToCsv(string pathFile)
+        public static List<Employees> XmlToCsv(string pathFile,string putputPath)
         {
             List<string> ReadData = ReadXmlToList(pathFile);
             List<string[]> dataSet = FormatList(ReadData);
             List<Employees> employees = formatDataToEmployeeObj(dataSet);
-            genarateCsvFormat(employees);
+            genarateCsvFormat(employees, putputPath);
             return employees;
         }
         private static List<Employees> formatDataToEmployeeObj(List<string[]> dataSet)

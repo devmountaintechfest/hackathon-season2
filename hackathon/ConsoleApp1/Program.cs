@@ -11,7 +11,9 @@ namespace ConsoleApp1
             bool stop = false;
             string[] cmd =
             {
-                "stop program"
+                "Stop program",
+                "Convert Xml To CSV",
+                "Convert Csv To Xml"
             };
             string menu = "";
             while (!stop)
@@ -22,22 +24,44 @@ namespace ConsoleApp1
                 }
                 Console.WriteLine("please select manu:");
                 menu = Console.ReadLine();
-                for (int idx = 0; idx < cmd.Length; idx++)
+                try
                 {
-                    if (menu == (idx + 1).ToString())
+                    int menuSelect = Convert.ToInt32(menu);
+                    if (menuSelect < cmd.Length)
                     {
-                        if (cmd[idx] == "stop program")
+                       
+                        if (menuSelect == 1)
                         {
-                            stop = true;
-                            Console.WriteLine("Good bye");
+                             stop = true;
+                             Console.WriteLine("Good bye");
                         }
-                        // else if anther menu
+                        else if (menuSelect == 2)
+                        {
+                            string path = "",output="";
+                            Console.WriteLine("please enter your file path");
+                            path = Console.ReadLine();
+                            //for test : ../../../../data-devclub-1.xml
+                            Console.WriteLine("please enter your output file path");
+                            output = Console.ReadLine();
+                            //for test : ../../../../data-devclub-1
+                            GlobalFunction.XmlToCsv(path,output);
+                            Console.ReadLine();
+                        }
+                        else if (menuSelect == 3)
+                        {
+                            Console.WriteLine("Convert Csv To Xml");
+                        }
                     }
                     else
                     {
                         Console.WriteLine("don't match please try again\n");
-                    }  
+                    }
                 }
+                catch (Exception)
+                {
+                    Console.WriteLine("something what wrong error!!\n");
+                }  
+                
             }
             /* string pathFile = "";
              *//* string pathFile = @"D:/DevClubData.xml";*//*
