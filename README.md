@@ -65,7 +65,20 @@ optional arguments:
 
 **Data visualization**
 
-[Click me](data-visualization.ipynb)
+[Gender2 is data after database migration](data-visualization.ipynb)
+
+![alt text](images/1.png)
+![alt text](images/2.png)
+![alt text](images/3.png)
+![alt text](images/4.png)
+![alt text](images/5.png)
+![alt text](images/6.png)
+![alt text](images/7.png)
+![alt text](images/8.png)
+![alt text](images/9.png)
+![alt text](images/10.png)
+
+
 
 
 ## การสร้าง PR
