@@ -25,6 +25,7 @@ namespace ConsoleApp1
             {
                 for (int idx = 0; idx< cmd.Length;idx++)
                 {
+                    Console.WriteLine("\n");
                     Console.WriteLine((idx+1) + " : "+ cmd[idx]);
                 }
                 Console.WriteLine("please select manu:");
@@ -55,13 +56,13 @@ namespace ConsoleApp1
                         else if (menuSelect == 3)
                         {
                             string pathFile = "", output = "";
-                            Console.Write("please enter your csv file path");
+                            Console.WriteLine("please enter your csv file path");
                             // ../../../../resultFile/data-devclub-1.csv
                             pathFile = Console.ReadLine();
                             Console.WriteLine("please enter your output file path");
                             output = Console.ReadLine();
                             // ../../../../resultFile/data-devclub-1
-                            List<Employees> employee = GlobalFunction.XmlToCsv(pathFile, output);
+                            List<Employees> employee = GlobalFunction.csvToXml(pathFile, output);
                             Console.WriteLine("success");
                         }
                         else if (menuSelect == 4)
@@ -105,23 +106,34 @@ namespace ConsoleApp1
                             foreach (var moutrain in devMoutrain)
                             {
                                 bool add = true;
-                                foreach (var club in devClubFilter)
-                                {
-                                    if ((moutrain.empId == club.empId) || (moutrain.passPort == club.passPort))
+                                if (devClubFilter != null){
+                                    foreach (var club in devClubFilter)
                                     {
-                                        add = false;
+                                        if ((moutrain.empId == club.empId) || (moutrain.passPort == club.passPort))
+                                        {
+                                            add = false;
+                                        }
                                     }
-                                }
-                                if (add)
-                                {
-                                    dataSender.Add(moutrain);
+                                    if (add)
+                                    {
+                                        dataSender.Add(moutrain);
+                                    }
+                                    else
+                                    {
+                                        dataSender.Add(moutrain);
+                                        delDevClub.Add(moutrain);
+                                    }
                                 }
                                 else
                                 {
-                                    delDevClub.Add(moutrain);
+                                    dataSender.Add(moutrain);
                                 }
+
                             }
                             // migration data 2 data base
+                            Console.WriteLine(delDevClub.Count);
+                            Console.WriteLine(dataSender.Count);
+
                             sqlite.romoveData(delDevClub);
                             sqlite.insertData(dataSender);
                             Console.WriteLine("success");

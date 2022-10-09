@@ -42,19 +42,20 @@ namespace ConsoleApp1.modules.Functions
             conn.Close();
             return list;
         }
-        public static void romoveData(List<Employees> listDel)
+        public static bool romoveData(List<Employees> listDel)
         {
             SQLiteConnection conn = new SQLiteConnection("Data Source=../../database/dataDevMoutrain.db; Version=3;New=True;Compress=True;");
             conn.Open();
             foreach (var item in listDel)
             {
                 Console.WriteLine("delete id :"+ item.empId);
-                SQLiteCommand cmd = new SQLiteCommand("DELETE FROM dev_club where dev_club.emp_Id =" + Convert.ToInt32(item.empId), conn);
+                SQLiteCommand cmd = new SQLiteCommand("DELETE FROM dev_club where dev_club.emp_Id =\""+Convert.ToInt32(item.empId)+"\"", conn);
                 cmd.ExecuteNonQuery();
             }
             conn.Close();
+            return true;
         }
-        public static void insertData(List<Employees> addlist)
+        public static bool insertData(List<Employees> addlist)
         {
 
             SQLiteConnection conn = new SQLiteConnection("Data Source=../../database/dataDevMoutrain.db; Version=3;New=True;Compress=True;");
@@ -74,7 +75,9 @@ namespace ConsoleApp1.modules.Functions
                 sql_cmd.ExecuteNonQuery();
             }
             conn.Close();
+            return true;
+
         }
-      
+
     }
 }
