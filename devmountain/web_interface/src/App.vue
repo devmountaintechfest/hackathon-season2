@@ -17,14 +17,16 @@
     <v-main>
       <v-container class="fluid">
         <div class="d-flex justify-space-around">
-          <v-btn variant="tonal" v-on:click="loadXMLDoc">อ่านไฟล์ XML + (กรองข้อมูล)</v-btn>
+          <v-btn variant="tonal" v-on:click="loadXMLDocWithoutFilter">อ่านไฟล์ XML (ไม่กรอง)</v-btn>
+          <v-btn variant="tonal" v-on:click="loadXMLDoc">อ่านไฟล์ XML (กรองข้อมูล)</v-btn>
           <v-btn variant="tonal" v-on:click="importReadXMLtoDB" color="success" :disabled="read_xml_data.length == 0">
             นำข้อมูลเข้า DB
           </v-btn>
-          <v-btn variant="tonal" v-on:click="exportByNATIONALITY" color="error">
+          <v-btn variant="tonal" v-on:click="exportCSVAll" color="error" :disabled="read_xml_data.length == 0">
             Export CSV พนักงานทั้งหมด
           </v-btn>
-          <v-btn variant="tonal" v-on:click="exportByNATIONALITY" color="error">
+          <v-btn variant="tonal" v-on:click="exportCSVByNATIONALITY" color="error"
+            :disabled="read_xml_data.length == 0">
             Export CSV แยกตามสัญชาติ
           </v-btn>
         </div>
@@ -84,7 +86,7 @@ export default {
     now_data: "",
   }),
   methods: {
-    loadXMLDoc() {
+    loadXMLDocWithoutFilter() {
       var read_xml = new Array();
       var xml = new XMLHttpRequest();
       xml.open("GET", "./data-devclub-1.xml", true);
@@ -102,7 +104,46 @@ export default {
 
         // Start to fetch the data by using TagName
         for (i = 0; i < x.length; i++) {
-          if (x[i].getElementsByTagName("STATUS")[0].childNodes[0].nodeValue == 1)
+          read_xml.push({
+            EMPID: x[i].getElementsByTagName("EMPID")[0].childNodes[0].nodeValue,
+            PASSPORT: x[i].getElementsByTagName("PASSPORT")[0].childNodes[0].nodeValue,
+            FIRSTNAME: x[i].getElementsByTagName("FIRSTNAME")[0].childNodes[0].nodeValue,
+            LASTNAME: x[i].getElementsByTagName("LASTNAME")[0].childNodes[0].nodeValue,
+            GENDER: x[i].getElementsByTagName("GENDER")[0].childNodes[0].nodeValue,
+            BIRTHDAY: x[i].getElementsByTagName("BIRTHDAY")[0].childNodes[0].nodeValue,
+            NATIONALITY: x[i].getElementsByTagName("NATIONALITY")[0].childNodes[0]
+              .nodeValue,
+            HIRED: x[i].getElementsByTagName("HIRED")[0].childNodes[0].nodeValue,
+            DEPT: x[i].getElementsByTagName("DEPT")[0].childNodes[0].nodeValue,
+            POSITION: x[i].getElementsByTagName("POSITION")[0].childNodes[0].nodeValue,
+            STATUS: x[i].getElementsByTagName("STATUS")[0].childNodes[0].nodeValue,
+            REGION: x[i].getElementsByTagName("REGION")[0].childNodes[0].nodeValue,
+          });
+        }
+        return read_xml;
+      }
+    },
+
+    loadXMLDoc() {
+      var read_xml = new Array();
+      var xml = new XMLHttpRequest();
+      xml.open("GET", "./data-devclub-1.xml", true);
+      xml.send();
+      xml.onreadystatechange = () => {
+        if (xml.readyState == 4 && xml.status == 200) {
+          this.read_xml_data = readXmlFile(this);
+          this.now_data = "XML File";
+        }
+      };
+      function readXmlFile() {
+        var i;
+        var xmlDoc = xml.responseXML;
+        var x = xmlDoc.getElementsByTagName("record");
+        var position_accept = ['Airhostess', 'Pilot', 'Steward']
+
+        // Start to fetch the data by using TagName
+        for (i = 0; i < x.length; i++) {
+          if (x[i].getElementsByTagName("STATUS")[0].childNodes[0].nodeValue == 1 && position_accept.includes(x[i].getElementsByTagName("POSITION")[0].childNodes[0].nodeValue)) {
             if (read_xml.some((item) => item.PASSPORT == x[i].getElementsByTagName("PASSPORT")[0].childNodes[0].nodeValue) == false) {
               // Check 3 Year
               var now_date = new Date();
@@ -130,6 +171,7 @@ export default {
                 });
               }
             }
+          }
         }
         return read_xml;
       }
@@ -146,7 +188,7 @@ export default {
         })
     },
 
-    async exportByNATIONALITY() {
+    async exportCSVByNATIONALITY() {
       var nation_lists = [...new Set(this.read_xml_data.map((item) => { return item.NATIONALITY }))];
       for await (let nation of nation_lists) {
         var data_by_nation = this.read_xml_data.filter((item) => {
@@ -167,6 +209,22 @@ export default {
         link.setAttribute("download", nation + ".csv");
         link.click();
       }
+    },
+
+    async exportCSVAll() {
+      let csvContent = "data:text/csv;charset=utf-8,";
+      csvContent += [
+        Object.keys(this.read_xml_data[0]).join(","),
+        ...this.read_xml_data.map(item => Object.values(item).join(","))
+      ]
+        .join("\n")
+        .replace(/(^\[)|(\]$)/gm, "");
+
+      const data = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", data);
+      link.setAttribute("download", "All Employee.csv");
+      link.click();
     },
   },
 };
