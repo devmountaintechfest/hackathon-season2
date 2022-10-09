@@ -19,6 +19,7 @@
         <div class="d-flex justify-space-around">
           <v-btn variant="tonal" v-on:click="loadXMLDocWithoutFilter">อ่านไฟล์ XML (ไม่กรอง)</v-btn>
           <v-btn variant="tonal" v-on:click="loadXMLDoc">อ่านไฟล์ XML (กรองข้อมูล)</v-btn>
+          <v-btn variant="tonal" v-on:click="loadDB">เรียกข้อมูลจาก DB</v-btn>
           <v-btn variant="tonal" v-on:click="importReadXMLtoDB" color="success" :disabled="read_xml_data.length == 0">
             นำข้อมูลเข้า DB
           </v-btn>
@@ -33,6 +34,8 @@
             Export CSV แยกตามสัญชาติ
           </v-btn>
         </div>
+      </v-container>
+      <v-container>
 
         <div class="d-flex justify-space-around" style="margin: 10px;">
           <v-btn-toggle v-model="toggle_exclusive">
@@ -48,14 +51,12 @@
           </v-btn-toggle>
         </div>
 
-        <v-card tonal style="padding: 10px;margin-top: 10px;" v-if="page_select == 'table'">
-          <div v-if="read_xml_data.length > 0">
-            <b>จำนวนข้อมูล</b> {{read_xml_data.length}} รายการ | <b>ข้อมูลจาก</b> {{now_data}}
-          </div>
+        <v-card tonal style="padding: 10px;margin-top: 10px;" v-if="page_select == 'table' && read_xml_data.length > 0">
+          <b>จำนวนข้อมูล</b> {{read_xml_data.length}} รายการ | <b>ข้อมูลจาก</b> {{now_data}}
           <v-table>
             <thead>
               <tr>
-                <th class="text-left">EMPID</th>
+                <th class=" text-left">EMPID</th>
                 <th class="text-left">PASSPORT</th>
                 <th class="text-left">FIRSTNAME</th>
                 <th class="text-left">LASTNAME</th>
@@ -95,12 +96,34 @@
           </v-table>
         </v-card>
 
-        <v-card tonal style="padding: 10px;margin-top: 10px;" v-if="page_select == 'chart'">
-          <div v-if="read_xml_data.length > 0">
-            <b>จำนวนข้อมูล</b> {{read_xml_data.length}} รายการ | <b>ข้อมูลจาก</b> {{now_data}}
-          </div>
+        <div tonal style="padding: 10px;margin-top: 10px;" v-if="page_select == 'chart' && read_xml_data.length > 0">
+          <v-card style="text-align: center;padding: 10px">
+            <v-row no-gutters>
+              <v-col cols="12" sm="6">
+                <b>Gender</b>
+                <Pie :chart-options="chartOptions" :chart-data="GenderchartData" :chart-id="chartId"
+                  :dataset-id-key="datasetIdKey" :plugins="plugins" :css-classes="cssClasses" :styles="styles"
+                  :width="width" :height="height" />
+              </v-col>
+              <v-col cols="12" sm="6">
+                <b>Country</b>
+                <Pie :chart-options="chartOptions" :chart-data="CountrychartData" :width="width" :height="height" />
+              </v-col>
+              <v-col cols="12" sm="6">
+                <b>Nationality</b>
+                <Doughnut :chart-options="chartOptions" :chart-data="NationchartData" :width="width" :height="height" />
+              </v-col>
+              <v-col cols="12" sm="6">
+                <b>Age</b>
+                <Doughnut :chart-options="chartOptions" :chart-data="AgechartData" :width="width" height="150" />
+              </v-col>
+            </v-row>
+          </v-card>
+        </div>
 
-        </v-card>
+        <div tonal style="padding: 10px;margin-top: 10px;text-align:center" v-if="read_xml_data.length == 0">
+          <b>กรุณากดอ่านไฟล์ XML ก่อน</b>
+        </div>
       </v-container>
     </v-main>
   </v-layout>
@@ -108,19 +131,86 @@
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
+import { Pie, Doughnut } from 'vue-chartjs'
+import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement, CategoryScale, LinearScale } from 'chart.js'
+ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale, LinearScale)
+
 export default {
   name: "App",
-
   components: {
-    //   HelloWorld,
+    Pie,
+    Doughnut,
   },
 
   data: () => ({
     read_xml_data: new Array(),
     now_data: "",
-    page_select: 'table' //table, chart
+    page_select: 'table', //table, chart
+    chartOptions: {
+      responsive: true
+    },
+
+    GenderchartData: {
+      labels: ['Male', 'Female'],
+      datasets: [{
+        backgroundColor: ['#00D8FF', '#E46651'],
+        data: [0, 0]
+      }]
+    },
+    CountrychartData: {
+      labels: [],
+      datasets: [{
+        backgroundColor: [],
+        data: []
+      }]
+    },
+    NationchartData: {
+      labels: [],
+      datasets: [{
+        backgroundColor: [],
+        data: []
+      }]
+    },
+    AgechartData: {
+      labels: [],
+      datasets: [{
+        backgroundColor: ['#fcdc83'],
+        data: []
+      }]
+    },
   }),
+
   methods: {
+    ChartInit() {
+      this.GenderchartData.datasets[0].data[0] = this.read_xml_data.filter(item => { return item.GENDER == '0' }).length
+      this.GenderchartData.datasets[0].data[1] = this.read_xml_data.filter(item => { return item.GENDER == '1' }).length
+      // Region Chart
+      this.CountrychartData.labels = [...new Set(this.read_xml_data.map(item => { return item.REGION }))]
+      this.CountrychartData.datasets[0].data = this.CountrychartData.labels.map(item => {
+        return this.read_xml_data.filter(item2 => { return item2.REGION == item }).length
+      })
+      this.CountrychartData.datasets[0].backgroundColor = this.CountrychartData.labels.map(() => {
+        return '#' + Math.floor(Math.random() * 16777215).toString(16)
+      })
+      // Nationarity Chart
+      this.NationchartData.labels = [...new Set(this.read_xml_data.map(item => { return item.NATIONALITY }))]
+      this.NationchartData.datasets[0].data = this.NationchartData.labels.map(item => {
+        return this.read_xml_data.filter(item2 => { return item2.NATIONALITY == item }).length
+      })
+      this.NationchartData.datasets[0].backgroundColor = this.NationchartData.labels.map(() => {
+        return '#' + Math.floor(Math.random() * 16777215).toString(16)
+      })
+      // Age Chart
+      this.AgechartData.labels = [...new Set(this.read_xml_data.map(item => { return Math.floor(Math.abs(new Date() - new Date(item.BIRTHDAY.split("-")[2], item.BIRTHDAY.split("-")[1], item.BIRTHDAY.split("-")[0])) / (1000 * 60 * 60 * 24 * 365)) }))]
+      this.AgechartData.datasets[0].data = this.AgechartData.labels.map(item => {
+        return this.read_xml_data.filter(item2 => { return Math.floor(Math.abs(new Date() - new Date(item2.BIRTHDAY.split("-")[2], item2.BIRTHDAY.split("-")[1], item2.BIRTHDAY.split("-")[0])) / (1000 * 60 * 60 * 24 * 365)) == item }).length
+      })
+      console.log(this.AgechartData.datasets[0].data)
+      this.AgechartData.datasets[0].backgroundColor = this.AgechartData.labels.map(() => {
+        return '#' + Math.floor(Math.random() * 16777215).toString(16)
+      })
+    },
+
     loadXMLDocWithoutFilter() {
       var read_xml = new Array();
       var xml = new XMLHttpRequest();
@@ -130,6 +220,7 @@ export default {
         if (xml.readyState == 4 && xml.status == 200) {
           this.read_xml_data = readXmlFile(this);
           this.now_data = "XML File";
+          this.ChartInit()
         }
       };
       function readXmlFile() {
@@ -168,6 +259,7 @@ export default {
         if (xml.readyState == 4 && xml.status == 200) {
           this.read_xml_data = readXmlFile(this);
           this.now_data = "XML File";
+          this.ChartInit()
         }
       };
       function readXmlFile() {
@@ -223,6 +315,18 @@ export default {
         })
     },
 
+    loadDB() {
+      this.axios
+        .get("api/get/devclub")
+        .then((res) => {
+          if (res.data.data.length != 0) {
+            this.read_xml_data = res.data.data
+            this.now_data = "Sqlite3 Database";
+            this.ChartInit()
+          }
+        })
+    },
+
     loadJSON() {
       const data = JSON.stringify(this.read_xml_data)
       const blob = new Blob([data], { type: 'text/plain' })
@@ -273,6 +377,9 @@ export default {
       link.setAttribute("download", "All Employee.csv");
       link.click();
     },
+  },
+  beforeMount() {
+    this.loadDB()
   },
 };
 </script>

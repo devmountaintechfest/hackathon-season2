@@ -33,6 +33,14 @@ sequelize
     });
 
 // API Request
+app.get("/api/get/devclub", async (req, res) => {
+    var loaddata = await sequelize.query("SELECT * FROM devclub", { type: QueryTypes.SELECT })
+    res.send({
+        status: "Success",
+        data: loaddata
+    });
+});
+
 app.post("/api/update/devclub", async (req, res) => {
     req.body.data_array.map(element => {
         if (element.STATUS == "1") {
