@@ -27,50 +27,6 @@ sequelize
     .authenticate()
     .then(function (err) {
         console.log("Connection established.");
-        db_DevClub = sequelize.define("devclub", {
-            EMPID: {
-                primaryKey: true,
-                type: Sequelize.INTEGER
-            },
-            PASSPORT: {
-                type: Sequelize.STRING
-            },
-            FIRSTNAME: {
-                type: Sequelize.STRING
-            },
-            LASTNAME: {
-                type: Sequelize.STRING
-            },
-            GENDER: {
-                type: Sequelize.STRING
-            },
-            BIRTHDAY: {
-                type: Sequelize.DATE
-            },
-            NATIONALITY: {
-                type: Sequelize.STRING
-            },
-            HIRED: {
-                type: Sequelize.STRING
-            },
-            DEPT: {
-                type: Sequelize.STRING
-            },
-            POSITION: {
-                type: Sequelize.STRING
-            },
-            STATUS: {
-                type: Sequelize.TINYINT
-            },
-            REGION: {
-                type: Sequelize.STRING
-            },
-        }, {
-            tableName: 'devclub',
-            timestamps: false,
-            freezeTableName: true
-        }
-        );
     })
     .catch(function (err) {
         console.log("Unable to connect to database: ", err);
@@ -78,17 +34,12 @@ sequelize
 
 // API Request
 app.post("/api/update/devclub", (req, res) => {
-    console.log(req.body.data_array)
-
-});
-
-app.post("/api/insert/devclub", (req, res) => {
-    console.log(req.body.data_array)
     req.body.data_array.map(element => {
         if (element.STATUS == "1") {
-            db_DevClub.query("SELECT * FROM devclub WHERE EMPID = :EMPID OR PASSPORT = :PASSPORT LIMIT = 1", { replacements: { EMPID: element.EMPID, PASSPORT: element.PASSPORT }, type: QueryTypes.SELECT }).then((chk) => {
-                if (!chk) {
-                    db_DevClub.query("INSERT INTO devclub (EMPID,PASSPORT,FIRSTNAME,LASTNAME,GENDER,BIRTHDAY,NATIONALITY,HIRED,DEPT,POSITION,STATUS,REGION) VALUES(:EMPID,:PASSPORT,:FIRSTNAME,:LASTNAME,:GENDER,:BIRTHDAY,:NATIONALITY,:HIRED,:DEPT,:POSITION,:STATUS,:REGION)",
+            sequelize.query("SELECT * FROM devclub WHERE EMPID = :EMPID OR PASSPORT = :PASSPORT LIMIT 1", { replacements: { EMPID: element.EMPID, PASSPORT: element.PASSPORT }, type: QueryTypes.SELECT }).then((chk) => {
+                console.log(chk)
+                if (chk.length == 0) {
+                    sequelize.query("INSERT INTO devclub (EMPID,PASSPORT,FIRSTNAME,LASTNAME,GENDER,BIRTHDAY,NATIONALITY,HIRED,DEPT,POSITION,STATUS,REGION) VALUES(:EMPID,:PASSPORT,:FIRSTNAME,:LASTNAME,:GENDER,:BIRTHDAY,:NATIONALITY,:HIRED,:DEPT,:POSITION,:STATUS,:REGION)",
                         {
                             replacements: {
                                 EMPID: element.EMPID,
@@ -110,7 +61,7 @@ app.post("/api/insert/devclub", (req, res) => {
             })
         }
     });
-})
+});
 
 app.get("/api/create/view/dept", (req, res) => {
     sequelize.query("SELECT DISTINCT DEPT FROM devclub", { type: QueryTypes.SELECT }).then((depts) => {
