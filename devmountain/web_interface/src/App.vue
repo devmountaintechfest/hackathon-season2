@@ -5,19 +5,20 @@
         <v-app-bar-nav-icon></v-app-bar-nav-icon>
       </template>
 
-      <v-app-bar-title>Dev Mountain</v-app-bar-title>
+      <v-app-bar-title>Dev Club</v-app-bar-title>
 
       <template v-slot:append>
-        <v-btn icon="mdi-dots-vertical"></v-btn>
+        <!-- <v-btn icon="mdi-dots-vertical"></v-btn> -->
       </template>
     </v-app-bar>
 
     <v-main>
       <v-container class="fluid">
         <div class="d-flex justify-space-between">
-          <v-btn variant="tonal" v-on:click="loadXMLDoc">Read XML</v-btn>
+          <v-btn variant="tonal" v-on:click="loadXMLDoc">อ่านไฟล์ XML</v-btn>
         </div>
         {{ read_xml_data }}
+
       </v-container>
     </v-main>
   </v-layout>
@@ -34,23 +35,22 @@ export default {
 
   data: () => ({
     //
-    test_var: "test",
     read_xml_data: new Array(),
   }),
   methods: {
     loadXMLDoc() {
       var read_xml = new Array();
-      var xmlhttp = new XMLHttpRequest();
-      xmlhttp.open("GET", "./data-devclub-1.xml", true);
-      xmlhttp.send();
-      xmlhttp.onreadystatechange = () => {
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+      var xml = new XMLHttpRequest();
+      xml.open("GET", "./data-devclub-1.xml", true);
+      xml.send();
+      xml.onreadystatechange = () => {
+        if (xml.readyState == 4 && xml.status == 200) {
           this.read_xml_data = readXmlFile(this);
         }
       };
       function readXmlFile() {
         var i;
-        var xmlDoc = xmlhttp.responseXML;
+        var xmlDoc = xml.responseXML;
         var x = xmlDoc.getElementsByTagName("record");
 
         // Start to fetch the data by using TagName
@@ -74,7 +74,6 @@ export default {
               });
             }
         }
-        console.log(read_xml);
         return read_xml;
       }
     },
