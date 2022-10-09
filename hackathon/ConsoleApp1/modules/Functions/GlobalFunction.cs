@@ -10,6 +10,31 @@ namespace ConsoleApp1.modules.module
 {
     public static class GlobalFunction
     {
+        public static void getJsonFile(List<Employees> data, string outputPath)
+        {
+            string datas = "{\n";
+            foreach (var emp in data)
+            {
+                datas += "\t{\n";
+                datas += "\t\t\"emp_id\":\"" + emp.empId + "\",\n";
+                datas += "\t\t\"passpost\":\"" + emp.passPort + "\",\n";
+                datas += "\t\t\"firstName\":\"" + emp.empFirstName + "\",\n";
+                datas += "\t\t\"lastName\":\"" + emp.empLastName + "\",\n";
+                datas += "\t\t\"gender\":\"" + emp.empGender + "\",\n";
+                datas += "\t\t\"birthdate\":\"" + emp.empBirthday + "\",\n";
+                datas += "\t\t\"nationality\":\"" + emp.empNationality + "\",\n";
+                datas += "\t\t\"hired\":\"" + emp.empHired + "\",\n";
+                datas += "\t\t\"dept\":\"" + emp.empDept + "\",\n";
+                datas += "\t\t\"position\":\"" + emp.empPosition + "\",\n";
+                datas += "\t\t\"status\":\"" + emp.empStatus + "\",\n";
+                datas += "\t\t\"region\":\"" + emp.empRegion + "\",\n";
+                datas += "\t},\n";
+            }
+            datas += "}\n";
+            string[] jsondata = datas.Split('\n');
+            File.WriteAllLines(outputPath + ".json", jsondata);
+            Console.WriteLine(datas);
+        }
         public static string genarateCsvFormat(List<Employees> data,string outputPath)
         {
             string[] csvText = new string[data.Count];
@@ -24,7 +49,6 @@ namespace ConsoleApp1.modules.module
             {
                 text += csvText[idx] + "\n";
             }
-            Console.WriteLine(text);
             if(outputPath != "")
             {
                 writeCsv(csvText, outputPath);
@@ -88,14 +112,13 @@ namespace ConsoleApp1.modules.module
         private static List<Employees> formatDataToEmployeeObj(List<string[]> dataSet)
         {
             List<Employees> employee = new List<Employees>();
-          
+            int idx = 0;
             foreach (var item in dataSet)
             {
-                int idx = 1;
+                idx = 1;
                 Employees temp = new Employees();
                 foreach (var att in item)
                 {
-                Console.WriteLine(att);
                     string[] dataExtract = att.Split('>');
                     string[] dataValue = dataExtract[1].Split('<');
                     // idx เเทน attribute ของ data ทั้ง 12 ตัว

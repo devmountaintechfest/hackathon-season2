@@ -49,37 +49,32 @@ namespace ConsoleApp1.modules.Functions
             foreach (var item in listDel)
             {
                 Console.WriteLine("delete id :"+ item.empId);
-                SQLiteCommand cmd = new SQLiteCommand("DELETE FROM dev_club where dev_club.emp_Id=" + Convert.ToInt32(item.empId), conn);
+                SQLiteCommand cmd = new SQLiteCommand("DELETE FROM dev_club where dev_club.emp_Id =" + Convert.ToInt32(item.empId), conn);
                 cmd.ExecuteNonQuery();
             }
             conn.Close();
         }
-        public static void insertData(string cmd)
+        public static void insertData(List<Employees> addlist)
         {
-            SQLiteConnection conn = new SQLiteConnection("Data Source=database.db; Version=3;New=True;Compress=True;");
+
+            SQLiteConnection conn = new SQLiteConnection("Data Source=../../database/dataDevMoutrain.db; Version=3;New=True;Compress=True;");
             conn.Open();
-            SQLiteCommand sqlite_cmd;
-            sqlite_cmd = conn.CreateCommand();
-            sqlite_cmd.CommandText = "INSERT INTO SampleTable (Col1, Col2) VALUES('Test Text ', 1); ";
-            sqlite_cmd.ExecuteNonQuery();
-            conn.Close();
-        }
-        public static void updateData(string cmd)
-        {
-            SQLiteConnection conn = new SQLiteConnection("Data Source=database.db; Version=3;New=True;Compress=True;");
-            conn.Open();
-            SQLiteDataReader sqlite_datareader;
-            SQLiteCommand sqlite_cmd;
-            sqlite_cmd = conn.CreateCommand();
-            sqlite_cmd.CommandText = cmd;
-            sqlite_datareader = sqlite_cmd.ExecuteReader();
-            while (sqlite_datareader.Read())
+            foreach (var item in addlist)
             {
-                string myreader = sqlite_datareader.GetString(0);
-                Console.WriteLine(myreader);
+                Console.WriteLine("insert new id :"+ item.empId);
+                SQLiteCommand sql_cmd = conn.CreateCommand();
+                string cmd = 
+                    $"insert into dev_club (emp_id,passport,fname,lname,gender," +
+                    $"birthdate,nationality,hired,dept,position,status,region) " +
+                    $"values (\"{item.empId}\",\"{item.passPort}\",\"{item.empFirstName}\",\"{item.empLastName}\",\"{item.empGender}\"," +
+                    $"\"{item.empBirthday}\",\"{item.empNationality}\",\"{item.empHired}\",\"{item.empDept}\",\"{item.empPosition}\",\"{item.empStatus}\",\"{item.empRegion}\");";
+                Console.WriteLine("insert  :" + cmd);
+
+                sql_cmd.CommandText = cmd;
+                sql_cmd.ExecuteNonQuery();
             }
             conn.Close();
         }
-
+      
     }
 }

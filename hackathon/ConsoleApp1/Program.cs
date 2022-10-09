@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.IO;
 using ConsoleApp1.modules.Functions;
 using ConsoleApp1.modules.module;
@@ -33,34 +34,34 @@ namespace ConsoleApp1
                     int menuSelect = Convert.ToInt32(menu);
                     if (menuSelect <= cmd.Length)
                     {
-                       
+
                         if (menuSelect == 1)
                         {
-                             stop = true;
-                             Console.WriteLine("Good bye");
+                            stop = true;
+                            Console.WriteLine("Good bye");
                         }
                         else if (menuSelect == 2)
                         {
-                            string path = "",output="";
+                            string path = "", output = "";
                             Console.WriteLine("please enter your xml file path");
                             path = Console.ReadLine();
                             //for test : ../../../../data-devclub-1.xml
                             Console.WriteLine("please enter your output file path");
                             output = Console.ReadLine();
-                            //for test : ../../../../data-devclub-1
-                            List<Employees> employee = GlobalFunction.XmlToCsv(path,output);
+                            //for test : ../../../../resultFile/data-devclub-1
+                            List<Employees> employee = GlobalFunction.XmlToCsv(path, output);
                             Console.WriteLine("success");
                         }
                         else if (menuSelect == 3)
                         {
                             string pathFile = "", output = "";
                             Console.Write("please enter your csv file path");
-                            // ../../../../data-devclub-1
+                            // ../../../../resultFile/data-devclub-1.csv
                             pathFile = Console.ReadLine();
                             Console.WriteLine("please enter your output file path");
                             output = Console.ReadLine();
-                            // ../../../../data-devclub-1
-                            List<Employees> employee = GlobalFunction.XmlToCsv(pathFile,output);
+                            // ../../../../resultFile/data-devclub-1
+                            List<Employees> employee = GlobalFunction.XmlToCsv(pathFile, output);
                             Console.WriteLine("success");
                         }
                         else if (menuSelect == 4)
@@ -68,13 +69,13 @@ namespace ConsoleApp1
                             string path = "", output = "";
                             Console.WriteLine("we need DevMountain csv file please enter path csv file");
                             path = Console.ReadLine();
-                            // ../../../../data-devclub-1.csv
+                            // ../../../../resultFile/data-devclub-1.csv
                             List<Employees> employee = GlobalFunction.csvToXml(path, output);
                             List<Employees> devMoutrain = new List<Employees>();
                             foreach (var emp in employee)
                             {
                                 // filter data 
-                                if (emp.empStatus == "1" && (emp.empPosition == "Pilot"|| emp.empPosition == "Steward" || emp.empPosition == "Airhostess"))
+                                if (emp.empStatus == "1" && (emp.empPosition == "Pilot" || emp.empPosition == "Steward" || emp.empPosition == "Airhostess"))
                                 {
                                     string[] year = emp.empHired.Split('-');
                                     if (2022 - Convert.ToInt32(year[2]) >= 3)
@@ -84,7 +85,7 @@ namespace ConsoleApp1
                                 }
                             }
                             //dev club getdata 
-                            List<Employees> devClub =  sqlite.getData("select * from dev_club;");
+                            List<Employees> devClub = sqlite.getData("select * from dev_club;");
                             List<Employees> delDevClub = new List<Employees>();
                             List<Employees> devClubFilter = new List<Employees>();
                             foreach (var emp in devClub)
@@ -96,38 +97,33 @@ namespace ConsoleApp1
                                 }
                                 else
                                 {
-                                    Console.WriteLine("dwed");
                                     delDevClub.Add(emp);
                                 }
                             }
-                           
+
                             List<Employees> dataSender = new List<Employees>();
                             foreach (var moutrain in devMoutrain)
                             {
+                                bool add = true;
                                 foreach (var club in devClubFilter)
                                 {
-                                    if ((moutrain.empId != club.empId) && (moutrain.passPort != club.passPort))
+                                    if ((moutrain.empId == club.empId) || (moutrain.passPort == club.passPort))
                                     {
-
-                                        dataSender.Add(moutrain);
-                                    }
-                                    else
-                                    {
-                                        Console.WriteLine("dwed");
-                                        delDevClub.Add(moutrain);
+                                        add = false;
                                     }
                                 }
+                                if (add)
+                                {
+                                    dataSender.Add(moutrain);
+                                }
+                                else
+                                {
+                                    delDevClub.Add(moutrain);
+                                }
                             }
-
+                            // migration data 2 data base
                             sqlite.romoveData(delDevClub);
-
-                            foreach (var item in delDevClub)
-                            {
-                                Console.WriteLine(item.empId);
-                            }
-                            // migration data 2 data base 
-                            // GlobalFunction.genarateCsvFormat(dataSender,"../../../../dataDevclub");
-                            // send to db
+                            sqlite.insertData(dataSender);
                             Console.WriteLine("success");
                         }
                         else if (menuSelect == 5)
@@ -135,7 +131,7 @@ namespace ConsoleApp1
                             string path = "", output = "";
                             Console.WriteLine("we need csv file for split please enter file path");
 
-                            // ../../../../data-devclub-1.csv
+                            // ../../../../resultFile/data-devclub-1.csv
 
                             path = Console.ReadLine();
                             List<Employees> employee = GlobalFunction.csvToXml(path, output);
@@ -145,16 +141,16 @@ namespace ConsoleApp1
                             {
                                 bool add = true;
                                 string[] nation = nations.Split('-');
-                                for (int idx = 0;idx < nation.Length;idx++)
+                                for (int idx = 0; idx < nation.Length; idx++)
                                 {
                                     if (emp.empNationality.Trim() == nation[idx].Trim())
-                                    { 
+                                    {
                                         add = false;
                                     }
                                 }
                                 if (add)
                                 {
-                                    nations += "-"+emp.empNationality.ToString().Trim();
+                                    nations += "-" + emp.empNationality.ToString().Trim();
                                 }
                             }
                             string[] nationality = nations.Split('-');
@@ -163,15 +159,42 @@ namespace ConsoleApp1
                                 List<Employees> nationCsv = new List<Employees>();
                                 foreach (var emp in employee)
                                 {
-                                    if(emp.empNationality == nation)
+                                    if (emp.empNationality == nation)
                                     {
                                         nationCsv.Add(emp);
-                                        /*employee.Remove(emp);*/
                                     }
-                                    GlobalFunction.genarateCsvFormat(nationCsv,"../../../../employees_"+ nation);
+                                    GlobalFunction.genarateCsvFormat(nationCsv, "../../../../resultFile/nationality/employees_" + nation);
                                 }
                             }
                             Console.WriteLine("success");
+                        }
+                        else if (menuSelect == 6)
+                        {
+                            Console.WriteLine("what database your want to create jsonfile");
+                            Console.WriteLine("1. dev Club 2.dev Mountrain");
+                            string choice = Console.ReadLine();
+                            if (choice == "1" || choice == "2")
+                            {
+                                string selectCmd = "";
+                                if(choice == "1")
+                                {
+                                    selectCmd += "select * from dev_club";
+                                }
+                                else
+                                {
+                                    selectCmd += "select * from dev_mountain";
+                                }
+
+                                List<Employees> employee = sqlite.getData(selectCmd);
+                                Console.WriteLine("output path and filename: ");
+                                // ../../../../resultFile/resultJson
+                                string output = Console.ReadLine();
+                                GlobalFunction.getJsonFile(employee, output);
+                            }
+                            else
+                            {
+                                Console.WriteLine("wrong choice");
+                            }
                         }
                     }
                     
