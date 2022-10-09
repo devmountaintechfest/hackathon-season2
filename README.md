@@ -63,9 +63,9 @@ optional arguments:
 - Creative ตอนทำ Data visualization 
 - ผลลัพธ์จาก SQLlite ต้องได้เป็น **JSON** format
 
-**Data visualization**
+[**Data visualization**](data-visualization.ipynb)
 
-[Gender2 is data after database migration](data-visualization.ipynb)
+*Gender2 is data after database migration*
 
 ![alt text](images/1.png)
 ![alt text](images/2.png)
