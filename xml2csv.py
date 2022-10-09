@@ -26,8 +26,7 @@ def ensure_years_experiences(date_str, years=3):
     leap_days = 0
     target_date = datetime(int(date_str[6:]), int(date_str[3:5]), int(date_str[:2]))
     for year in range(target_date.year, current_datetime.year + 2):
-        if year & 0b11:  # mod 4
-            leap_days += 1
+        leap_days += not (year & 0b11)
     return (current_datetime - target_date).days > years * 365 + leap_days
 
 

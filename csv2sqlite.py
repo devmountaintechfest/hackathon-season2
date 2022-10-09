@@ -85,7 +85,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--table-name",
-        default="DEVCLUB",
+        default="TBL_DEVCLUB",
         help="Specify the name of a table"
     )
     parser.add_argument(
