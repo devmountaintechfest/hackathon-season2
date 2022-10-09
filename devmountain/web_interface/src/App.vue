@@ -2,10 +2,12 @@
   <v-layout>
     <v-app-bar color="primary" density="compact">
       <template v-slot:prepend>
-        <v-app-bar-nav-icon></v-app-bar-nav-icon>
+        <v-icon large>
+          mdi-domain
+        </v-icon>
       </template>
 
-      <v-app-bar-title>Dev Club</v-app-bar-title>
+      <v-app-bar-title>DevClub</v-app-bar-title>
 
       <template v-slot:append>
         <!-- <v-btn icon="mdi-dots-vertical"></v-btn> -->
@@ -14,11 +16,50 @@
 
     <v-main>
       <v-container class="fluid">
-        <div class="d-flex justify-space-between">
+        <div class="d-flex justify-space-around">
           <v-btn variant="tonal" v-on:click="loadXMLDoc">อ่านไฟล์ XML</v-btn>
+          <v-btn variant="tonal" v-on:click="importReadXMLtoDB" color="success" :disabled="read_xml_data.length == 0">
+            นำข้อมูลที่อ่านแล้วเข้า DB
+            ({{read_xml_data.length}} รายการ)
+          </v-btn>
+          <v-btn variant="tonal" v-on:click="exportByNATIONALITY" color="error">
+            สร้างไฟล์ CSV
+          </v-btn>
         </div>
-        {{ read_xml_data }}
-
+        <v-table>
+          <thead>
+            <tr>
+              <th class="text-left">EMPID</th>
+              <th class="text-left">PASSPORT</th>
+              <th class="text-left">FIRSTNAME</th>
+              <th class="text-left">LASTNAME</th>
+              <th class="text-left">GENDER</th>
+              <th class="text-left">BIRTHDAY</th>
+              <th class="text-left">NATIONALITY</th>
+              <th class="text-left">HIRED</th>
+              <th class="text-left">DEPT</th>
+              <th class="text-left">POSITION</th>
+              <th class="text-left">STATUS</th>
+              <th class="text-left">REGION</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="data in read_xml_data" :key="data.EMPID">
+              <td>{{ data.EMPID }}</td>
+              <td>{{ data.PASSPORT }}</td>
+              <td>{{ data.FIRSTNAME }}</td>
+              <td>{{ data.LASTNAME }}</td>
+              <td>{{ data.GENDER }}</td>
+              <td>{{ data.BIRTHDAY }}</td>
+              <td>{{ data.NATIONALITY }}</td>
+              <td>{{ data.HIRED }}</td>
+              <td>{{ data.DEPT }}</td>
+              <td>{{ data.POSITION }}</td>
+              <td>{{ data.STATUS }}</td>
+              <td>{{ data.REGION }}</td>
+            </tr>
+          </tbody>
+        </v-table>
       </v-container>
     </v-main>
   </v-layout>
@@ -34,7 +75,6 @@ export default {
   },
 
   data: () => ({
-    //
     read_xml_data: new Array(),
   }),
   methods: {
@@ -76,6 +116,39 @@ export default {
             // }
         }
         return read_xml;
+      }
+    },
+
+    importReadXMLtoDB() {
+      this.axios
+        .post("api/update/devclub", {
+          data_array: this.read_xml_data,
+        })
+        .then((res) => {
+          console.log(res)
+        })
+    },
+
+    async exportByNATIONALITY() {
+      var nation_lists = [...new Set(this.read_xml_data.map((item) => { return item.NATIONALITY }))];
+      for await (let nation of nation_lists) {
+        var data_by_nation = this.read_xml_data.filter((item) => {
+          return item.NATIONALITY == nation;
+        })
+
+        let csvContent = "data:text/csv;charset=utf-8,";
+        csvContent += [
+          Object.keys(data_by_nation[0]).join(","),
+          ...data_by_nation.map(item => Object.values(item).join(","))
+        ]
+          .join("\n")
+          .replace(/(^\[)|(\]$)/gm, "");
+
+        const data = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", data);
+        link.setAttribute("download", nation + ".csv");
+        link.click();
       }
     },
   },

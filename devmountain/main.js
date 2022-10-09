@@ -66,9 +66,9 @@ sequelize
                 type: Sequelize.STRING
             },
         }, {
-            sequelize,
             tableName: 'devclub',
             timestamps: false,
+            freezeTableName: true
         }
         );
     })
@@ -77,10 +77,9 @@ sequelize
     });
 
 // API Request
-app.get("/api", (req, res) => {
-    db_DevClub.findAll().then((data) => {
-        res.send(data);
-    })
+app.post("/api/update/devclub", (req, res) => {
+    console.log(req.body.data_array)
+
 });
 
 app.get("/api/create/view/dept", (req, res) => {
