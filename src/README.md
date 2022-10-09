@@ -7,7 +7,8 @@
   - M Migrate
 - arg2 Datasource file
 - arg3 Target db
-- arg4 Report name
+- arg4 csv path
+- arg5 Report name
 
 Example
-python run.py M ../data-devclub-1.xml ../database/devclub2022.db ../reports/data-devclub-report.json
+python run.py M ../data-devclub-1.xml ../database/devclub2022.db ../csv ../reports/data-devclub-report.json
