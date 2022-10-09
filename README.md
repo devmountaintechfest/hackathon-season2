@@ -10,6 +10,9 @@
 - arg4 csv path
 - arg5 Report name
 
+# visualize
+- visualize.ipynb
+
 Example
 python run.py M ../data-devclub-1.xml ../database/devclub2022.db ../csv ../reports/data-devclub-report.json
 
