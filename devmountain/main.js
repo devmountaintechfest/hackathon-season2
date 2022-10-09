@@ -77,7 +77,7 @@ app.post("/api/update/devclub", async (req, res) => {
 
 app.get("/api/create/view/dept", (req, res) => {
     sequelize.query("SELECT DISTINCT DEPT FROM devclub", { type: QueryTypes.SELECT }).then((depts) => {
-        depts.forEach(dept => {
+        depts.map(dept => {
             sequelize.query("DROP VIEW IF EXISTS :view_name", { type: QueryTypes.SELECT, replacements: { view_name: "devclub_dept_" + dept.DEPT } })
             sequelize.query("CREATE VIEW :view_name AS SELECT * FROM devclub WHERE DEPT = :dept_data", { replacements: { view_name: "devclub_dept_" + dept.DEPT, dept_data: dept.DEPT } })
         });
@@ -87,7 +87,7 @@ app.get("/api/create/view/dept", (req, res) => {
 
 app.get("/api/create/view/region", (req, res) => {
     sequelize.query("SELECT DISTINCT REGION FROM devclub", { type: QueryTypes.SELECT }).then((regions) => {
-        regions.forEach(region => {
+        regions.map(region => {
             sequelize.query("DROP VIEW IF EXISTS :view_name", { type: QueryTypes.SELECT, replacements: { view_name: "devclub_region_" + region.REGION } })
             sequelize.query("CREATE VIEW :view_name AS SELECT * FROM devclub WHERE REGION = :region_data", { replacements: { view_name: "devclub_region_" + region.REGION, region_data: region.REGION } })
         });
@@ -97,7 +97,7 @@ app.get("/api/create/view/region", (req, res) => {
 
 app.get("/api/create/view/nationality", (req, res) => {
     sequelize.query("SELECT DISTINCT NATIONALITY FROM devclub", { type: QueryTypes.SELECT }).then((nationalitys) => {
-        nationalitys.forEach(nationality => {
+        nationalitys.map(nationality => {
             sequelize.query("DROP VIEW IF EXISTS :view_name", { type: QueryTypes.SELECT, replacements: { view_name: "devclub_nationality_" + nationality.NATIONALITY } })
             sequelize.query("CREATE VIEW :view_name AS SELECT * FROM devclub WHERE NATIONALITY = :nationality_data", { replacements: { view_name: "devclub_nationality_" + nationality.NATIONALITY, nationality_data: nationality.NATIONALITY } })
         });
