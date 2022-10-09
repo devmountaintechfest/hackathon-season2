@@ -38,7 +38,22 @@ class Executor(object):
             clubData=ClubData(data)
             
             diffYear=dateUtil.diffYear(dateUtil.toDate(clubData.hired),currentDate)
-            print(f'diff {dateUtil.toDate(clubData.hired)} {currentDate} : {diffYear} ')
+            # print(f'diff {dateUtil.toDate(clubData.hired)} {currentDate} : {diffYear} ')
+            if(diffYear>YEAR_EXP):
+                self.results.append(clubData.toSet())
+        print("Raw Data Valid:",len(self.results))
+        print("Raw Data InValid:",str(self.total-len(self.results)))
+
+    @usedtime
+    def groupby(self):
+        dateUtil=DateUtility()
+        currentDate=dateUtil.currentDate()
+        YEAR_EXP=3
+        for element in self.rawData:
+            data=DevMountainData(element)
+            clubData=ClubData(data)
+            diffYear=dateUtil.diffYear(dateUtil.toDate(clubData.hired),currentDate)
+            # print(f'diff {dateUtil.toDate(clubData.hired)} {currentDate} : {diffYear} ')
             if(diffYear>YEAR_EXP):
                 self.results.append(clubData.toSet())
         print("Raw Data Valid:",len(self.results))
@@ -72,10 +87,10 @@ class Executor(object):
             }
             results.append(tmpData)
         FileUtility().write(self.config['clubDataReport'],json.dumps(results))
-        # FileUtility().write(self.config['clubDataReport'],json.dumps(self.results))
 
-
-
+def printInfo():
+    print("- arg1 Execute type\n  - M Migrate\n- arg2 Datasource file\n- arg3 Target db\n- arg4 Report name")
+    print("Example\n python run.py M ../data-devclub-1.xml ../database/devclub2022.db ../reports/data-devclub-report.json")
 
 def main():
     try:
@@ -83,10 +98,7 @@ def main():
         print("#####start#####")
         print(f"{sys.argv}")
         if(len(sys.argv)>1):
-            
             exeType = sys.argv[1]
-            
-            print(f'{exeType}') 
             if (exeType=='M'):
                 datasource = sys.argv[2]
                 dbName = sys.argv[3]
@@ -111,8 +123,10 @@ def main():
                 print(f'##Total used time {totalTime:.4f} seconds##')
             else:
                 print("Please enter Execute Type (M) Parameter!")
+                printInfo()
         else:
             print("Please enter Parameter!")
+            printInfo()
     except ValueError as ve:
         return str(ve)
 
