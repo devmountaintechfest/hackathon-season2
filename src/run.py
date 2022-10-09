@@ -1,10 +1,11 @@
 from lxml import etree as ET
 from data import DevMountainData, ClubData
 from util import DataUtility, FileUtility, usedtime
-import time
+import time,sys,os,csv
 import sys
 from datetime import datetime, date
 from dateutil import relativedelta
+import matplotlib.pyplot as plt
 
 
 @usedtime
@@ -67,6 +68,44 @@ class Executor(object):
             data = [i for i in self.results if i[6] == ds]
             FileUtility().write(self.config['clubDataReport'], [list(dat) for dat in data])
 
+        if not os.path.exists("../csv"):
+            os.makedirs("../csv")
+
+        with open("../csv/devclub.csv", 'w', newline="") as f:
+            write = csv.writer(f)
+            write.writerow(["EMP_ID","PASSPORT","FIRSTNAME","LASTNAME","GENDER","BIRTHDAY","NATIONALITY","HIRED","DEPT","POSITION","STATUS","REGION"])
+            write.writerows([list(dat) for dat in self.results])
+
+    @usedtime
+    def visualize(self):
+        print("Generate visualize..")
+        if not os.path.exists("../visualize"):
+            os.makedirs("../visualize")
+        # gender
+        male = 0
+        female = 0
+        for data in self.results:
+            gender = data[4]
+            if gender == 0:
+                male += 1
+            elif gender == 1:
+                female += 1
+            else:
+                pass
+        gender_data = [male, female]
+        gender_data_label = ["Male", "Female"]
+        print(gender_data)
+        plt.pie(gender_data, labels=gender_data_label)
+        plt.legend()
+        plt.title("summary gender")
+        plt.savefig('../visualize/gender.png')
+        # import numpy as np
+        # import pandas as pd
+        # import matplotlib.pyplot as plt
+        # df1 = pd.read_csv("../csv/devclub.csv")
+        # df2 = df1[['GENDER', 'EMP_ID']]
+        # df2 = df2.groupby(['GENDER'])['EMP_ID']
+        # print(df2.plot.pie())
 
 def main():
     try:
@@ -90,6 +129,7 @@ def main():
                 exe.extract()
                 exe.load()
                 exe.generateSummary()
+                exe.visualize()
                 endTime = time.perf_counter()
                 totalTime = endTime - startTime
                 print(f'##Total used time {totalTime:.4f} seconds##')
