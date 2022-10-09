@@ -1,5 +1,5 @@
-import csv
 import argparse
+import csv
 import collections
 import json
 import sqlite3
