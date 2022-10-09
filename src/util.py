@@ -1,6 +1,9 @@
 import sqlite3
 from functools import wraps
 import time
+from datetime import datetime
+from datetime import date
+from dateutil import relativedelta
 
 
 def usedtime(func):
@@ -13,6 +16,27 @@ def usedtime(func):
         print(f'{func.__name__} used time {totalTime:.4f} seconds')
         return result
     return usedtimeWrapper
+
+class DateUtility(object):
+    def currentDate(self):
+        return date.today()
+
+    def toDate(self,dateStr):
+        date = datetime.strptime(dateStr, '%d-%m-%Y')
+        return date
+
+    def diffYear(self,start,end):
+        diff = relativedelta.relativedelta(end, start)
+        return diff.years
+
+    def diffYear2(self,startStr,endStr):
+        testdate = '09-10-2020'
+
+        # start = d.date()
+        # end = date.today()
+        # print(f'start {start} {end}')
+        diff = relativedelta.relativedelta(end, start)
+        return diff.years
 
 class DataUtility(object):
     def __init__(self, DB_NAME):

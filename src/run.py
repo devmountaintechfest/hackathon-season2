@@ -1,6 +1,6 @@
 from lxml import etree as ET
 from data import DevMountainData,ClubData
-from util import DataUtility,FileUtility,usedtime
+from util import DataUtility,FileUtility,DateUtility,usedtime
 import json
 import time
 import sys
@@ -11,6 +11,7 @@ class Executor(object):
     total=int()
     valid=int()
     invalid=int()
+    rawData=[]
     results=[]
     @usedtime
     def setup(self,config):
@@ -25,14 +26,23 @@ class Executor(object):
         alldata=xml.xpath("count(/records/record)")
         self.total=int(alldata)
         print("Raw Data Total:",self.total)
-        datasource=xml.xpath("/records/record[STATUS/text()='1' and (POSITION/text()='Steward' or POSITION/text()='Pilot' or POSITION/text()='Airhostess') and EMPID/text()!=PASSPORT/text()]")
-        print("Raw Data Valid:",len(datasource))
-        print("Raw Data InValid:",str(self.total-len(datasource)))
+        self.rawData=xml.xpath("/records/record[STATUS/text()='1' and (POSITION/text()='Steward' or POSITION/text()='Pilot' or POSITION/text()='Airhostess') and EMPID/text()!=PASSPORT/text()]")
         
-        for element in list(datasource):
+    @usedtime
+    def transform(self):
+        dateUtil=DateUtility()
+        currentDate=dateUtil.currentDate()
+        YEAR_EXP=3
+        for element in self.rawData:
             data=DevMountainData(element)
             clubData=ClubData(data)
-            self.results.append(clubData.toSet())
+            
+            diffYear=dateUtil.diffYear(dateUtil.toDate(clubData.hired),currentDate)
+            print(f'diff {dateUtil.toDate(clubData.hired)} {currentDate} : {diffYear} ')
+            if(diffYear>YEAR_EXP):
+                self.results.append(clubData.toSet())
+        print("Raw Data Valid:",len(self.results))
+        print("Raw Data InValid:",str(self.total-len(self.results)))
 
     @usedtime
     def load(self):
@@ -92,6 +102,7 @@ def main():
                 exe=Executor()
                 exe.setup(config)
                 exe.extract()
+                exe.transform()
                 exe.load()
                 exe.generateSummary()
 
