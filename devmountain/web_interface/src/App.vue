@@ -15,12 +15,15 @@
     </v-app-bar>
 
     <v-main>
-      <v-container class="fluid">
+      <v-container fluid>
         <div class="d-flex justify-space-around">
           <v-btn variant="tonal" v-on:click="loadXMLDocWithoutFilter">อ่านไฟล์ XML (ไม่กรอง)</v-btn>
           <v-btn variant="tonal" v-on:click="loadXMLDoc">อ่านไฟล์ XML (กรองข้อมูล)</v-btn>
           <v-btn variant="tonal" v-on:click="importReadXMLtoDB" color="success" :disabled="read_xml_data.length == 0">
             นำข้อมูลเข้า DB
+          </v-btn>
+          <v-btn variant="tonal" v-on:click="loadJSON" color="success" :disabled="read_xml_data.length == 0">
+            Export JSON
           </v-btn>
           <v-btn variant="tonal" v-on:click="exportCSVAll" color="error" :disabled="read_xml_data.length == 0">
             Export CSV พนักงานทั้งหมด
@@ -30,50 +33,74 @@
             Export CSV แยกตามสัญชาติ
           </v-btn>
         </div>
-        <div v-if="read_xml_data.length > 0">
-          จำนวนข้อมูล {{read_xml_data.length}} รายการ | ข้อมูลจาก {{now_data}}
+
+        <div class="d-flex justify-space-around" style="margin: 10px;">
+          <v-btn-toggle v-model="toggle_exclusive">
+            <v-btn v-on:click="page_select = 'table'">
+              <v-icon>mdi-table</v-icon>
+              &nbsp;Table
+            </v-btn>
+
+            <v-btn v-on:click="page_select = 'chart'">
+              <v-icon>mdi-chart-areaspline</v-icon>
+              &nbsp;Chart
+            </v-btn>
+          </v-btn-toggle>
         </div>
-        <v-table>
-          <thead>
-            <tr>
-              <th class="text-left">EMPID</th>
-              <th class="text-left">PASSPORT</th>
-              <th class="text-left">FIRSTNAME</th>
-              <th class="text-left">LASTNAME</th>
-              <th class="text-left">GENDER</th>
-              <th class="text-left">BIRTHDAY</th>
-              <th class="text-left">NATIONALITY</th>
-              <th class="text-left">HIRED</th>
-              <th class="text-left">DEPT</th>
-              <th class="text-left">POSITION</th>
-              <th class="text-left">STATUS</th>
-              <th class="text-left">REGION</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="data in read_xml_data" :key="data.EMPID">
-              <td>{{ data.EMPID }}</td>
-              <td>{{ data.PASSPORT }}</td>
-              <td>{{ data.FIRSTNAME }}</td>
-              <td>{{ data.LASTNAME }}</td>
-              <td>
-                <label v-if="data.STATUS == 0">Male</label>
-                <label v-if="data.STATUS == 1">Female</label>
-              </td>
-              <td>{{ data.BIRTHDAY }}</td>
-              <td>{{ data.NATIONALITY }}</td>
-              <td>{{ data.HIRED }}</td>
-              <td>{{ data.DEPT }}</td>
-              <td>{{ data.POSITION }}</td>
-              <td>
-                <label v-if="data.STATUS == 1">Active</label>
-                <label v-if="data.STATUS == 2">Resigned</label>
-                <label v-if="data.STATUS == 3">Retired</label>
-              </td>
-              <td>{{ data.REGION }}</td>
-            </tr>
-          </tbody>
-        </v-table>
+
+        <v-card tonal style="padding: 10px;margin-top: 10px;" v-if="page_select == 'table'">
+          <div v-if="read_xml_data.length > 0">
+            <b>จำนวนข้อมูล</b> {{read_xml_data.length}} รายการ | <b>ข้อมูลจาก</b> {{now_data}}
+          </div>
+          <v-table>
+            <thead>
+              <tr>
+                <th class="text-left">EMPID</th>
+                <th class="text-left">PASSPORT</th>
+                <th class="text-left">FIRSTNAME</th>
+                <th class="text-left">LASTNAME</th>
+                <th class="text-left">GENDER</th>
+                <th class="text-left">BIRTHDAY</th>
+                <th class="text-left">NATIONALITY</th>
+                <th class="text-left">HIRED</th>
+                <th class="text-left">DEPT</th>
+                <th class="text-left">POSITION</th>
+                <th class="text-left">STATUS</th>
+                <th class="text-left">REGION</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="data in read_xml_data" :key="data.EMPID">
+                <td>{{ data.EMPID }}</td>
+                <td>{{ data.PASSPORT }}</td>
+                <td>{{ data.FIRSTNAME }}</td>
+                <td>{{ data.LASTNAME }}</td>
+                <td>
+                  <label v-if="data.STATUS == 0">Male</label>
+                  <label v-if="data.STATUS == 1">Female</label>
+                </td>
+                <td>{{ data.BIRTHDAY }}</td>
+                <td>{{ data.NATIONALITY }}</td>
+                <td>{{ data.HIRED }}</td>
+                <td>{{ data.DEPT }}</td>
+                <td>{{ data.POSITION }}</td>
+                <td>
+                  <label v-if="data.STATUS == 1">Active</label>
+                  <label v-if="data.STATUS == 2">Resigned</label>
+                  <label v-if="data.STATUS == 3">Retired</label>
+                </td>
+                <td>{{ data.REGION }}</td>
+              </tr>
+            </tbody>
+          </v-table>
+        </v-card>
+
+        <v-card tonal style="padding: 10px;margin-top: 10px;" v-if="page_select == 'chart'">
+          <div v-if="read_xml_data.length > 0">
+            <b>จำนวนข้อมูล</b> {{read_xml_data.length}} รายการ | <b>ข้อมูลจาก</b> {{now_data}}
+          </div>
+
+        </v-card>
       </v-container>
     </v-main>
   </v-layout>
@@ -91,6 +118,7 @@ export default {
   data: () => ({
     read_xml_data: new Array(),
     now_data: "",
+    page_select: 'table' //table, chart
   }),
   methods: {
     loadXMLDocWithoutFilter() {
@@ -192,17 +220,19 @@ export default {
         .then((res) => {
           this.read_xml_data = res.data.data
           this.now_data = "Sqlite3 Database";
-
-          const data = JSON.stringify(this.read_xml_data)
-          const blob = new Blob([data], { type: 'text/plain' })
-          const e = document.createEvent('MouseEvents'),
-            a = document.createElement('a');
-          a.download = "sqlite.json";
-          a.href = window.URL.createObjectURL(blob);
-          a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
-          e.initEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-          a.dispatchEvent(e);
         })
+    },
+
+    loadJSON() {
+      const data = JSON.stringify(this.read_xml_data)
+      const blob = new Blob([data], { type: 'text/plain' })
+      const e = document.createEvent('MouseEvents'),
+        a = document.createElement('a');
+      a.download = "sqlite.json";
+      a.href = window.URL.createObjectURL(blob);
+      a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
+      e.initEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+      a.dispatchEvent(e);
     },
 
     async exportCSVByNATIONALITY() {
