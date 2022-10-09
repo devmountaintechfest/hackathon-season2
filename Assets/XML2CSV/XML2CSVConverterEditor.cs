@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
 using System.IO;
 using System.Xml.Linq;
+using UnityEngine;
+using UnityEditor;
 
 [CustomEditor(typeof(XML2CSVConverter))]
 public class XML2CSVConverterEditor : Editor
@@ -21,7 +22,6 @@ public class XML2CSVConverterEditor : Editor
             catch (System.Exception e)
             {
 				Debug.LogError(e.Message);
-				Debug.LogError("Failed to parse the XML file. Make sure the correct XML file is referenced.");
 			}
 		}
 	}
@@ -60,14 +60,27 @@ public class XML2CSVConverterEditor : Editor
 		string[] columnArray = columns.ToArray();
 		sw.WriteLine(string.Join(",", columnArray));
 
+        List<string> acceptedPositions = new List<string>{"Airhostess", "Pilot", "Steward"};
+        DateTime acceptedHiredDate = DateTime.Now.AddYears(-3);
+
 		foreach (var record in dataElements)
         {
 			Dictionary<string, string> recordDictionary = new Dictionary<string, string>();
-			foreach (string tag in columnArray) recordDictionary.Add(tag, "");
+			foreach (string header in columnArray) recordDictionary.Add(header, "");
 			foreach (var recordElement in record.Elements()) recordDictionary[recordElement.Name.LocalName] = recordElement.Value;
 
+            DateTime hiredDate = DateTime.ParseExact(recordDictionary["HIRED"], "dd-MM-yyyy", null);
+
+            if (
+                recordDictionary["EMPID"] == recordDictionary["PASSPORT"] ||
+                recordDictionary["STATUS"] != "1" ||
+                !acceptedPositions.Contains(recordDictionary["POSITION"]) ||
+                hiredDate > acceptedHiredDate
+            )
+                continue;
+
 			List<string> recordLine = new List<string>();
-			foreach (string tag in columnArray) recordLine.Add(recordDictionary[tag]);
+			foreach (string header in columnArray) recordLine.Add(recordDictionary[header]);
 			string[] dataArray = recordLine.ToArray();
 			sw.WriteLine(string.Join(",", dataArray));
 		}

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 49305f65a1364ec46aa812ea79b7af45, type: 3}
-  m_Name: New XML2CSV Converter
+  m_Name: XML2CSV Converter
   m_EditorClassIdentifier: 
-  xmlFile: {fileID: 0}
-  csvFileName: 
+  xmlFile: {fileID: 4900000, guid: fd8d94c43dd8da84796a2a7a0eba0a35, type: 3}
+  csvFileName: data-devclub-1
