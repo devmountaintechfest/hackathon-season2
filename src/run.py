@@ -50,7 +50,7 @@ class Executor(object):
     def generateCSVByNationality(self):
         nationIndex={}
         nationsResult=[[]]
-        for i in range(50):
+        for i in range(500):
 	        nationsResult.append([])
         index=0
         print(len(self.results))
