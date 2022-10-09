@@ -20,17 +20,16 @@
           <v-btn variant="tonal" v-on:click="loadXMLDocWithoutFilter">อ่านไฟล์ XML (ไม่กรอง)</v-btn>
           <v-btn variant="tonal" v-on:click="loadXMLDoc">อ่านไฟล์ XML (กรองข้อมูล)</v-btn>
           <v-btn variant="tonal" v-on:click="loadDB">เรียกข้อมูลจาก DB</v-btn>
-          <v-btn variant="tonal" v-on:click="importReadXMLtoDB" color="success" :disabled="read_xml_data.length == 0">
+          <v-btn variant="tonal" v-on:click="importReadXMLtoDB" color="success" :disabled="read_data.length == 0">
             นำข้อมูลเข้า DB
           </v-btn>
-          <v-btn variant="tonal" v-on:click="loadJSON" color="success" :disabled="read_xml_data.length == 0">
+          <v-btn variant="tonal" v-on:click="loadJSON" color="success" :disabled="read_data.length == 0">
             Export JSON
           </v-btn>
-          <v-btn variant="tonal" v-on:click="exportCSVAll" color="error" :disabled="read_xml_data.length == 0">
+          <v-btn variant="tonal" v-on:click="exportCSVAll" color="error" :disabled="read_data.length == 0">
             Export CSV พนักงานทั้งหมด
           </v-btn>
-          <v-btn variant="tonal" v-on:click="exportCSVByNATIONALITY" color="error"
-            :disabled="read_xml_data.length == 0">
+          <v-btn variant="tonal" v-on:click="exportCSVByNATIONALITY" color="error" :disabled="read_data.length == 0">
             Export CSV แยกตามสัญชาติ
           </v-btn>
         </div>
@@ -51,8 +50,8 @@
           </v-btn-toggle>
         </div>
 
-        <v-card tonal style="padding: 10px;margin-top: 10px;" v-if="page_select == 'table' && read_xml_data.length > 0">
-          <b>จำนวนข้อมูล</b> {{read_xml_data.length}} รายการ | <b>ข้อมูลจาก</b> {{now_data}}
+        <v-card tonal style="padding: 10px;margin-top: 10px;" v-if="page_select == 'table' && read_data.length > 0">
+          <b>จำนวนข้อมูล</b> {{read_data.length}} รายการ | <b>ข้อมูลจาก</b> {{now_data}}
           <v-table>
             <thead>
               <tr>
@@ -71,7 +70,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="data in read_xml_data" :key="data.EMPID">
+              <tr v-for="data in read_data" :key="data.EMPID">
                 <td>{{ data.EMPID }}</td>
                 <td>{{ data.PASSPORT }}</td>
                 <td>{{ data.FIRSTNAME }}</td>
@@ -96,7 +95,7 @@
           </v-table>
         </v-card>
 
-        <div tonal style="padding: 10px;margin-top: 10px;" v-if="page_select == 'chart' && read_xml_data.length > 0">
+        <div tonal style="padding: 10px;margin-top: 10px;" v-if="page_select == 'chart' && read_data.length > 0">
           <v-card style="text-align: center;padding: 10px">
             <v-row no-gutters>
               <v-col cols="12" sm="6">
@@ -124,7 +123,7 @@
           </v-card>
         </div>
 
-        <div tonal style="padding: 10px;margin-top: 10px;text-align:center" v-if="read_xml_data.length == 0">
+        <div tonal style="padding: 10px;margin-top: 10px;text-align:center" v-if="read_data.length == 0">
           <b>กรุณากดอ่านไฟล์ XML ก่อน</b>
         </div>
       </v-container>
@@ -146,7 +145,7 @@ export default {
   },
 
   data: () => ({
-    read_xml_data: new Array(),
+    read_data: new Array(),
     now_data: "",
     page_select: 'table', //table, chart
     chartOptions: {
@@ -177,7 +176,7 @@ export default {
     AgechartData: {
       labels: [],
       datasets: [{
-        backgroundColor: ['#fcdc83'],
+        backgroundColor: [],
         data: []
       }]
     },
@@ -185,30 +184,29 @@ export default {
 
   methods: {
     ChartInit() {
-      this.GenderchartData.datasets[0].data[0] = this.read_xml_data.filter(item => { return item.GENDER == '0' }).length
-      this.GenderchartData.datasets[0].data[1] = this.read_xml_data.filter(item => { return item.GENDER == '1' }).length
+      this.GenderchartData.datasets[0].data[0] = this.read_data.filter(item => { return item.GENDER == '0' }).length
+      this.GenderchartData.datasets[0].data[1] = this.read_data.filter(item => { return item.GENDER == '1' }).length
       // Region Chart
-      this.CountrychartData.labels = [...new Set(this.read_xml_data.map(item => { return item.REGION }))]
+      this.CountrychartData.labels = [...new Set(this.read_data.map(item => { return item.REGION }))]
       this.CountrychartData.datasets[0].data = this.CountrychartData.labels.map(item => {
-        return this.read_xml_data.filter(item2 => { return item2.REGION == item }).length
+        return this.read_data.filter(item2 => { return item2.REGION == item }).length
       })
       this.CountrychartData.datasets[0].backgroundColor = this.CountrychartData.labels.map(() => {
         return '#' + Math.floor(Math.random() * 16777215).toString(16)
       })
       // Nationarity Chart
-      this.NationchartData.labels = [...new Set(this.read_xml_data.map(item => { return item.NATIONALITY }))]
+      this.NationchartData.labels = [...new Set(this.read_data.map(item => { return item.NATIONALITY }))]
       this.NationchartData.datasets[0].data = this.NationchartData.labels.map(item => {
-        return this.read_xml_data.filter(item2 => { return item2.NATIONALITY == item }).length
+        return this.read_data.filter(item2 => { return item2.NATIONALITY == item }).length
       })
       this.NationchartData.datasets[0].backgroundColor = this.NationchartData.labels.map(() => {
         return '#' + Math.floor(Math.random() * 16777215).toString(16)
       })
       // Age Chart
-      this.AgechartData.labels = [...new Set(this.read_xml_data.map(item => { return Math.floor(Math.abs(new Date() - new Date(item.BIRTHDAY.split("-")[2], item.BIRTHDAY.split("-")[1], item.BIRTHDAY.split("-")[0])) / (1000 * 60 * 60 * 24 * 365)) }))]
+      this.AgechartData.labels = [...new Set(this.read_data.map(item => { return Math.floor(Math.abs(new Date() - new Date(item.BIRTHDAY.split("-")[2], item.BIRTHDAY.split("-")[1], item.BIRTHDAY.split("-")[0])) / (1000 * 60 * 60 * 24 * 365)) }))]
       this.AgechartData.datasets[0].data = this.AgechartData.labels.map(item => {
-        return this.read_xml_data.filter(item2 => { return Math.floor(Math.abs(new Date() - new Date(item2.BIRTHDAY.split("-")[2], item2.BIRTHDAY.split("-")[1], item2.BIRTHDAY.split("-")[0])) / (1000 * 60 * 60 * 24 * 365)) == item }).length
+        return this.read_data.filter(item2 => { return Math.floor(Math.abs(new Date() - new Date(item2.BIRTHDAY.split("-")[2], item2.BIRTHDAY.split("-")[1], item2.BIRTHDAY.split("-")[0])) / (1000 * 60 * 60 * 24 * 365)) == item }).length
       })
-      console.log(this.AgechartData.datasets[0].data)
       this.AgechartData.datasets[0].backgroundColor = this.AgechartData.labels.map(() => {
         return '#' + Math.floor(Math.random() * 16777215).toString(16)
       })
@@ -221,7 +219,7 @@ export default {
       xml.send();
       xml.onreadystatechange = () => {
         if (xml.readyState == 4 && xml.status == 200) {
-          this.read_xml_data = readXmlFile(this);
+          this.read_data = readXmlFile(this);
           this.now_data = "XML File";
           this.ChartInit()
         }
@@ -260,7 +258,7 @@ export default {
       xml.send();
       xml.onreadystatechange = () => {
         if (xml.readyState == 4 && xml.status == 200) {
-          this.read_xml_data = readXmlFile(this);
+          this.read_data = readXmlFile(this);
           this.now_data = "XML File";
           this.ChartInit()
         }
@@ -310,10 +308,10 @@ export default {
     importReadXMLtoDB() {
       this.axios
         .post("api/update/devclub", {
-          data_array: this.read_xml_data,
+          data_array: this.read_data,
         })
         .then((res) => {
-          this.read_xml_data = res.data.data
+          this.read_data = res.data.data
           this.now_data = "Sqlite3 Database";
         })
     },
@@ -323,7 +321,7 @@ export default {
         .get("api/get/devclub")
         .then((res) => {
           if (res.data.data.length != 0) {
-            this.read_xml_data = res.data.data
+            this.read_data = res.data.data
             this.now_data = "Sqlite3 Database";
             this.ChartInit()
           }
@@ -331,7 +329,7 @@ export default {
     },
 
     loadJSON() {
-      const data = JSON.stringify(this.read_xml_data)
+      const data = JSON.stringify(this.read_data)
       const blob = new Blob([data], { type: 'text/plain' })
       const e = document.createEvent('MouseEvents'),
         a = document.createElement('a');
@@ -343,9 +341,9 @@ export default {
     },
 
     async exportCSVByNATIONALITY() {
-      var nation_lists = [...new Set(this.read_xml_data.map((item) => { return item.NATIONALITY }))];
+      var nation_lists = [...new Set(this.read_data.map((item) => { return item.NATIONALITY }))];
       for await (let nation of nation_lists) {
-        var data_by_nation = this.read_xml_data.filter((item) => {
+        var data_by_nation = this.read_data.filter((item) => {
           return item.NATIONALITY == nation;
         })
 
@@ -368,8 +366,8 @@ export default {
     async exportCSVAll() {
       let csvContent = "data:text/csv;charset=utf-8,";
       csvContent += [
-        Object.keys(this.read_xml_data[0]).join(","),
-        ...this.read_xml_data.map(item => Object.values(item).join(","))
+        Object.keys(this.read_data[0]).join(","),
+        ...this.read_data.map(item => Object.values(item).join(","))
       ]
         .join("\n")
         .replace(/(^\[)|(\]$)/gm, "");
@@ -381,6 +379,7 @@ export default {
       link.click();
     },
   },
+
   beforeMount() {
     this.loadDB()
   },
