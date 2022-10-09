@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\hackathon",
+    "\\hackathon\\ConsoleApp1"
   ],
-  "SelectedNode": "\\D:\\hackatrain",
+  "SelectedNode": "\\hackathon\\ConsoleApp1\\Program.cs",
   "PreviewInSolutionExplorer": false
 }
