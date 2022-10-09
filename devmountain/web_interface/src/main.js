@@ -15,7 +15,7 @@ const vuetify = createVuetify({
   components,
   directives,
   ssr: true,
-}); // Replaces new Vuetify()
+});
 
 app.use(vuetify);
 
