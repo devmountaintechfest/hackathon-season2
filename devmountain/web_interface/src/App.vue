@@ -55,9 +55,8 @@ export default {
 
         // Start to fetch the data by using TagName
         for (i = 0; i < x.length; i++) {
-          if (x[i].getElementsByTagName("STATUS")[0].childNodes[0].nodeValue == 1 )
-
-            if (read_xml.some((item) => item.PASSPORT == x[i].getElementsByTagName("PASSPORT")[0].childNodes[0].nodeValue) == false) {
+          // if (x[i].getElementsByTagName("STATUS")[0].childNodes[0].nodeValue == 1 ){
+          //   if (read_xml.some((item) => item.PASSPORT == x[i].getElementsByTagName("PASSPORT")[0].childNodes[0].nodeValue) == false) {
               read_xml.push({
                 EMPID: x[i].getElementsByTagName("EMPID")[0].childNodes[0].nodeValue,
                 PASSPORT: x[i].getElementsByTagName("PASSPORT")[0].childNodes[0].nodeValue,
@@ -73,7 +72,8 @@ export default {
                 STATUS: x[i].getElementsByTagName("STATUS")[0].childNodes[0].nodeValue,
                 REGION: x[i].getElementsByTagName("REGION")[0].childNodes[0].nodeValue,
               });
-            }
+              // }
+            // }
         }
         return read_xml;
       }
