@@ -71,7 +71,7 @@
 https://github.com/firstcontributions/first-contributions 
 
 ## How to submit
-- Create a PR to hackathon season 2 repository, add your name or team information.
+- Create a PR to hackathon season 2 repository, add your name or team information and your repo link
 
 
 ## Q&A คำถามที่พบบ่อย
