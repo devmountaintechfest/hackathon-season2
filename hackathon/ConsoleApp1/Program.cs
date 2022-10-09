@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using ConsoleApp1.modules.Functions;
 using ConsoleApp1.modules.module;
 namespace ConsoleApp1
 {
@@ -14,7 +15,7 @@ namespace ConsoleApp1
                 "Stop program",
                 "Convert Xml To CSV",
                 "Convert Csv To Xml",
-                "tranfer data DevMountain to DevClub",
+                "tranfer data DevMountain to DevClub (csv to db)",
                 "split csv with nationallity"
             };
             string menu = "";
@@ -60,8 +61,7 @@ namespace ConsoleApp1
                             path = Console.ReadLine();
                             // ../../../../data-devclub-1.csv
                             List<Employees> employee = GlobalFunction.csvToXml(path, output);
-                            
-                            List<Employees> dataSender = new List<Employees>();
+                            List<Employees> devMoutrain = new List<Employees>();
                             foreach (var emp in employee)
                             {
                                 // filter data 
@@ -70,30 +70,99 @@ namespace ConsoleApp1
                                     string[] year = emp.empHired.Split('-');
                                     if (2022 - Convert.ToInt32(year[2]) >= 3)
                                     {
-                                        dataSender.Add(emp);
+                                        devMoutrain.Add(emp);
                                     }
                                 }
                             }
-                            GlobalFunction.genarateCsvFormat(dataSender,"../../../../dataDevclub");
+                            //dev club getdata 
+                            List<Employees> devClub =  sqlite.getData("select * from dev_club;");
+                           
+                            List<Employees> delDevClub = new List<Employees>();
+                            List<Employees> devClubFilter = new List<Employees>();
+                            foreach (var emp in devClub)
+                            {
+                                // filter data 
+                                if (emp.empStatus != "3" )
+                                {
+                                    devClubFilter.Add(emp);
+                                }
+                                else
+                                {
+                                    delDevClub.Add(emp);
+                                }
+                            }
+                           
+                            List<Employees> dataSender = new List<Employees>();
+                            foreach (var moutrain in devMoutrain)
+                            {
+                                foreach (var club in devClubFilter)
+                                {
+                                    if ((moutrain.empId != club.empId) || (moutrain.passPort != club.passPort))
+                                    {
+
+                                        dataSender.Add(moutrain);
+                                    }
+                                    else
+                                    {
+                                        delDevClub.Add(moutrain);
+                                    }
+                                }
+                            }
+                            foreach (var item in delDevClub)
+                            {
+                                Console.WriteLine(devClubFilter);
+                            }
+                            // migration data 2 data base 
+                            // GlobalFunction.genarateCsvFormat(dataSender,"../../../../dataDevclub");
+                            // send to db
+                        }
+                        else if (menuSelect == 5)
+                        {
+                            string path = "", output = "";
+                            Console.WriteLine("we need csv file for split please enter file path");
+                            // ../../../../data-devclub-1.csv
+                            path = Console.ReadLine();
+                            List<Employees> employee = GlobalFunction.csvToXml(path, output);
+                            string nations = "";
+                            nations += employee[0].empNationality.ToString().Trim();
+                            foreach (var emp in employee)
+                            {
+                                bool add = true;
+                                string[] nation = nations.Split('-');
+
+                                for (int idx = 0;idx < nation.Length;idx++)
+                                {
+                                    if (emp.empNationality.Trim() != nation[idx].Trim())
+                                    { 
+                                        add = true;
+                                    }
+                                    else
+                                    {
+                                        add = false;
+                                    }
+                                }
+                                if (add)
+                                {
+                                    Console.WriteLine(nations);
+                                    Console.WriteLine(emp.empNationality);
+                                    nations += "-"+emp.empNationality.ToString().Trim();
+                                }
+                            }
+                          /*  Console.WriteLine(nations);*/
+                            Console.WriteLine(nations.Split('-').Length);
+                            /* GlobalFunction.csvToXml(path, "../../../../dataDevclub.csv");*/
+
                         }
                     }
-                    else if (menuSelect == 5)
-                    {
-                        string path = "", output = "";
-                        Console.WriteLine("we need csv file for split please enter file path");
-                        // ../../../../data-devclub-1.csv
-                        path = Console.ReadLine();
-                        List<Employees> employee = GlobalFunction.XmlToCsv(path, output);
-                        GlobalFunction.csvToXml(path, "../../../../dataDevclub.csv");
-
-                    }
+                    
                     else
                     {
                         Console.WriteLine("don't match please try again\n");
                     }
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    Console.WriteLine(e.Message);
                     Console.WriteLine("something what wrong error!!\n");
                 }  
                 

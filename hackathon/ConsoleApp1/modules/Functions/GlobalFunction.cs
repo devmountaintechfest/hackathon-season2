@@ -88,13 +88,14 @@ namespace ConsoleApp1.modules.module
         private static List<Employees> formatDataToEmployeeObj(List<string[]> dataSet)
         {
             List<Employees> employee = new List<Employees>();
-            int idx = 0;
+          
             foreach (var item in dataSet)
             {
-                idx = 1;
+                int idx = 1;
                 Employees temp = new Employees();
                 foreach (var att in item)
                 {
+                Console.WriteLine(att);
                     string[] dataExtract = att.Split('>');
                     string[] dataValue = dataExtract[1].Split('<');
                     // idx เเทน attribute ของ data ทั้ง 12 ตัว
