@@ -147,7 +147,7 @@ def dataprep1(args: String*) = {
 	println(" Write JSON ")
 	val json1File = new PrintWriter("devclub.json")
 	while (rs1.next) {
-		json1File.println(s"""{ "EMPID": "${rs1.getString(1)}", "PASSPORT": "${rs1.getString(2)}", "FIrs1TNAME": "${rs1.getString(3)}", "LASTNAME": "${rs1.getString(4)}", "GENDER": "${rs1.getString(5)}", "BIRTHDAY": "${rs1.getString(6)}", "NATIONALITY": "${rs1.getString(7)}", "HIRED": "${rs1.getString(8)}", "DEPT": "${rs1.getString(9)}", "POSITION": "${rs1.getString(10)}", "STATUS": "${rs1.getString(11)}", "REGION": "${rs1.getString(12)}" }""")
+		json1File.println(s"""{ "EMPID": "${rs1.getString(1)}", "PASSPORT": "${rs1.getString(2)}", "FIRSTNAME": "${rs1.getString(3)}", "LASTNAME": "${rs1.getString(4)}", "GENDER": "${rs1.getString(5)}", "BIRTHDAY": "${rs1.getString(6)}", "NATIONALITY": "${rs1.getString(7)}", "HIRED": "${rs1.getString(8)}", "DEPT": "${rs1.getString(9)}", "POSITION": "${rs1.getString(10)}", "STATUS": "${rs1.getString(11)}", "REGION": "${rs1.getString(12)}" }""")
 	}
 	json1File.close
 	(records \ "record").map(r => ((r \ "REGION").text, r)).groupBy(_._1).map {
