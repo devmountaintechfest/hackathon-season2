@@ -1,5 +1,40 @@
 # hackathon-season2
 
+## USAGE
+To generate CSV from XML:
+> python xml2csv.py
+
+```text
+usage: xml2csv.py [-h] [--xml XML] [--csv CSV] [--convert-default]
+
+optional arguments:
+  -h, --help         show this help message and exit
+  --xml XML          Specify the name of a xml file to read from.
+  --csv CSV          Specify the name of a csv file to write to.
+  --convert-default  Convert active 3 years experience+ Airhostess, Pilot, Steward to csv file without duplicate ID and passport number.
+```
+
+To execute DAL and generate JSON:
+> python csv2sqlite.py
+```text
+usage: csv2sqlite.py [-h] [--csv CSV] [--json JSON] [--database DATABASE] [--table-name TABLE_NAME] [--region-param REGION_PARAM] [--dept-param DEPT_PARAM] [--nation-param NATION_PARAM]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --csv CSV             Specify a csv file.
+  --json JSON           Specify a json outfile.
+  --database DATABASE   Specify the name of a database file to write to.
+  --table-name TABLE_NAME
+                        Specify the name of a table
+  --region-param REGION_PARAM
+                        Specify parameter for SQLite View region-based query
+  --dept-param DEPT_PARAM
+                        Specify parameter for SQLite View department-based query
+  --nation-param NATION_PARAM
+                        Specify parameter for SQLite View nationality-based query
+
+```
+
 ## เลข Status จะมีตามนี้ครับ
 - 1 = Active
 - 2 = Resigned
@@ -28,15 +63,16 @@
 - Creative ตอนทำ Data visualization 
 - ผลลัพธ์จาก SQLlite ต้องได้เป็น **JSON** format
 
-**ตัวอย่าง Data visualization**
+**Data visualization**
 
-[dev-mountain-visualization](https://dev-moutain-dataviz.netlify.app/)
+[Click me](data-visualization.ipynb)
 
 
-## ตัวอย่างการสร้าง PR
-ทีม Dev mountain
+## การสร้าง PR
+ทีม นอนต่อเลยได้ไหม
 สมาชิก
-- [annibuliful](https://github.com/annibuliful)
-- [lordbenz](https://github.com/lordbenz)
+- [N.SX](https://github.com/rsxss)
+- [Sathipp](https://github.com/Sathipp)
+- [Jiruschai](https://github.com/JirusAnun)
 
-Repo: [hackathon](https://github.com/devmountaintechfest/hackathon-season2)
+Repo: [hackathon](https://github.com/rsxss/hackathon-season2)

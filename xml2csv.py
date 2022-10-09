@@ -99,7 +99,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--convert-default",
         action="store_false",
-        help="Only convert actives 3 years experiences+ Airhostess, Pilot, Steward to csv file without duplicate ID and passport number.",
+        help="Convert actives 3 years experiences+ Airhostess, Pilot, Steward to csv file without duplicate ID and passport number.",
     )
 
     args = parser.parse_args()
