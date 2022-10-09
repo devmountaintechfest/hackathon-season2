@@ -4,6 +4,8 @@ from util import DataUtility,FileUtility,DateUtility,usedtime
 import json
 import time
 import sys
+import os
+import csv
 
 @usedtime
 class Executor(object):
@@ -89,6 +91,24 @@ class Executor(object):
         dataUtility.save(self.results)
 
     @usedtime
+    def loadFromCSV(self):
+        csvPath=self.config["csvPath"]
+        dataUtility=DataUtility(self.config['dbName'])
+        dataUtility.dbSetup()
+        print("Load fron csv..")
+        for file in os.listdir(csvPath):
+            if os.path.isfile(os.path.join(csvPath, file)):
+                print(file)
+                fileDatas=[]
+                with open(os.path.join(csvPath, file), 'r') as f:
+                    csvData = csv.reader(f, delimiter=',')
+                    next(csvData)
+                    for row in csvData:
+                        fileData=(row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9],row[10],row[11])
+                        fileDatas.append(fileData)
+                    dataUtility.save(fileDatas)
+
+    @usedtime
     def generateSummary(self):
         print("Generate Summary..")
         results=[]
@@ -140,7 +160,8 @@ def main():
                 exe.extract()
                 exe.transform()
                 exe.generateCSVByNationality()
-                exe.load()
+                # exe.load()
+                exe.loadFromCSV()
                 exe.generateSummary()
                 
 
