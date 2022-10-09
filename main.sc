@@ -19,6 +19,7 @@ import sys.process._
 @main
 def dataprep1(args: String*) = {
 	try {
+		os.remove(os.pwd / "devclub-old.csv")
 		os.remove(os.pwd / "devclub.csv")
 		os.remove(os.pwd / "devclub.json")
 		os.remove(os.pwd / "result.sqlite")
@@ -29,7 +30,7 @@ def dataprep1(args: String*) = {
 	var records = scala.xml.XML.loadFile("data-devclub-1.xml")
 	println(" Write CSV ")
 	val headFile = "EMPID,PASSPORT,FIRSTNAME,LASTNAME,GENDER,BIRTHDAY,NATIONALITY,HIRED,DEPT,POSITION,STATUS,REGION"
-	val csv1File = new PrintWriter("devclub.csv")
+	val csv1File = new PrintWriter("devclub-old.csv")
 	csv1File.println(headFile)
 	for (record <- records \ "record") {
 		csv1File.print((record \ "EMPID").text)
@@ -124,6 +125,25 @@ def dataprep1(args: String*) = {
 		}
 	}
 	var rs1 = statement.executeQuery("SELECT * FROM DEV_CLUB")
+	val csv2File = new PrintWriter("devclub.csv")
+	csv2File.println(headFile)
+	while (rs1.next) {
+		csv2File.print(rs1.getString(1))
+		csv2File.print(","); csv2File.print(rs1.getString(2))
+		csv2File.print(","); csv2File.print(rs1.getString(3))
+		csv2File.print(","); csv2File.print(rs1.getString(4))
+		csv2File.print(","); csv2File.print(rs1.getString(5))
+		csv2File.print(","); csv2File.print(rs1.getString(6))
+		csv2File.print(","); csv2File.print(rs1.getString(7))
+		csv2File.print(","); csv2File.print(rs1.getString(8))
+		csv2File.print(","); csv2File.print(rs1.getString(9))
+		csv2File.print(","); csv2File.print(rs1.getString(10))
+		csv2File.print(","); csv2File.print(rs1.getString(11))
+		csv2File.print(","); csv2File.print(rs1.getString(12))
+		csv2File.println()
+	}
+	csv2File.close
+	var rs2 = statement.executeQuery("SELECT * FROM DEV_CLUB")
 	println(" Write JSON ")
 	val json1File = new PrintWriter("devclub.json")
 	while (rs1.next) {

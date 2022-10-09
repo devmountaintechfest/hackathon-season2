@@ -1,0 +1,101 @@
+EMPID,PASSPORT,FIRSTNAME,LASTNAME,GENDER,BIRTHDAY,NATIONALITY,HIRED,DEPT,POSITION,STATUS,REGION
+1,OQI75XIE4UX,Christopher,Kennedy,1,05-02-1978,South Korea,20-02-2005,Flight Planning,Steward,2,Europe
+2,CDC87ETW8EQ,Burton,Gallegos,0,22-09-1960,Germany,29-10-2021,Aircraft Maintenance,Pilot,1,APAC
+3,JUI65YBK7AF,Jada,Bender,0,28-05-1963,Pakistan,11-02-2001,Pilot,Pilot,1,Canada
+4,CYB72WYU6UR,Winter,Blair,0,14-02-1993,Austria,24-03-2022,Pilot,Steward,4,Ocenia
+5,AZE20CSG4MU,Lillian,Reese,0,03-12-1982,Ukraine,19-05-2002,Flight Planning,Steward,1,Canada
+6,KXU40SKR1YO,Simone,Mosley,0,20-11-1994,Norway,10-03-2023,Flight Planning,Steward,2,Canada
+7,SBJ34IXU7TC,Madeson,Mcintosh,1,03-11-1997,Mexico,22-08-2007,Flight Attendance,Steward,0,Ocenia
+8,UCT91SOT6EN,Josephine,Hansen,1,12-10-1982,United States,24-12-2021,Flight Planning,Pilot,4,Middle East
+9,WOW94MLI6CM,Prescott,Dudley,0,07-04-1990,Sweden,16-11-2012,Pilot,Steward,2,Canada
+10,YHF52IXT9VG,Lamar,Reeves,1,13-09-1988,Philippines,26-09-2003,Flight Attendance,Pilot,2,Canada
+11,LBI65YUK1BG,Hamilton,Duffy,1,09-11-1987,Vietnam,31-12-2021,Aircraft Maintenance,Steward,4,APAC
+12,KGM77GAL2UW,Levi,Atkinson,0,08-10-1969,Sweden,13-09-2002,Aircraft Maintenance,Steward,4,Europe
+13,UOM66JXI0ZD,Levi,Myers,0,29-12-1998,Sweden,13-09-2004,Aircraft Maintenance,Steward,0,Europe
+14,TAP82QBU5PN,Lunea,Sweet,1,27-10-1992,Netherlands,15-03-2004,Pilot,Airhostess,3,Middle East
+15,MOJ66TSD0LH,Jade,Simmons,1,04-03-1961,Costa Rica,24-12-2000,Aircraft Maintenance,Steward,0,Canada
+16,WRS57BWI1RG,Serina,Tran,1,28-11-1980,Sweden,18-07-2010,Flight Planning,Steward,2,Canada
+17,TZU74JZT1GC,Talon,Santiago,1,17-04-1969,United States,02-09-2015,Aircraft Maintenance,Steward,0,Canada
+18,DFE84WHT0ED,Joelle,Boyle,0,19-07-1962,Germany,28-03-2013,Flight Planning,Airhostess,0,Ocenia
+19,SYT22ZIA2ZU,Thaddeus,Martinez,1,02-04-1975,Costa Rica,11-07-2015,Flight Attendance,Steward,0,Middle East
+20,JDS74VWV5XG,Lester,Edwards,1,11-10-1973,India,03-09-2000,Flight Planning,Airhostess,0,Canada
+21,SMN51EPH5FE,Aline,Riley,0,04-06-1989,India,05-04-2001,Flight Attendance,Pilot,3,APAC
+22,SOM23XJR5NC,Igor,Ochoa,1,11-10-1972,Colombia,02-11-2005,Flight Planning,Airhostess,4,APAC
+23,NFH65BYM0VB,Armand,Horn,0,24-05-1987,Netherlands,19-06-2007,Aircraft Maintenance,Airhostess,1,Ocenia
+24,EQI56KFP6NU,Chaney,Ramsey,1,13-06-1972,South Africa,19-12-2002,Aircraft Maintenance,Steward,2,USA
+25,BJQ37WBQ4UL,Leandra,Mayer,0,07-09-1974,Philippines,17-09-2019,Pilot,Steward,0,Europe
+26,CCE27MGJ8KI,Chloe,Blanchard,1,29-12-1998,Russian Federation,20-05-2001,Pilot,Steward,2,Middle East
+27,EDF66USR7HP,Anjolie,Dudley,1,27-12-1975,United Kingdom,28-07-2004,Aircraft Maintenance,Steward,0,USA
+28,VSN53SUD8EA,Lana,Aguirre,1,30-10-1979,Pakistan,16-09-2020,Flight Attendance,Pilot,2,Middle East
+29,CMK62UAD3VK,Rowan,Leonard,1,15-07-1974,Germany,27-03-2004,Aircraft Maintenance,Pilot,1,Ocenia
+30,WJE55UKG3YU,Clarke,Norman,1,15-06-1987,Pakistan,13-01-2022,Aircraft Maintenance,Steward,3,USA
+31,JBK92QBQ9CF,Kyra,Noel,1,25-08-1972,China,27-11-2005,Flight Attendance,Airhostess,3,Canada
+32,KUO96QIG4VK,Stephen,Dickson,0,02-05-1962,Netherlands,15-03-2013,Aircraft Maintenance,Airhostess,4,APAC
+33,EWD45RJW5YK,Carter,Velasquez,0,23-11-1967,Indonesia,27-02-2005,Flight Planning,Pilot,1,APAC
+34,BFS82MEY3CX,Selma,Bush,0,26-03-1972,Italy,10-10-2008,Flight Attendance,Airhostess,1,USA
+35,XPI62OGX6QX,Roary,Frank,1,30-12-1979,South Korea,12-11-2008,Flight Attendance,Airhostess,2,Middle East
+36,TLM36YPP3NE,Vera,Ashley,1,02-06-1982,Peru,12-03-2022,Flight Attendance,Pilot,3,Canada
+37,GWY17TOL2UG,Matthew,Vasquez,1,17-03-1995,Ireland,01-07-2007,Flight Planning,Steward,4,Ocenia
+38,KMG07QVW7MP,Kylynn,Mullins,0,19-04-1979,Vietnam,07-11-2020,Aircraft Maintenance,Steward,0,Middle East
+39,DDI37UIV8QD,Trevor,Wyatt,0,14-02-1998,Turkey,15-03-2010,Pilot,Airhostess,2,USA
+40,JHJ72ODJ7RA,Gregory,Bryant,0,14-09-1968,Austria,10-01-2017,Flight Planning,Pilot,0,Middle East
+41,ITS61SWZ4PW,Duncan,Morrison,1,24-04-1975,Mexico,01-03-2012,Flight Planning,Steward,0,Europe
+42,QSP69GYO0YK,Rajah,Roach,0,13-12-1992,Costa Rica,26-05-2011,Flight Attendance,Pilot,0,Europe
+43,JWF56EYP2AN,Sophia,Fuller,1,03-01-1986,Peru,15-02-2012,Pilot,Steward,0,Europe
+44,VTF75CUM7PC,Rhea,Keith,0,28-06-2000,Costa Rica,30-10-2010,Flight Attendance,Airhostess,4,Canada
+45,MIF51GHC3PF,Walker,Jarvis,0,26-06-1988,Philippines,22-04-2004,Aircraft Maintenance,Pilot,3,Ocenia
+46,ZGJ51FDM2LC,Reese,Christensen,0,15-09-1993,Turkey,10-08-2011,Aircraft Maintenance,Pilot,3,Ocenia
+47,CQW50GAD3DS,Martin,Payne,1,12-05-1961,Austria,07-10-2015,Pilot,Pilot,4,Ocenia
+48,MKI89CUF6PR,Fuller,Alvarez,0,06-01-1988,Austria,30-12-2016,Flight Attendance,Pilot,4,APAC
+49,PRX53TYM5LT,Macon,Trevino,1,01-10-1997,Colombia,17-12-2019,Flight Planning,Steward,0,Ocenia
+50,MRC33GHJ2KW,Calvin,Roach,1,16-04-1999,Mexico,18-03-2011,Flight Attendance,Steward,1,Europe
+51,BPO49TXH0XX,Charles,Kim,0,30-12-1968,South Africa,12-09-2015,Flight Planning,Pilot,2,Ocenia
+52,THN13DDU7PZ,Kieran,Hancock,1,01-07-1976,Italy,14-04-2023,Flight Planning,Airhostess,0,USA
+53,EKI78MBL1DM,Irene,Moon,0,02-10-1973,United Kingdom,21-04-2015,Flight Attendance,Airhostess,2,USA
+54,ZCM30CQE2UN,Noelani,Watkins,0,31-08-1969,United Kingdom,18-07-2016,Aircraft Maintenance,Airhostess,4,Europe
+55,JJG71FLY1XR,Paula,Delaney,0,18-09-1986,Brazil,29-01-2003,Aircraft Maintenance,Steward,2,Middle East
+56,UWS82URG4LM,Keelie,Crosby,0,17-07-1985,Vietnam,01-04-2002,Flight Planning,Steward,0,USA
+57,GRE66NCT2EF,Aimee,Stone,0,08-09-1990,Spain,25-07-2007,Flight Attendance,Pilot,3,Middle East
+58,TZT98UWC8BW,Donna,Clay,1,25-12-1977,Peru,16-05-2003,Aircraft Maintenance,Steward,4,APAC
+59,VDF94IVV1UX,Nomlanga,Stout,0,03-04-1975,China,06-08-2009,Flight Planning,Airhostess,0,Canada
+60,IUE46AKB9OH,Yuri,Evans,1,05-10-1973,Vietnam,18-04-2022,Aircraft Maintenance,Airhostess,0,Ocenia
+61,KGM73NWG1JP,Desirae,Melton,1,07-11-1993,Australia,12-04-2013,Aircraft Maintenance,Airhostess,0,Europe
+62,LYL50VBA1GL,Armando,Moody,1,24-04-1989,Costa Rica,15-04-2020,Flight Planning,Steward,3,USA
+63,UVV50TVB3TS,Maggy,Miles,0,16-01-1972,Mexico,02-08-2015,Flight Planning,Pilot,3,Ocenia
+64,GSW02GPL6OY,Wyoming,Joyner,0,20-11-1991,Turkey,17-04-2022,Flight Attendance,Steward,0,Europe
+65,UCZ18XLY9OA,Solomon,Estes,0,16-07-1968,Philippines,08-02-2014,Aircraft Maintenance,Airhostess,0,USA
+66,WKV12UQC6QF,Zachery,Valentine,0,04-06-1971,Philippines,25-08-2011,Flight Attendance,Steward,1,Middle East
+67,BVY21SKG6CE,Kitra,Green,0,10-07-1967,Ireland,12-09-2006,Flight Planning,Airhostess,0,Middle East
+68,GDJ74WSM7LG,Autumn,Page,0,01-11-1969,Brazil,24-04-2001,Aircraft Maintenance,Airhostess,3,Middle East
+69,OOR56TFJ3XV,Nehru,Vargas,1,25-09-1976,Germany,27-08-2007,Flight Attendance,Pilot,2,USA
+70,RAX87DEX6CC,Ferris,Houston,0,01-05-1981,Singapore,23-02-2016,Pilot,Pilot,3,Canada
+71,FSQ47TYA9DJ,Pascale,Silva,0,13-10-1968,Netherlands,27-09-2007,Pilot,Steward,4,Canada
+72,AUY27DLM5FK,Leilani,Moran,0,25-08-1996,Belgium,08-04-2005,Aircraft Maintenance,Airhostess,2,Ocenia
+73,XIJ68PKR7QT,Darius,Serrano,0,29-04-1990,United States,03-11-2005,Pilot,Steward,4,Middle East
+74,HJL93JJY5GH,September,Morin,1,15-09-1997,Mexico,26-08-2014,Aircraft Maintenance,Steward,4,APAC
+75,KVI04NMS2QH,Shay,Mcdonald,1,29-12-1999,South Africa,07-03-2007,Aircraft Maintenance,Airhostess,4,Ocenia
+76,YWT45VVP7KK,Nathan,Floyd,0,04-01-1988,Australia,09-10-2008,Flight Planning,Steward,3,USA
+77,EOP89YXA3YW,Wayne,Bowman,0,02-03-1991,Vietnam,28-03-2007,Aircraft Maintenance,Steward,2,APAC
+78,YHV05IUP6ER,Willa,Ferguson,0,10-12-1969,Italy,08-07-2017,Flight Planning,Steward,3,Ocenia
+79,RCQ71JXX4NH,Teagan,Daniel,1,02-09-1983,United States,22-05-2005,Pilot,Steward,0,APAC
+80,EUC74ENE9ZK,Ryan,Rush,0,13-06-1998,Italy,31-07-2019,Aircraft Maintenance,Pilot,1,Middle East
+81,DCD61JXD7UO,Brady,Hernandez,1,26-11-1961,Russian Federation,01-09-2022,Pilot,Airhostess,2,Europe
+82,ISX87UNW0AD,Herrod,Oliver,0,07-01-1965,Peru,16-01-2023,Flight Attendance,Airhostess,0,Europe
+83,LJK19GHE1TM,Dalton,Roberson,0,02-05-1994,New Zealand,21-06-2012,Aircraft Maintenance,Airhostess,0,Europe
+84,KMS88HTI5IR,Chanda,Wynn,1,10-07-1993,Indonesia,20-11-2014,Flight Planning,Steward,2,USA
+85,MUE55VMY6MX,Solomon,Booker,0,28-03-1961,Nigeria,18-09-2007,Aircraft Maintenance,Steward,3,APAC
+86,WND47SBT6OF,Yardley,Buckley,1,24-06-1989,Singapore,04-06-2002,Flight Attendance,Pilot,3,USA
+87,RVO63HMC4NL,Ferris,Gilbert,0,24-07-1969,Peru,25-12-2002,Flight Planning,Steward,4,Europe
+88,TRJ51LBJ6II,Shaeleigh,Roth,1,04-02-1986,India,15-03-2004,Aircraft Maintenance,Steward,4,Europe
+89,PHE40UOS0GY,Amanda,Schwartz,1,03-04-1983,Vietnam,06-08-2019,Aircraft Maintenance,Steward,4,APAC
+90,MCJ12FYX5KN,Maxine,Branch,1,29-05-1979,Norway,17-10-2018,Pilot,Steward,0,Europe
+91,WEA16MFX7OE,Drew,Gordon,0,31-10-1981,Sweden,19-04-2015,Aircraft Maintenance,Steward,2,Ocenia
+92,HET44XPQ0RR,Lucy,Finch,1,21-02-1975,Indonesia,19-05-2002,Pilot,Steward,4,Middle East
+93,UXL43IOW6OV,Honorato,Maxwell,1,09-03-1982,France,04-02-2017,Aircraft Maintenance,Airhostess,1,Europe
+94,BVQ96KDP3EL,Darryl,Nichols,1,29-05-1988,Ukraine,19-02-2001,Aircraft Maintenance,Steward,0,USA
+95,OUP31WOE2IE,Dara,Wilcox,1,29-06-1996,Singapore,18-05-2011,Flight Attendance,Airhostess,1,Canada
+96,LJB26BQM6PS,Laith,Whitfield,0,14-01-1987,Russian Federation,09-02-2001,Pilot,Airhostess,0,APAC
+97,SUF73DKV4QE,Dante,Hart,0,21-12-1999,Peru,22-02-2016,Pilot,Pilot,1,Europe
+98,DOB31QXV4GZ,Moana,Walsh,1,03-05-1995,Brazil,21-04-2002,Pilot,Airhostess,3,Ocenia
+99,OUB92IKA7AU,Jonah,Solomon,1,25-05-1985,Pakistan,30-04-2023,Flight Attendance,Pilot,3,Europe
+100,WIN16ELU8GN,Orlando,Mayer,0,11-01-1961,Austria,07-04-2003,Pilot,Pilot,0,APAC
