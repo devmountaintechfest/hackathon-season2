@@ -6,6 +6,8 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+
 namespace ConsoleApp1.modules.Functions
 {
     public static class sqlite
@@ -40,19 +42,15 @@ namespace ConsoleApp1.modules.Functions
             conn.Close();
             return list;
         }
-        public static void romoveData(string cmd)
+        public static void romoveData(List<Employees> listDel)
         {
-            SQLiteConnection conn = new SQLiteConnection("Data Source=database.db; Version=3;New=True;Compress=True;");
+            SQLiteConnection conn = new SQLiteConnection("Data Source=../../database/dataDevMoutrain.db; Version=3;New=True;Compress=True;");
             conn.Open();
-            SQLiteDataReader sqlite_datareader;
-            SQLiteCommand sqlite_cmd;
-            sqlite_cmd = conn.CreateCommand();
-            sqlite_cmd.CommandText = cmd;
-            sqlite_datareader = sqlite_cmd.ExecuteReader();
-            while (sqlite_datareader.Read())
+            foreach (var item in listDel)
             {
-                string myreader = sqlite_datareader.GetString(0);
-                Console.WriteLine(myreader);
+                Console.WriteLine("delete id :"+ item.empId);
+                SQLiteCommand cmd = new SQLiteCommand("DELETE FROM dev_club where dev_club.emp_Id=" + Convert.ToInt32(item.empId), conn);
+                cmd.ExecuteNonQuery();
             }
             conn.Close();
         }

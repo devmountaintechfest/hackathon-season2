@@ -16,7 +16,8 @@ namespace ConsoleApp1
                 "Convert Xml To CSV",
                 "Convert Csv To Xml",
                 "tranfer data DevMountain to DevClub (csv to db)",
-                "split csv with nationallity"
+                "split csv with nationallity",
+                "get json file"
             };
             string menu = "";
             while (!stop)
@@ -41,18 +42,26 @@ namespace ConsoleApp1
                         else if (menuSelect == 2)
                         {
                             string path = "",output="";
-                            Console.WriteLine("please enter your file path");
+                            Console.WriteLine("please enter your xml file path");
                             path = Console.ReadLine();
                             //for test : ../../../../data-devclub-1.xml
                             Console.WriteLine("please enter your output file path");
                             output = Console.ReadLine();
                             //for test : ../../../../data-devclub-1
                             List<Employees> employee = GlobalFunction.XmlToCsv(path,output);
-                            Console.ReadLine();
+                            Console.WriteLine("success");
                         }
                         else if (menuSelect == 3)
                         {
-                            Console.WriteLine("Convert Csv To Xml");
+                            string pathFile = "", output = "";
+                            Console.Write("please enter your csv file path");
+                            // ../../../../data-devclub-1
+                            pathFile = Console.ReadLine();
+                            Console.WriteLine("please enter your output file path");
+                            output = Console.ReadLine();
+                            // ../../../../data-devclub-1
+                            List<Employees> employee = GlobalFunction.XmlToCsv(pathFile,output);
+                            Console.WriteLine("success");
                         }
                         else if (menuSelect == 4)
                         {
@@ -76,18 +85,18 @@ namespace ConsoleApp1
                             }
                             //dev club getdata 
                             List<Employees> devClub =  sqlite.getData("select * from dev_club;");
-                           
                             List<Employees> delDevClub = new List<Employees>();
                             List<Employees> devClubFilter = new List<Employees>();
                             foreach (var emp in devClub)
                             {
                                 // filter data 
-                                if (emp.empStatus != "3" )
+                                if (emp.empStatus == "1")
                                 {
                                     devClubFilter.Add(emp);
                                 }
                                 else
                                 {
+                                    Console.WriteLine("dwed");
                                     delDevClub.Add(emp);
                                 }
                             }
@@ -97,30 +106,37 @@ namespace ConsoleApp1
                             {
                                 foreach (var club in devClubFilter)
                                 {
-                                    if ((moutrain.empId != club.empId) || (moutrain.passPort != club.passPort))
+                                    if ((moutrain.empId != club.empId) && (moutrain.passPort != club.passPort))
                                     {
 
                                         dataSender.Add(moutrain);
                                     }
                                     else
                                     {
+                                        Console.WriteLine("dwed");
                                         delDevClub.Add(moutrain);
                                     }
                                 }
                             }
+
+                            sqlite.romoveData(delDevClub);
+
                             foreach (var item in delDevClub)
                             {
-                                Console.WriteLine(devClubFilter);
+                                Console.WriteLine(item.empId);
                             }
                             // migration data 2 data base 
                             // GlobalFunction.genarateCsvFormat(dataSender,"../../../../dataDevclub");
                             // send to db
+                            Console.WriteLine("success");
                         }
                         else if (menuSelect == 5)
                         {
                             string path = "", output = "";
                             Console.WriteLine("we need csv file for split please enter file path");
+
                             // ../../../../data-devclub-1.csv
+
                             path = Console.ReadLine();
                             List<Employees> employee = GlobalFunction.csvToXml(path, output);
                             string nations = "";
@@ -129,29 +145,33 @@ namespace ConsoleApp1
                             {
                                 bool add = true;
                                 string[] nation = nations.Split('-');
-
                                 for (int idx = 0;idx < nation.Length;idx++)
                                 {
-                                    if (emp.empNationality.Trim() != nation[idx].Trim())
+                                    if (emp.empNationality.Trim() == nation[idx].Trim())
                                     { 
-                                        add = true;
-                                    }
-                                    else
-                                    {
                                         add = false;
                                     }
                                 }
                                 if (add)
                                 {
-                                    Console.WriteLine(nations);
-                                    Console.WriteLine(emp.empNationality);
                                     nations += "-"+emp.empNationality.ToString().Trim();
                                 }
                             }
-                          /*  Console.WriteLine(nations);*/
-                            Console.WriteLine(nations.Split('-').Length);
-                            /* GlobalFunction.csvToXml(path, "../../../../dataDevclub.csv");*/
-
+                            string[] nationality = nations.Split('-');
+                            foreach (var nation in nationality)
+                            {
+                                List<Employees> nationCsv = new List<Employees>();
+                                foreach (var emp in employee)
+                                {
+                                    if(emp.empNationality == nation)
+                                    {
+                                        nationCsv.Add(emp);
+                                        /*employee.Remove(emp);*/
+                                    }
+                                    GlobalFunction.genarateCsvFormat(nationCsv,"../../../../employees_"+ nation);
+                                }
+                            }
+                            Console.WriteLine("success");
                         }
                     }
                     
@@ -167,17 +187,6 @@ namespace ConsoleApp1
                 }  
                 
             }
-            /* string pathFile = "";
-             *//* string pathFile = @"D:/DevClubData.xml";*//*
-             Console.Write("enter url xml file");
-             pathFile = Console.ReadLine();
-             List<Employees> employee = GlobalFunction.XmlToCsv(pathFile);
-             foreach (var emp in employee)
-             {
-                 Console.WriteLine(emp.ToString());
-             }
-             //List<Employees> employeeXml = GlobalFunction.csvToXml("../../DefaultDevMountainData.csv");
-             Console.ReadLine();*/
             Console.ReadLine();
         }
         
