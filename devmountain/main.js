@@ -28,6 +28,7 @@ sequelize
         console.log("Connection established.");
         db_DevClub = sequelize.define("devclub", {
             EMPID: {
+                primaryKey: true,
                 type: Sequelize.INTEGER
             },
             PASSPORT: {
