@@ -1,0 +1,4 @@
+EMPID,PASSPORT,FIRSTNAME,LASTNAME,GENDER,BIRTHDAY,NATIONALITY,HIRED,DEPT,POSITION,STATUS,REGION
+27,EDF66USR7HP,Anjolie,Dudley,1,1975-12-27,United Kingdom,2004-07-28,Aircraft Maintenance,Steward,0,USA
+53,EKI78MBL1DM,Irene,Moon,0,1973-10-02,United Kingdom,2015-04-21,Flight Attendance,Airhostess,2,USA
+54,ZCM30CQE2UN,Noelani,Watkins,0,1969-08-31,United Kingdom,2016-07-18,Aircraft Maintenance,Airhostess,4,Europe

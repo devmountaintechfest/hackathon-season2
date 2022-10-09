@@ -1,0 +1,7 @@
+EMPID,PASSPORT,FIRSTNAME,LASTNAME,GENDER,BIRTHDAY,NATIONALITY,HIRED,DEPT,POSITION,STATUS,REGION
+11,LBI65YUK1BG,Hamilton,Duffy,1,1987-11-09,Vietnam,2021-12-31,Aircraft Maintenance,Steward,4,APAC
+38,KMG07QVW7MP,Kylynn,Mullins,0,1979-04-19,Vietnam,2020-11-07,Aircraft Maintenance,Steward,0,Middle East
+56,UWS82URG4LM,Keelie,Crosby,0,1985-07-17,Vietnam,2002-04-01,Flight Planning,Steward,0,USA
+60,IUE46AKB9OH,Yuri,Evans,1,1973-10-05,Vietnam,2022-04-18,Aircraft Maintenance,Airhostess,0,Ocenia
+77,EOP89YXA3YW,Wayne,Bowman,0,1991-03-02,Vietnam,2007-03-28,Aircraft Maintenance,Steward,2,APAC
+89,PHE40UOS0GY,Amanda,Schwartz,1,1983-04-03,Vietnam,2019-08-06,Aircraft Maintenance,Steward,4,APAC

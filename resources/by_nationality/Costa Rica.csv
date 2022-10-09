@@ -1,0 +1,6 @@
+EMPID,PASSPORT,FIRSTNAME,LASTNAME,GENDER,BIRTHDAY,NATIONALITY,HIRED,DEPT,POSITION,STATUS,REGION
+15,MOJ66TSD0LH,Jade,Simmons,1,1961-03-04,Costa Rica,2000-12-24,Aircraft Maintenance,Steward,0,Canada
+19,SYT22ZIA2ZU,Thaddeus,Martinez,1,1975-04-02,Costa Rica,2015-07-11,Flight Attendance,Steward,0,Middle East
+42,QSP69GYO0YK,Rajah,Roach,0,1992-12-13,Costa Rica,2011-05-26,Flight Attendance,Pilot,0,Europe
+44,VTF75CUM7PC,Rhea,Keith,0,2000-06-28,Costa Rica,2010-10-30,Flight Attendance,Airhostess,4,Canada
+62,LYL50VBA1GL,Armando,Moody,1,1989-04-24,Costa Rica,2020-04-15,Flight Planning,Steward,3,USA

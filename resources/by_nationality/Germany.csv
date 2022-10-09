@@ -1,0 +1,5 @@
+EMPID,PASSPORT,FIRSTNAME,LASTNAME,GENDER,BIRTHDAY,NATIONALITY,HIRED,DEPT,POSITION,STATUS,REGION
+2,CDC87ETW8EQ,Burton,Gallegos,0,1960-09-22,Germany,2021-10-29,Aircraft Maintenance,Pilot,1,APAC
+18,DFE84WHT0ED,Joelle,Boyle,0,1962-07-19,Germany,2013-03-28,Flight Planning,Airhostess,0,Ocenia
+29,CMK62UAD3VK,Rowan,Leonard,1,1974-07-15,Germany,2004-03-27,Aircraft Maintenance,Pilot,1,Ocenia
+69,OOR56TFJ3XV,Nehru,Vargas,1,1976-09-25,Germany,2007-08-27,Flight Attendance,Pilot,2,USA

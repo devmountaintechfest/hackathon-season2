@@ -1,0 +1,5 @@
+EMPID,PASSPORT,FIRSTNAME,LASTNAME,GENDER,BIRTHDAY,NATIONALITY,HIRED,DEPT,POSITION,STATUS,REGION
+14,TAP82QBU5PN,Lunea,Sweet,1,1992-10-27,Netherlands,2004-03-15,Pilot,Airhostess,3,Middle East
+23,NFH65BYM0VB,Armand,Horn,0,1987-05-24,Netherlands,2007-06-19,Aircraft Maintenance,Airhostess,1,Ocenia
+32,KUO96QIG4VK,Stephen,Dickson,0,1962-05-02,Netherlands,2013-03-15,Aircraft Maintenance,Airhostess,4,APAC
+71,FSQ47TYA9DJ,Pascale,Silva,0,1968-10-13,Netherlands,2007-09-27,Pilot,Steward,4,Canada

@@ -21,6 +21,10 @@ def read_xml_to_list_of_dict(path: str) -> List[dict]:
                 continue
 
             row[elem.tag] = elem.text
+
+        if row["STATUS"] not in ["1", "2", "3"] and row["GENDER"] not in ["0", "1"]:
+            continue
+
         data.append(row)
     return data
 

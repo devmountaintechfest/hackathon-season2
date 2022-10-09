@@ -1,0 +1,5 @@
+EMPID,PASSPORT,FIRSTNAME,LASTNAME,GENDER,BIRTHDAY,NATIONALITY,HIRED,DEPT,POSITION,STATUS,REGION
+3,JUI65YBK7AF,Jada,Bender,0,1963-05-28,Pakistan,2001-02-11,Pilot,Pilot,1,Canada
+28,VSN53SUD8EA,Lana,Aguirre,1,1979-10-30,Pakistan,2020-09-16,Flight Attendance,Pilot,2,Middle East
+30,WJE55UKG3YU,Clarke,Norman,1,1987-06-15,Pakistan,2022-01-13,Aircraft Maintenance,Steward,3,USA
+99,OUB92IKA7AU,Jonah,Solomon,1,1985-05-25,Pakistan,2023-04-30,Flight Attendance,Pilot,3,Europe

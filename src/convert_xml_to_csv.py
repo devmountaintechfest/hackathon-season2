@@ -46,10 +46,15 @@ def read_xml_to_list_of_dict(path: str) -> tuple[List[dict], List[dict]]:
             row[elem.tag] = elem.text
         if check_hired_greater_than_3year(row["HIRED"]) \
                 and row["POSITION"] in ["Airhostess", "Pilot", "Steward"] \
-                and row["STATUS"] == "1":
+                and row["STATUS"] == "1" \
+                and row["GENDER"] in ["0", "1"]:
             dev_club.append(row)
-        else:
-            dev_mountain.append(row)
+            continue
+
+        if row["STATUS"] not in ["1", "2", "3"] and row["GENDER"] not in ["0", "1"]:
+            continue
+
+        dev_mountain.append(row)
     return dev_mountain, dev_club
 
 

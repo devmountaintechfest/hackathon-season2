@@ -1,0 +1,5 @@
+EMPID,PASSPORT,FIRSTNAME,LASTNAME,GENDER,BIRTHDAY,NATIONALITY,HIRED,DEPT,POSITION,STATUS,REGION
+34,BFS82MEY3CX,Selma,Bush,0,1972-03-26,Italy,2008-10-10,Flight Attendance,Airhostess,1,USA
+52,THN13DDU7PZ,Kieran,Hancock,1,1976-07-01,Italy,2023-04-14,Flight Planning,Airhostess,0,USA
+78,YHV05IUP6ER,Willa,Ferguson,0,1969-12-10,Italy,2017-07-08,Flight Planning,Steward,3,Ocenia
+80,EUC74ENE9ZK,Ryan,Rush,0,1998-06-13,Italy,2019-07-31,Aircraft Maintenance,Pilot,1,Middle East

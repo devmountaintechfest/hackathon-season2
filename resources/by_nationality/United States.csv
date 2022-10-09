@@ -1,0 +1,5 @@
+EMPID,PASSPORT,FIRSTNAME,LASTNAME,GENDER,BIRTHDAY,NATIONALITY,HIRED,DEPT,POSITION,STATUS,REGION
+8,UCT91SOT6EN,Josephine,Hansen,1,1982-10-12,United States,2021-12-24,Flight Planning,Pilot,4,Middle East
+17,TZU74JZT1GC,Talon,Santiago,1,1969-04-17,United States,2015-09-02,Aircraft Maintenance,Steward,0,Canada
+73,XIJ68PKR7QT,Darius,Serrano,0,1990-04-29,United States,2005-11-03,Pilot,Steward,4,Middle East
+79,RCQ71JXX4NH,Teagan,Daniel,1,1983-09-02,United States,2005-05-22,Pilot,Steward,0,APAC

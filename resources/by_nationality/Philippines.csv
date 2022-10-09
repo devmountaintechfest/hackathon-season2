@@ -1,0 +1,6 @@
+EMPID,PASSPORT,FIRSTNAME,LASTNAME,GENDER,BIRTHDAY,NATIONALITY,HIRED,DEPT,POSITION,STATUS,REGION
+10,YHF52IXT9VG,Lamar,Reeves,1,1988-09-13,Philippines,2003-09-26,Flight Attendance,Pilot,2,Canada
+25,BJQ37WBQ4UL,Leandra,Mayer,0,1974-09-07,Philippines,2019-09-17,Pilot,Steward,0,Europe
+45,MIF51GHC3PF,Walker,Jarvis,0,1988-06-26,Philippines,2004-04-22,Aircraft Maintenance,Pilot,3,Ocenia
+65,UCZ18XLY9OA,Solomon,Estes,0,1968-07-16,Philippines,2014-02-08,Aircraft Maintenance,Airhostess,0,USA
+66,WKV12UQC6QF,Zachery,Valentine,0,1971-06-04,Philippines,2011-08-25,Flight Attendance,Steward,1,Middle East

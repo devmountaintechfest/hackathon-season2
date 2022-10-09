@@ -1,0 +1,7 @@
+EMPID,PASSPORT,FIRSTNAME,LASTNAME,GENDER,BIRTHDAY,NATIONALITY,HIRED,DEPT,POSITION,STATUS,REGION
+36,TLM36YPP3NE,Vera,Ashley,1,1982-06-02,Peru,2022-03-12,Flight Attendance,Pilot,3,Canada
+43,JWF56EYP2AN,Sophia,Fuller,1,1986-01-03,Peru,2012-02-15,Pilot,Steward,0,Europe
+58,TZT98UWC8BW,Donna,Clay,1,1977-12-25,Peru,2003-05-16,Aircraft Maintenance,Steward,4,APAC
+82,ISX87UNW0AD,Herrod,Oliver,0,1965-01-07,Peru,2023-01-16,Flight Attendance,Airhostess,0,Europe
+87,RVO63HMC4NL,Ferris,Gilbert,0,1969-07-24,Peru,2002-12-25,Flight Planning,Steward,4,Europe
+97,SUF73DKV4QE,Dante,Hart,0,1999-12-21,Peru,2016-02-22,Pilot,Pilot,1,Europe

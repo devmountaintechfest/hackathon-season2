@@ -1,0 +1,6 @@
+EMPID,PASSPORT,FIRSTNAME,LASTNAME,GENDER,BIRTHDAY,NATIONALITY,HIRED,DEPT,POSITION,STATUS,REGION
+9,WOW94MLI6CM,Prescott,Dudley,0,1990-04-07,Sweden,2012-11-16,Pilot,Steward,2,Canada
+12,KGM77GAL2UW,Levi,Atkinson,0,1969-10-08,Sweden,2002-09-13,Aircraft Maintenance,Steward,4,Europe
+13,UOM66JXI0ZD,Levi,Myers,0,1998-12-29,Sweden,2004-09-13,Aircraft Maintenance,Steward,0,Europe
+16,WRS57BWI1RG,Serina,Tran,1,1980-11-28,Sweden,2010-07-18,Flight Planning,Steward,2,Canada
+91,WEA16MFX7OE,Drew,Gordon,0,1981-10-31,Sweden,2015-04-19,Aircraft Maintenance,Steward,2,Ocenia

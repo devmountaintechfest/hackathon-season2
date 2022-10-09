@@ -1,0 +1,4 @@
+EMPID,PASSPORT,FIRSTNAME,LASTNAME,GENDER,BIRTHDAY,NATIONALITY,HIRED,DEPT,POSITION,STATUS,REGION
+24,EQI56KFP6NU,Chaney,Ramsey,1,1972-06-13,South Africa,2002-12-19,Aircraft Maintenance,Steward,2,USA
+51,BPO49TXH0XX,Charles,Kim,0,1968-12-30,South Africa,2015-09-12,Flight Planning,Pilot,2,Ocenia
+75,KVI04NMS2QH,Shay,Mcdonald,1,1999-12-29,South Africa,2007-03-07,Aircraft Maintenance,Airhostess,4,Ocenia

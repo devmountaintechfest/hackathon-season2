@@ -1,0 +1,6 @@
+EMPID,PASSPORT,FIRSTNAME,LASTNAME,GENDER,BIRTHDAY,NATIONALITY,HIRED,DEPT,POSITION,STATUS,REGION
+7,SBJ34IXU7TC,Madeson,Mcintosh,1,1997-11-03,Mexico,2007-08-22,Flight Attendance,Steward,0,Ocenia
+41,ITS61SWZ4PW,Duncan,Morrison,1,1975-04-24,Mexico,2012-03-01,Flight Planning,Steward,0,Europe
+50,MRC33GHJ2KW,Calvin,Roach,1,1999-04-16,Mexico,2011-03-18,Flight Attendance,Steward,1,Europe
+63,UVV50TVB3TS,Maggy,Miles,0,1972-01-16,Mexico,2015-08-02,Flight Planning,Pilot,3,Ocenia
+74,HJL93JJY5GH,September,Morin,1,1997-09-15,Mexico,2014-08-26,Aircraft Maintenance,Steward,4,APAC
