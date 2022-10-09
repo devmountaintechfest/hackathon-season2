@@ -56,13 +56,20 @@
               <td>{{ data.PASSPORT }}</td>
               <td>{{ data.FIRSTNAME }}</td>
               <td>{{ data.LASTNAME }}</td>
-              <td>{{ data.GENDER }}</td>
+              <td>
+                <label v-if="data.STATUS == 0">Male</label>
+                <label v-if="data.STATUS == 1">Female</label>
+              </td>
               <td>{{ data.BIRTHDAY }}</td>
               <td>{{ data.NATIONALITY }}</td>
               <td>{{ data.HIRED }}</td>
               <td>{{ data.DEPT }}</td>
               <td>{{ data.POSITION }}</td>
-              <td>{{ data.STATUS }}</td>
+              <td>
+                <label v-if="data.STATUS == 1">Active</label>
+                <label v-if="data.STATUS == 2">Resigned</label>
+                <label v-if="data.STATUS == 3">Retired</label>
+              </td>
               <td>{{ data.REGION }}</td>
             </tr>
           </tbody>
@@ -183,8 +190,18 @@ export default {
           data_array: this.read_xml_data,
         })
         .then((res) => {
-          console.log(res)
+          this.read_xml_data = res.data.data
           this.now_data = "Sqlite3 Database";
+
+          const data = JSON.stringify(this.read_xml_data)
+          const blob = new Blob([data], { type: 'text/plain' })
+          const e = document.createEvent('MouseEvents'),
+            a = document.createElement('a');
+          a.download = "sqlite.json";
+          a.href = window.URL.createObjectURL(blob);
+          a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
+          e.initEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+          a.dispatchEvent(e);
         })
     },
 

@@ -33,7 +33,7 @@ sequelize
     });
 
 // API Request
-app.post("/api/update/devclub", (req, res) => {
+app.post("/api/update/devclub", async (req, res) => {
     req.body.data_array.map(element => {
         if (element.STATUS == "1") {
             sequelize.query("SELECT * FROM devclub WHERE EMPID = :EMPID OR PASSPORT = :PASSPORT LIMIT 1", { replacements: { EMPID: element.EMPID, PASSPORT: element.PASSPORT }, type: QueryTypes.SELECT }).then((chk) => {
@@ -60,7 +60,11 @@ app.post("/api/update/devclub", (req, res) => {
             })
         }
     });
-    res.send("Import Complete");
+    var loaddata = await sequelize.query("SELECT * FROM devclub", { type: QueryTypes.SELECT })
+    res.send({
+        status: "Success",
+        data: loaddata
+    });
 });
 
 app.get("/api/create/view/dept", (req, res) => {
