@@ -4,7 +4,7 @@ import time
 from datetime import datetime
 from datetime import date
 from dateutil import relativedelta
-
+import json
 
 def usedtime(func):
     @wraps(func)
@@ -60,6 +60,21 @@ class DataUtility(object):
         con.executemany("INSERT INTO emp_test (EMP_ID,PASSPORT,FIRSTNAME,LASTNAME,GENDER,BIRTHDAY,NATIONALITY,HIRED,DEPT,POSITION,STATUS,REGION) VALUES(?,?,?,?,?,?,?,?,?,?,?,?);", data)
         con.commit()
         con.close
+
+    def query(self,cond,value):
+        print("query..")
+        con=self.getConnection()
+        cur = con.cursor()
+        SQL=f'SELECT EMP_ID,PASSPORT,FIRSTNAME,LASTNAME,GENDER,BIRTHDAY,NATIONALITY,HIRED,DEPT,POSITION,STATUS,REGION FROM EMP_TEST  {cond}'
+        if(cond==''):
+            cur.execute(SQL)
+        else:
+            cur.execute(SQL,(value,))
+        rows = cur.fetchall()
+        con.close
+        return rows
+
+    
 
 class FileUtility(object):
     def write(seft,fileName,data):

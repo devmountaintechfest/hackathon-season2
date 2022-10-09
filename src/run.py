@@ -89,7 +89,8 @@ class Executor(object):
         dataUtility=DataUtility(self.config['dbName'])
         dataUtility.dbSetup()
         dataUtility.save(self.results)
-
+    def rep(self,data):
+        return data.replace('"','').strip()
     @usedtime
     def loadFromCSV(self):
         csvPath=self.config["csvPath"]
@@ -101,10 +102,10 @@ class Executor(object):
                 print(file)
                 fileDatas=[]
                 with open(os.path.join(csvPath, file), 'r') as f:
-                    csvData = csv.reader(f, delimiter=',')
+                    csvData = csv.reader(f, delimiter=',',quoting=csv.QUOTE_NONE)
                     next(csvData)
                     for row in csvData:
-                        fileData=(row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9],row[10],row[11])
+                        fileData=(row[0],self.rep(row[1]),self.rep(row[2]),self.rep(row[3]),row[4],self.rep(row[5]),self.rep(row[6]),self.rep(row[7]),self.rep(row[8]),self.rep(row[9]),row[10],self.rep(row[11]))
                         fileDatas.append(fileData)
                     dataUtility.save(fileDatas)
 
@@ -130,10 +131,53 @@ class Executor(object):
             results.append(tmpData)
         FileUtility().write(self.config['clubDataReport'],json.dumps(results))
 
+    @usedtime
+    def queryByRegion(self,region):
+        print("queryByRegion..")
+        dataUtility=DataUtility(self.config['dbName'])
+        cond=''
+        if(region!='' and region!='all'):
+            cond='WHERE REGION=?'
+        datas=dataUtility.query(cond,region.replace('"',''))
+        print("####Result####")
+        for data in datas:
+            print(f'{data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7],data[8],data[9],data[10],data[11]}')
+
+    @usedtime
+    def queryByNationality(self,nationality):
+        print("queryByNationality..")
+        dataUtility=DataUtility(self.config['dbName'])
+        cond=''
+        if(nationality!='' and nationality!='all'):
+            cond='WHERE NATIONALITY=?'
+        datas=dataUtility.query(cond,nationality.replace('"',''))
+        print("####Result####")
+        for data in datas:
+            print(f'{data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7],data[8],data[9],data[10],data[11]}')
+
+    @usedtime
+    def queryByDepartment(self,department):
+        print("queryByDepartment..")
+        dataUtility=DataUtility(self.config['dbName'])
+        cond=''
+        if(department!='' and department!='all'):
+            cond='WHERE DEPT=?'
+        datas=dataUtility.query(cond,department.replace('"',''))
+        print("####Result####")
+        for data in datas:
+            print(f'{data[0],data[1],data[2],data[3],data[4],data[5],data[6],data[7],data[8],data[9],data[10],data[11]}')
+
 def printInfo():
     print("- arg1 Execute type\n  - M Migrate\n- arg2 Datasource file\n- arg3 Target db\n- arg4 Report name")
     print("Example\n python runv2.py M ../data-devclub-1.xml ../database/devclub2022.db ../csv ../reports/data-devclub-report.json")
-
+def printInfoQ():
+    print("- arg1 Execute type\n  - M Migrate\n- arg2 Target db file\n- arg3 Search Type\n- arg4 Value Search")
+    print("Example\n python run.py Q ../database/devclub2022.db region all")
+    print('Example\n python run.py Q ../database/devclub2022.db region "Canada"')
+    print("Example\n python run.py Q ../database/devclub2022.db dept all")
+    print('Example\n python run.py Q ../database/devclub2022.db dept "Flight Planning"')
+    print("Example\n python run.py Q ../database/devclub2022.db nationality all")
+    print('Example\n python run.py Q ../database/devclub2022.db nationality "Germany"')
 def main():
     try:
 
@@ -168,12 +212,43 @@ def main():
                 endTime = time.perf_counter()
                 totalTime = endTime - startTime
                 print(f'##Total used time {totalTime:.4f} seconds##')
+            elif (exeType=='Q'):
+                dbName = sys.argv[2]
+                searchType = sys.argv[3]
+                valueSearch = sys.argv[4]
+                if(searchType!='' or valueSearch!=''):
+                    config={
+                        "searchType":searchType,
+                        "dbName":dbName,
+                        "valueSearch":valueSearch
+                    }
+                    startTime = time.perf_counter()
+                            
+                    exe=Executor()
+                    exe.setup(config)
+                    if searchType=='region':
+                        exe.queryByRegion(valueSearch)
+                    elif searchType=='dept':
+                        exe.queryByDepartment(valueSearch)
+                    elif searchType=='nationality':
+                        exe.queryByNationality(valueSearch)
+                    else:
+                        print("Invalid Parameter!")
+                        printInfoQ()
+                else:
+                     print("Please enter Parameter!")
+                     printInfoQ()
+                endTime = time.perf_counter()
+                totalTime = endTime - startTime
+                print(f'##Total used time {totalTime:.4f} seconds##')
             else:
                 print("Please enter Execute Type (M) Parameter!")
                 printInfo()
+                printInfoQ()
         else:
             print("Please enter Parameter!")
             printInfo()
+            printInfoQ()
     except ValueError as ve:
         return str(ve)
 
