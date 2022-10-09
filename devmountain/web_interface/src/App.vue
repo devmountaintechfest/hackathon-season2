@@ -17,14 +17,19 @@
     <v-main>
       <v-container class="fluid">
         <div class="d-flex justify-space-around">
-          <v-btn variant="tonal" v-on:click="loadXMLDoc">อ่านไฟล์ XML</v-btn>
+          <v-btn variant="tonal" v-on:click="loadXMLDoc">อ่านไฟล์ XML + (กรองข้อมูล)</v-btn>
           <v-btn variant="tonal" v-on:click="importReadXMLtoDB" color="success" :disabled="read_xml_data.length == 0">
-            นำข้อมูลที่อ่านแล้วเข้า DB
-            ({{read_xml_data.length}} รายการ)
+            นำข้อมูลเข้า DB
           </v-btn>
           <v-btn variant="tonal" v-on:click="exportByNATIONALITY" color="error">
-            สร้างไฟล์ CSV
+            Export CSV พนักงานทั้งหมด
           </v-btn>
+          <v-btn variant="tonal" v-on:click="exportByNATIONALITY" color="error">
+            Export CSV แยกตามสัญชาติ
+          </v-btn>
+        </div>
+        <div v-if="read_xml_data.length > 0">
+          จำนวนข้อมูล {{read_xml_data.length}} รายการ | ข้อมูลจาก {{now_data}}
         </div>
         <v-table>
           <thead>
@@ -76,6 +81,7 @@ export default {
 
   data: () => ({
     read_xml_data: new Array(),
+    now_data: "",
   }),
   methods: {
     loadXMLDoc() {
@@ -86,6 +92,7 @@ export default {
       xml.onreadystatechange = () => {
         if (xml.readyState == 4 && xml.status == 200) {
           this.read_xml_data = readXmlFile(this);
+          this.now_data = "XML File";
         }
       };
       function readXmlFile() {
@@ -96,23 +103,32 @@ export default {
         // Start to fetch the data by using TagName
         for (i = 0; i < x.length; i++) {
           if (x[i].getElementsByTagName("STATUS")[0].childNodes[0].nodeValue == 1)
-
             if (read_xml.some((item) => item.PASSPORT == x[i].getElementsByTagName("PASSPORT")[0].childNodes[0].nodeValue) == false) {
-              read_xml.push({
-                EMPID: x[i].getElementsByTagName("EMPID")[0].childNodes[0].nodeValue,
-                PASSPORT: x[i].getElementsByTagName("PASSPORT")[0].childNodes[0].nodeValue,
-                FIRSTNAME: x[i].getElementsByTagName("FIRSTNAME")[0].childNodes[0].nodeValue,
-                LASTNAME: x[i].getElementsByTagName("LASTNAME")[0].childNodes[0].nodeValue,
-                GENDER: x[i].getElementsByTagName("GENDER")[0].childNodes[0].nodeValue,
-                BIRTHDAY: x[i].getElementsByTagName("BIRTHDAY")[0].childNodes[0].nodeValue,
-                NATIONALITY: x[i].getElementsByTagName("NATIONALITY")[0].childNodes[0]
-                  .nodeValue,
-                HIRED: x[i].getElementsByTagName("HIRED")[0].childNodes[0].nodeValue,
-                DEPT: x[i].getElementsByTagName("DEPT")[0].childNodes[0].nodeValue,
-                POSITION: x[i].getElementsByTagName("POSITION")[0].childNodes[0].nodeValue,
-                STATUS: x[i].getElementsByTagName("STATUS")[0].childNodes[0].nodeValue,
-                REGION: x[i].getElementsByTagName("REGION")[0].childNodes[0].nodeValue,
-              });
+              // Check 3 Year
+              var now_date = new Date();
+              var hired_day = (x[i].getElementsByTagName("HIRED")[0].childNodes[0].nodeValue).split("-")[0];
+              var hired_month = (x[i].getElementsByTagName("HIRED")[0].childNodes[0].nodeValue).split("-")[1]
+              var hired_year = (x[i].getElementsByTagName("HIRED")[0].childNodes[0].nodeValue).split("-")[2]
+              var hired_date = new Date(hired_year, hired_month, hired_day);
+              var diffTime = Math.abs(now_date - hired_date);
+              var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+              if (1095 <= diffDays) {
+                read_xml.push({
+                  EMPID: x[i].getElementsByTagName("EMPID")[0].childNodes[0].nodeValue,
+                  PASSPORT: x[i].getElementsByTagName("PASSPORT")[0].childNodes[0].nodeValue,
+                  FIRSTNAME: x[i].getElementsByTagName("FIRSTNAME")[0].childNodes[0].nodeValue,
+                  LASTNAME: x[i].getElementsByTagName("LASTNAME")[0].childNodes[0].nodeValue,
+                  GENDER: x[i].getElementsByTagName("GENDER")[0].childNodes[0].nodeValue,
+                  BIRTHDAY: x[i].getElementsByTagName("BIRTHDAY")[0].childNodes[0].nodeValue,
+                  NATIONALITY: x[i].getElementsByTagName("NATIONALITY")[0].childNodes[0]
+                    .nodeValue,
+                  HIRED: x[i].getElementsByTagName("HIRED")[0].childNodes[0].nodeValue,
+                  DEPT: x[i].getElementsByTagName("DEPT")[0].childNodes[0].nodeValue,
+                  POSITION: x[i].getElementsByTagName("POSITION")[0].childNodes[0].nodeValue,
+                  STATUS: x[i].getElementsByTagName("STATUS")[0].childNodes[0].nodeValue,
+                  REGION: x[i].getElementsByTagName("REGION")[0].childNodes[0].nodeValue,
+                });
+              }
             }
         }
         return read_xml;
@@ -126,6 +142,7 @@ export default {
         })
         .then((res) => {
           console.log(res)
+          this.now_data = "Sqlite3 Database";
         })
     },
 
