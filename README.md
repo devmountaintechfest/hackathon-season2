@@ -70,7 +70,13 @@
 ### ไม่รู้วิธี Fork หรือ สร้าง PR สามารถฝึกได้จากที่นี่
 https://github.com/firstcontributions/first-contributions 
 
+## How to submit
+- Create a PR to hackathon season 2 repository, add your name or team information.
 
+
+## Q&A คำถามที่พบบ่อย
+- ดูได้จาก issues 
+https://github.com/devmountaintechfest/hackathon-season2/issues
 
 ## ทีม Dev mountain ที่ดูแลการแข่งครั้งนี้
 สมาชิก
