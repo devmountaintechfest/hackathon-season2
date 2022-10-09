@@ -1,37 +1,33 @@
 # hackathon-season2
 
-## เลข Status จะมีตามนี้ครับ
-- 1 = Active
-- 2 = Resigned
-- 3 = Retired
-- ถ้าเป็นเลขอื่นๆจะถือว่าเป็น anomaly information(**ข้อมูลที่ไม่ถูกต้อง**)
+## ใช้ Unity 2019.4.15f1 นะครับ ᕦ(ò_óˇ)ᕤ
 
-## กฎระเบียบ
+# Happy New World ! 🎉🎉🎉
 
-- ห้ามใช้ library สำหรับการทำ transformation จาก XML ไปเป็น CSV
-- สามารถใช้ Driver ของตัวภาษานั้นๆ เพื่อต่อ SQLlite ได้
-- ไม่อนุญาตให้ใช้ Tool สำเร็จรูป
+## Usages
+#### Click "Convert to CSV" ข้างขวาเพื่อแปลงไฟล์ XML ไปเป็น CSV
+![อุ้ย อะไรน่ะ](images/Screenshot2.png)
+
+#### Click "Convert to CSV" ข้างขวาเพื่อแปลงไฟล์ XML ไปเป็น CSV
+![แอบดูหรอ](images/Screenshot3.png)
+
+## Data Visualization
+![โลกของเราน่าอยู่](images/Screenshot1.png)
 
 ## เกณฑ์การให้คะแนน
-
-- โค๊ดทำงานถูกต้อง
-- Performance
-  - Memory usage
-  - Runtime benchmark 
-- Code อ่านง่าย
-- ส่งเร็ว
-- Creative ตอนทำ Data visualization 
-- ผลลัพธ์จาก SQLlite ต้องได้เป็น **JSON** format
-
-**ตัวอย่าง Data visualization**
-
-[dev-mountain-visualization](https://dev-moutain-dataviz.netlify.app/)
+- โค๊ดทำงานถูกต้อง 🛒
+- Performance 🎎
+  - Memory usage 🎨
+  - Runtime benchmark 🧶
+- Code อ่านง่าย 🎃
+- ส่งเร็ว 🎏
+- Creative ตอนทำ Data visualization 🎭
+- ผลลัพธ์จาก SQLlite ต้องได้เป็น **JSON** format 👜
 
 
-## ตัวอย่างการสร้าง PR
-ทีม Dev mountain
+## ไม่มีทีมครับ
+ทีม "อะไรดีครับ"
 สมาชิก
-- [annibuliful](https://github.com/annibuliful)
-- [lordbenz](https://github.com/lordbenz)
+- [ShiragaP](https://github.com/ShiragaP)
 
-Repo: [hackathon](https://github.com/devmountaintechfest/hackathon-season2)
+Repo: [hackathon](https://github.com/ShiragaP/hackathon-season2)
