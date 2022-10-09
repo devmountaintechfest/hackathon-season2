@@ -75,7 +75,6 @@ export default {
   },
 
   data: () => ({
-    //
     read_xml_data: new Array(),
   }),
   methods: {
@@ -96,7 +95,7 @@ export default {
 
         // Start to fetch the data by using TagName
         for (i = 0; i < x.length; i++) {
-          if (x[i].getElementsByTagName("STATUS")[0].childNodes[0].nodeValue == 1 )
+          if (x[i].getElementsByTagName("STATUS")[0].childNodes[0].nodeValue == 1)
 
             if (read_xml.some((item) => item.PASSPORT == x[i].getElementsByTagName("PASSPORT")[0].childNodes[0].nodeValue) == false) {
               read_xml.push({
@@ -121,7 +120,13 @@ export default {
     },
 
     importReadXMLtoDB() {
-
+      this.axios
+        .post("api/update/devclub", {
+          data_array: this.read_xml_data,
+        })
+        .then((res) => {
+          console.log(res)
+        })
     },
 
     async exportByNATIONALITY() {
