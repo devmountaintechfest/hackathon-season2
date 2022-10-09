@@ -116,6 +116,6 @@ then user must input some charecters to python cmd
 Data Visualization Demo Dashboard is displayed on website [https://hackathon-season2-data-analysis.pages.dev]
 
 > 
-> mVATOR is coming to train
+> mVATOR is coming to train 🚉💪
 ---
 Syntex Guide on GitHub [GitHub Help](https://help.github.com/articles/basic-writing-and-formatting-syntax/).
