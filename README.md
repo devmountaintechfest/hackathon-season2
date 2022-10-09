@@ -55,9 +55,6 @@ Use on web interface: http://localhost:8080
   GET /api/create/view/nationality
 ```
 
-Takes two numbers and returns the sum.
-
-
 ## Visualization
 
 ![alt text](https://github.com/Thanaphol47825/hackathon-season2/blob/main/images/home.png?raw=true)
